@@ -1,0 +1,136 @@
+.footer {
+  display: flex;
+  gap: 48px;
+  background-color: #2a2622;
+  color: #faf8f5;
+  margin-top: 64px;
+  width: 100%;
+  height: 468px;
+}
+
+.footer__discount {
+  display: flex;
+  align-items: center;
+}
+
+.footer__discount-email {
+  height: 48px;
+  margin-left: 185px;
+  margin-left: 955px;
+  padding-inline: 16px;
+  font-size: 14px;
+  background: rgb(250 248 245 / 5%);
+  border: 1px solid rgb(250 248 245 / 15%);
+  color: #faf8f5;
+  min-width: 370px;
+}
+
+.footer__discount-form {
+  display: flex;
+}
+
+.footer__discount-submit-btn {
+  height: 48px;
+  border: none;
+  padding-inline: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  background: #faf8f5;
+  color: #2a2622;
+}
+
+.footer__discount-submit-btn:hover {
+  cursor: pointer;
+  background: rgb(250 248 245 / 90%);
+}
+
+.footer__discount-title {
+  max-width: 320px;
+  font-size: 20px;
+  line-height: 1.625;
+  color: rgb(250 248 245 / 50%);
+}
+
+.footer__information {
+  display: block;
+  gap: 24px;
+  margin-left: 32px;
+  margin-top: 25px;
+}
+
+.footer__contact-info {
+  display: flex;
+  gap: 85px;
+  margin-top: 65px;
+  border-top: 1px solid rgb(250 248 245 / 100%);
+}
+
+.footer__phone-number {
+  display: block;
+  text-decoration: none;
+  color: rgb(250 248 245 / 60%);
+  font-size: 14px;
+  transition: color 300ms;
+  margin-top: 12px;
+}
+
+.footer__phone-number:hover {
+  color: #faf8f5;
+}
+
+.footer__email {
+  margin-bottom: 12px;
+  color: rgb(250 248 245 / 60%);
+  font-size: 14px;
+  transition: color 300ms;
+  text-decoration: none;
+}
+
+.footer__email:hover {
+  color: #faf8f5;
+}
+
+.footer__about-us {
+  margin-bottom: 12px;
+  text-decoration: none;
+  color: rgb(250 248 245 / 60%);
+  font-size: 14px;
+  transition: color 300ms;
+  text-decoration: none;
+}
+
+.footer__about-us:hover {
+  color: #faf8f5;
+}
+
+.footer__shipping {
+  text-decoration: none;
+  color: rgb(250 248 245 / 60%);
+  font-size: 14px;
+  transition: color 300ms;
+  text-decoration: none;
+}
+
+.footer__shipping:hover {
+  color: #faf8f5;
+}
+
+.footer__contact-information {
+  margin-top: 32px;
+  color: rgb(250 248 245 / 40%);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+}
+
+.footer__further-information {
+  display: flex;
+  flex-direction: column;
+  margin-top: 32px;
+  color: rgb(250 248 245 / 40%);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+}

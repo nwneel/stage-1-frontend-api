@@ -1,0 +1,27 @@
+.signup-modal__label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: #000000;
+  font-family: Cabinet Grotesk;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: 0%;
+  margin-top: 24px;
+}
+
+.signup-modal__input {
+  height: 24px;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+
+.signup-modal__error {
+  color: #ff0000;
+  font-family: Cabinet Grotesk;
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 4px;
+}

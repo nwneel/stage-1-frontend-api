@@ -1,0 +1,252 @@
+.product-page {
+  padding: 32px;
+}
+
+.product-page > .store-logo__name {
+  margin-left: -32px;
+  margin-right: -32px;
+}
+
+.product-page__back {
+  cursor: pointer;
+  padding: 10px 16px;
+}
+
+.product-page__add-to-cart {
+  cursor: pointer;
+  visibility: visible;
+  border: none;
+  background: transparent;
+  width: 24px;
+  height: 24px;
+}
+
+.product-page__shopping-cart {
+  width: 24px;
+}
+
+.product-page__details {
+  align-items: center;
+  display: flex;
+  gap: 48px;
+  margin: 32px auto;
+  max-width: 960px;
+}
+
+.product-page__image {
+  height: 713px;
+  width: 504px;
+  object-fit: contain;
+}
+
+.product-page__gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.product-page__thumbnails {
+  display: flex;
+  gap: 12px;
+}
+
+.product-page__thumbnail {
+  background: transparent;
+  border: 2px solid transparent;
+  cursor: pointer;
+  padding: 0;
+}
+
+.product-page__thumbnail img {
+  display: block;
+  height: 80px;
+  object-fit: contain;
+  width: 80px;
+}
+
+.product-page__thumbnail--selected {
+  border-color: #333;
+}
+
+.product-page__information {
+  flex: 1;
+}
+
+.product-page__description-title {
+  width: 472px;
+  height: 22px;
+}
+
+.product-page__category,
+.product-page__price {
+  margin: 0 0 16px;
+}
+
+.product-page__title {
+  margin: 0 0 16px;
+  margin-bottom: 52px;
+}
+
+.product-page__price {
+  font-size: 24px;
+}
+
+.product-page__description {
+  color: #555;
+  line-height: 1.6;
+  margin: 0 0 16px;
+}
+
+.product-page__cart-controls {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.product-page__cart-controls label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+.product-page__cart-controls input {
+  box-sizing: border-box;
+  height: 40px;
+  width: 56px;
+}
+
+.product-page__add-review-btn {
+  cursor: pointer;
+  margin-top: 24px;
+  padding: 10px 16px;
+  align-self: center;
+  width: 120px;
+}
+
+.product-page__review-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.product-page__review-rating {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.product-page__review-stars {
+  display: flex;
+  gap: 6px;
+  margin: 0.5rem 0;
+  width: 116px;
+  cursor: pointer;
+}
+
+.product-page__review-star {
+  appearance: none;
+  background: transparent;
+  border: none;
+  color: #d4d4d4;
+  cursor: pointer;
+  font-size: 28px;
+  line-height: 1;
+  padding: 0;
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.product-page__review-star:hover,
+.product-page__review-star:focus-visible {
+  color: #ff7b7b;
+  outline: none;
+}
+
+.product-page__review-star--selected {
+  color: #d62828;
+  transform: scale(1.08);
+}
+
+.product-page__review-form {
+  border: 1px solid #c7c7c7;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 16px;
+  padding: 16px;
+}
+
+.product-page__review-form textarea,
+.product-page__review-form select {
+  box-sizing: border-box;
+  font: inherit;
+  padding: 8px;
+  width: 100%;
+}
+
+.product-page__review-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.product-page__review-actions button {
+  cursor: pointer;
+  padding: 8px 12px;
+}
+
+.product-page__review-error {
+  color: #d62828;
+  margin: 0;
+}
+
+.product-page__review-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  list-style: none;
+  margin: 16px 0 0;
+  padding: 0;
+}
+
+.product-page__review-item {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 12px;
+  width: 145px;
+}
+
+.product-page__review-item-stars {
+  color: #d62828;
+  display: block;
+  font-size: 18px;
+}
+
+.product-page__review-item-comment {
+  margin: 8px 0 0;
+}
+
+.product-page__review-item-name {
+  font-weight: 700;
+  margin: 8px 0 0;
+}
+
+.product-page__review-item-title {
+  font-weight: 700;
+  margin: 4px 0 0;
+}
+
+@media (max-width: 700px) {
+  .product-page__details {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .product-page__image {
+    height: 280px;
+    width: 100%;
+  }
+}

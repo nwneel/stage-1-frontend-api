@@ -1,0 +1,151 @@
+.item-card {
+  border: 1px solid #c7c7c7;
+  padding: 16px;
+}
+
+.item-card__image {
+  aspect-ratio: 1;
+  cursor: pointer;
+  display: block;
+  object-fit: contain;
+  width: 100%;
+}
+
+.item-card__name {
+  font-size: 18px;
+  margin: 16px 0 8px;
+  text-align: center;
+}
+
+.item-card__category {
+  margin: 0;
+}
+
+.item-card__price {
+  margin: 0;
+  text-align: center;
+}
+
+.item-card__new-arrivals-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 320px;
+  margin: 16px auto 0;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 64px;
+}
+
+.item-card__new-arrivals {
+  font-size: 24px;
+  line-height: 29px;
+  margin: 0;
+}
+
+.item-card__controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.item-card__control-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.item-card__control-label {
+  font-size: 13px;
+  color: #333;
+}
+
+.item-card__control-select {
+  padding: 4px 8px;
+  font-size: 13px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.item-card__new-arrivals-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  list-style: none;
+  margin: 16px auto 0;
+  padding: 0;
+  width: 320px;
+  cursor: pointer;
+  background: white;
+  margin-top: 48px;
+}
+
+.item-card__new-arrival {
+  border: 1px solid #c7c7c7;
+  padding: 16px;
+}
+
+.item-card__new-arrival-image {
+  display: block;
+  height: 280px;
+  object-fit: contain;
+  width: 100%;
+}
+
+.item-card__product-link {
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  display: block;
+  padding: 0;
+  width: 100%;
+}
+/* values inside class helps make quantity box visible when you hover over it */
+.item-card__cart-controls {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 16px;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.2s ease,
+    visibility 0.2s ease;
+}
+/* values inside class helps make quantity box visible when you hover over it */
+.item-card__quantity-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+.item-card__quantity {
+  box-sizing: border-box;
+  height: 40px;
+  width: 56px;
+}
+
+.item-card__add-to-cart {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+}
+
+.item-card__shopping-cart-button {
+  width: 24px;
+}
+
+.item-card__new-arrival:hover .item-card__cart-controls,
+.item-card__new-arrival:focus-within .item-card__cart-controls {
+  opacity: 1;
+  visibility: visible;
+}

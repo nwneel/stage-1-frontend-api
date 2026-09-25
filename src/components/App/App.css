@@ -1,2 +1,8 @@
 .app {
+  background-color: #fff;
+}
+
+.app__content {
+  height: 99px;
+  width: 100%;
 }

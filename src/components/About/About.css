@@ -1,0 +1,14 @@
+.about {
+  margin: 64px auto;
+  max-width: 720px;
+  padding: 0 32px;
+}
+
+.about__title {
+  margin-top: 0;
+  text-align: center;
+}
+
+.about__description {
+  line-height: 1.6;
+}

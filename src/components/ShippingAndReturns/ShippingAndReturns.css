@@ -1,0 +1,14 @@
+.shipping-and-returns {
+  margin: 64px auto;
+  max-width: 720px;
+  padding: 0 32px;
+  margin-bottom: 145px;
+}
+
+.shipping-and-returns h1 {
+  margin-top: 0;
+}
+
+.shipping-and-returns p {
+  line-height: 1.6;
+}

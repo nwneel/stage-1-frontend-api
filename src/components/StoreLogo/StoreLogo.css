@@ -1,0 +1,17 @@
+.store-logo__name {
+  background-color: #f3ece2;
+  display: flex;
+  justify-content: center;
+  margin: 0;
+}
+
+.store-logo__text {
+  font-family: "Grape Nuts", cursive;
+  height: 88px;
+  text-align: center;
+  font-size: 60px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
