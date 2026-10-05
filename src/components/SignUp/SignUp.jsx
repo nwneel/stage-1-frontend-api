@@ -1,7 +1,7 @@
 import "./SignUp.css";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { useEffect, useState } from "react";
-import { useForm } from "../../hooks/hooks";
+import { useForm } from "../../hooks/useForm";
 
 const SignUp = ({ isOpen, onClose, onSubmit, onSignInClick }) => {
   const defaultValues = {

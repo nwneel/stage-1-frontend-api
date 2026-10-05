@@ -7,25 +7,22 @@ const Footer = ({ onAboutClick, onShippingClick }) => {
       <footer className="footer">
         <div className="footer__information">
           <div className="footer__discount">
-            <p class="footer__discount-title">Sign Up and get 5% off.</p>
-            <form class="footer__discount-form">
+            <p className="footer__discount-title">Sign Up and get 5% off.</p>
+            <form className="footer__discount-form">
               <input
                 type="email"
                 placeholder="Your email"
-                class="footer__discount-email"
+                className="footer__discount-email"
               />
-              <button type="submit" class="footer__discount-submit-btn">
-                <img src={blackArrowRight} />
+              <button type="submit" className="footer__discount-submit-btn">
+                <img alt="Submit" src={blackArrowRight} />
               </button>
             </form>
           </div>
           <div className="footer__contact-info">
             <section className="footer__contact-information">
               <h3>Contact Us</h3>
-              <a
-                className="footer__email"
-                href="mailto:natesbooksgames@gmail.com"
-              >
+              <a className="footer__email" href="mailto:nwneel@gmail.com">
                 nwneel@gmail.com
               </a>
               <a className="footer__phone-number" href="tel:208-446-4897">

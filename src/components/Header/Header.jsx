@@ -1,7 +1,9 @@
+import { useState } from "react";
 import "./Header.css";
 import searchButtonImage from "../../assets/Search-btn.png";
 import logo from "../../assets/logo.png";
 import shoppingCartButton from "../../assets/Shopping cart.png";
+import userIcon from "../../assets/User-Icon.png";
 
 function Header({
   cartQuantity,
@@ -9,6 +11,7 @@ function Header({
   onSignUpClick,
   onCartClick,
   onCategorySelect,
+  isSignedIn,
   onLogoClick,
   onSearchChange,
   onSearchSubmit,
@@ -17,7 +20,31 @@ function Header({
   showCartButton,
   searchSuggestions,
   searchTerm,
+  onAccountClick,
+  onOrdersClick,
+  onWishListClick,
+  onLogOutClick,
 }) {
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+
+  function handleUserMenuToggle() {
+    setIsUserMenuOpen((open) => !open);
+  }
+
+  function handleUserMenuSelect(handler) {
+    setIsUserMenuOpen(false);
+    if (handler) {
+      handler();
+    }
+  }
+
+  // closes the dropdown when focus moves outside the menu wrapper
+  function handleUserMenuBlur(event) {
+    if (!event.currentTarget.contains(event.relatedTarget)) {
+      setIsUserMenuOpen(false);
+    }
+  }
+
   function handleSelectCategory(categoryName) {
     const dropdowns = document.querySelectorAll(
       ".header__category-dropdown[open]",
@@ -299,40 +326,114 @@ function Header({
           </ul>
         </details>
       </div>
-      <div className="header__sign-in-up">
-        <button
-          className="header__sign-in-btn"
-          onClick={onSignInClick}
-          type="button"
-        >
-          Sign In
-        </button>
-        <button
-          className="header__sign-up-btn"
-          onClick={onSignUpClick}
-          type="button"
-        >
-          Sign Up
-        </button>
-        {showCartButton && (
+      {isSignedIn ? (
+        <div className="header__signed-in">
+          <div className="header__user-menu" onBlur={handleUserMenuBlur}>
+            <button
+              aria-expanded={isUserMenuOpen}
+              aria-haspopup="true"
+              className="header__user-menu-trigger"
+              onClick={handleUserMenuToggle}
+              type="button"
+            >
+              <img
+                alt="Account menu"
+                className="header__user-icon"
+                src={userIcon}
+              />
+            </button>
+            {isUserMenuOpen && (
+              <ul className="header__user-menu-list">
+                <li>
+                  <button
+                    onClick={() => handleUserMenuSelect(onAccountClick)}
+                    type="button"
+                  >
+                    Account
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => handleUserMenuSelect(onOrdersClick)}
+                    type="button"
+                  >
+                    Orders
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => handleUserMenuSelect(onWishListClick)}
+                    type="button"
+                  >
+                    Wish List
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => handleUserMenuSelect(onLogOutClick)}
+                    type="button"
+                  >
+                    Log Out
+                  </button>
+                </li>
+              </ul>
+            )}
+          </div>
+          {showCartButton && (
+            <>
+              <img
+                className="header__shopping-cart-signed-in"
+                src={shoppingCartButton}
+                // onClick={onCartClick} opens the form where you are take to the checkout popup form
+                onClick={onCartClick}
+              />
+              {cartQuantity > 0 && (
+                <span
+                  aria-label={`${cartQuantity} items in cart`}
+                  className="header__sign-in-cart-quantity"
+                >
+                  {cartQuantity}
+                </span>
+              )}
+            </>
+          )}
+        </div>
+      ) : (
+        <div className="header__sign-in-up">
           <button
-            aria-label="Shopping cart"
-            className="header__check-out-btn"
-            onClick={onCartClick}
+            className="header__sign-in-btn"
+            onClick={onSignInClick}
             type="button"
           >
-            <img alt="" src={shoppingCartButton} />
-            {cartQuantity > 0 && (
-              <span
-                aria-label={`${cartQuantity} items in cart`}
-                className="header__cart-quantity"
-              >
-                {cartQuantity}
-              </span>
-            )}
+            Sign In
           </button>
-        )}
-      </div>
+          <button
+            className="header__sign-up-btn"
+            onClick={onSignUpClick}
+            type="button"
+          >
+            Sign Up
+          </button>
+          {showCartButton && (
+            <button
+              aria-label="Shopping cart"
+              className="header__check-out-btn"
+              onClick={onCartClick}
+              type="button"
+            >
+              <img alt="" src={shoppingCartButton} />
+              {cartQuantity > 0 && (
+                <span
+                  aria-label={`${cartQuantity} items in cart`}
+                  className="header__cart-quantity"
+                >
+                  {cartQuantity}
+                </span>
+              )}
+            </button>
+          )}
+        </div>
+      )}
     </header>
   );
 }

@@ -13,7 +13,9 @@ import ProductList from "../ProductList/ProductList";
 import About from "../About/About";
 import ShippingAndReturns from "../ShippingAndReturns/ShippingAndReturns";
 import Checkout from "../Checkout/Checkout";
+import { getShippingRates } from "../../utils/ThirdPartyApi";
 import {
+  DEFAULT_PRODUCT_STOCK,
   defaultNewArrivals,
   allProducts,
   getProductsByCategory,
@@ -29,6 +31,7 @@ function App() {
   const [cartItems, setCartItems] = useState([]);
   const [isSignInOpen, setIsSignInOpen] = useState(false);
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
+  const [isSignedIn, setIsSignedIn] = useState(false);
   const [isForgetPasswordOpen, setIsForgetPasswordOpen] = useState(false);
   const [isEmptyCartOpen, setIsEmptyCartOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -242,6 +245,24 @@ function App() {
 
   function handleAddToCart(item, quantity = 1) {
     if (!item) return;
+    const stock = Number.isInteger(item.stock)
+      ? item.stock
+      : DEFAULT_PRODUCT_STOCK;
+    const cartItem = cartItems.find((existing) => existing._id === item._id);
+    const currentQuantity = cartItem?.quantity ?? 0;
+    const requestedQuantity = Math.max(1, Math.floor(Number(quantity) || 1));
+    const availableQuantity = Math.max(0, stock - currentQuantity);
+    const quantityToAdd = Math.min(requestedQuantity, availableQuantity);
+
+    if (quantityToAdd < requestedQuantity) {
+      window.alert(
+        availableQuantity > 0
+          ? `Only ${availableQuantity} more ${item.name} available.`
+          : `No more ${item.name} available.`,
+      );
+    }
+    if (quantityToAdd === 0) return;
+
     setCartItems((prevItems) => {
       const existingItemIndex = prevItems.findIndex(
         (existing) => existing._id === item._id,
@@ -250,11 +271,11 @@ function App() {
         const updatedItems = [...prevItems];
         updatedItems[existingItemIndex] = {
           ...updatedItems[existingItemIndex],
-          quantity: updatedItems[existingItemIndex].quantity + quantity,
+          quantity: updatedItems[existingItemIndex].quantity + quantityToAdd,
         };
         return updatedItems;
       }
-      return [...prevItems, { ...item, quantity }];
+      return [...prevItems, { ...item, quantity: quantityToAdd }];
     });
   }
 
@@ -272,13 +293,29 @@ function App() {
 
   function handleUpdateCartItemQuantity(itemId, quantity, options = {}) {
     const { showEmptyCartModal = true } = options;
-    if (quantity < 1) {
+    const requestedQuantity = Number(quantity);
+    if (!Number.isFinite(requestedQuantity)) return;
+    if (requestedQuantity < 1) {
+      handleRemoveCartItem(itemId, { showEmptyCartModal });
+      return;
+    }
+    const cartItem = cartItems.find((item) => item._id === itemId);
+    if (!cartItem) return;
+    const stock = Number.isInteger(cartItem.stock)
+      ? cartItem.stock
+      : DEFAULT_PRODUCT_STOCK;
+    const wholeNumberQuantity = Math.floor(requestedQuantity);
+    const cappedQuantity = Math.min(wholeNumberQuantity, stock);
+    if (cappedQuantity < wholeNumberQuantity) {
+      window.alert(`Only ${stock} ${cartItem.name} available in total.`);
+    }
+    if (cappedQuantity < 1) {
       handleRemoveCartItem(itemId, { showEmptyCartModal });
       return;
     }
     setCartItems((prevItems) =>
       prevItems.map((item) =>
-        item._id === itemId ? { ...item, quantity } : item,
+        item._id === itemId ? { ...item, quantity: cappedQuantity } : item,
       ),
     );
   }
@@ -293,6 +330,12 @@ function App() {
 
   function handleSignInSubmit() {
     setIsSignInOpen(false);
+    setIsSignedIn(true);
+  }
+
+  function handleLogOutClick() {
+    setIsSignedIn(false);
+    handleBackToHome();
   }
 
   function handleSignUpSubmit() {
@@ -321,6 +364,10 @@ function App() {
     window.scrollTo(0, 0);
   }
 
+  const handleShippingRates = ({ city, state, zipCode, country }) => {
+    getShippingRates({ city, state, zipCode, country });
+  };
+
   return (
     <div className="app">
       <div className="app__content">
@@ -328,6 +375,7 @@ function App() {
           cartQuantity={cartQuantity}
           onSignInClick={() => setIsSignInOpen(true)}
           onSignUpClick={() => setIsSignUpOpen(true)}
+          isSignedIn={isSignedIn}
           onCartClick={handleCartClick}
           onCategorySelect={handleCategorySelect}
           onLogoClick={handleBackToHome}
@@ -338,10 +386,13 @@ function App() {
           showCartButton={!isCheckoutPage}
           searchSuggestions={searchResults.slice(0, 5)}
           searchTerm={searchTerm}
+          onLogOutClick={handleLogOutClick}
         />
         {isCheckoutPage ? (
           <Checkout
             cartItems={cartItems}
+            onOrderComplete={() => setCartItems([])}
+            handleShippingRates={handleShippingRates}
             onBack={handleCheckoutBack}
             onSignInClick={() => setIsSignInOpen(true)}
             onUpdateQuantity={(itemId, quantity) =>

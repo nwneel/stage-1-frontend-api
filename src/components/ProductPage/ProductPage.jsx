@@ -31,7 +31,13 @@ function ProductPage({ product, onAddToCart }) {
     Array.isArray(product.images) && product.images.length > 0
       ? product.images
       : [product.image];
-  const [selectedImage, setSelectedImage] = useState(productImages[0]);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+
+  useEffect(() => {
+    setSelectedImageIndex(0);
+  }, [product._id]);
+
+  const selectedImage = productImages[selectedImageIndex] || productImages[0];
 
   useEffect(() => {
     try {
@@ -58,6 +64,22 @@ function ProductPage({ product, onAddToCart }) {
     onAddToCart(product, quantity > 0 ? quantity : 1);
   }
 
+  function handlePreviousImage() {
+    if (productImages.length > 1) {
+      setSelectedImageIndex((prevIndex) =>
+        prevIndex === 0 ? productImages.length - 1 : prevIndex - 1,
+      );
+    }
+  }
+
+  function handleNextImage() {
+    if (productImages.length > 1) {
+      setSelectedImageIndex(
+        (prevIndex) => (prevIndex + 1) % productImages.length,
+      );
+    }
+  }
+
   function handleReviewSubmit(event) {
     event.preventDefault();
 
@@ -70,6 +92,7 @@ function ProductPage({ product, onAddToCart }) {
       ...prevReviews,
       {
         id: Date.now(),
+        date: new Date().toISOString(),
         rating: selectedRating,
         comment: reviewComment,
         name: reviewName,
@@ -89,24 +112,51 @@ function ProductPage({ product, onAddToCart }) {
       <StoreLogo />
       <article className="product-page__details">
         <div className="product-page__gallery">
-          <img
-            alt={product.name}
-            className="product-page__image"
-            src={selectedImage}
-          />
+          <div className="product-page__image-container">
+            {productImages.length > 1 && (
+              <button
+                aria-label="Previous product image"
+                className="product-page__image-arrow product-page__image-arrow_left"
+                onClick={handlePreviousImage}
+                type="button"
+              >
+                <img alt="" src={leftArrowImage} />
+              </button>
+            )}
+            <img
+              alt={product.name}
+              className={`product-page__image${
+                productImages.length > 1
+                  ? " product-page__image--clickable"
+                  : ""
+              }`}
+              onClick={handleNextImage}
+              src={selectedImage}
+            />
+            {productImages.length > 1 && (
+              <button
+                aria-label="Next product image"
+                className="product-page__image-arrow product-page__image-arrow_right"
+                onClick={handleNextImage}
+                type="button"
+              >
+                <img alt="" src={rightArrowImage} />
+              </button>
+            )}
+          </div>
           {productImages.length > 1 && (
             <div className="product-page__thumbnails">
               {productImages.map((image, index) => (
                 <button
                   aria-label={`View ${product.name} image ${index + 1}`}
-                  aria-pressed={image === selectedImage}
+                  aria-pressed={index === selectedImageIndex}
                   className={`product-page__thumbnail${
-                    image === selectedImage
+                    index === selectedImageIndex
                       ? " product-page__thumbnail--selected"
                       : ""
                   }`}
-                  key={image}
-                  onClick={() => setSelectedImage(image)}
+                  key={`${image}-${index}`}
+                  onClick={() => setSelectedImageIndex(index)}
                   type="button"
                 >
                   <img alt="" src={image} />
@@ -118,6 +168,7 @@ function ProductPage({ product, onAddToCart }) {
         <div className="product-page__information">
           <h1 className="product-page__title">{product.name}</h1>
           <p className="product-page__price">${product.price.toFixed(2)}</p>
+          <p className="product-page__stock">Stock: {product.stock}</p>
           <div className="product-page__cart-controls">
             <label htmlFor="product-quantity">Quantity</label>
             <input
@@ -251,6 +302,14 @@ function ProductPage({ product, onAddToCart }) {
                   <p className="product-page__review-item-name">
                     {review.name}
                   </p>
+                )}
+                {review.date && (
+                  <time
+                    className="product-page__review-item-date"
+                    dateTime={review.date}
+                  >
+                    Posted {new Date(review.date).toLocaleDateString()}
+                  </time>
                 )}
                 {review.title && (
                   <p className="product-page__review-item-title">

@@ -1,3 +1,9 @@
+.about__page {
+  background: rgb(250 248 245 / 80%);
+  padding-top: 64px;
+  padding-bottom: 64px;
+}
+
 .about {
   margin: 64px auto;
   max-width: 720px;

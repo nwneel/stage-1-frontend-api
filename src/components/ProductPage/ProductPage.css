@@ -1,5 +1,7 @@
 .product-page {
   padding: 32px;
+  padding-bottom: 64px;
+  background: rgb(250 248 245 / 80%);
 }
 
 .product-page > .store-logo__name {
@@ -26,17 +28,73 @@
 }
 
 .product-page__details {
-  align-items: center;
   display: flex;
   gap: 48px;
   margin: 32px auto;
   max-width: 960px;
 }
 
+.product-page__image-container {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+}
+
+.product-page__image-arrow {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  padding: 8px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  box-sizing: border-box;
+  width: 48px;
+  height: 48px;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.2s ease,
+    visibility 0.2s ease;
+  pointer-events: none;
+}
+
+.product-page__image-container:hover .product-page__image-arrow,
+.product-page__image-arrow:focus-visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.product-page__image-arrow_left {
+  left: 16px;
+}
+
+.product-page__image-arrow_right {
+  right: 16px;
+}
+
+.product-page__image-arrow img {
+  display: block;
+  object-fit: contain;
+}
+
 .product-page__image {
   height: 713px;
   width: 504px;
   object-fit: contain;
+  background: white;
+  outline: 2px solid rgba(0, 0, 0, 0.3);
+}
+
+.product-page__image--clickable {
+  cursor: pointer;
 }
 
 .product-page__gallery {
@@ -62,6 +120,7 @@
   height: 80px;
   object-fit: contain;
   width: 80px;
+  background: white;
 }
 
 .product-page__thumbnail--selected {
@@ -89,6 +148,10 @@
 
 .product-page__price {
   font-size: 24px;
+}
+
+.product-page__stock {
+  margin: 0 0 16px;
 }
 
 .product-page__description {
@@ -231,6 +294,13 @@
 .product-page__review-item-name {
   font-weight: 700;
   margin: 8px 0 0;
+}
+
+.product-page__review-item-date {
+  color: #555;
+  display: block;
+  font-size: 14px;
+  margin-top: 4px;
 }
 
 .product-page__review-item-title {

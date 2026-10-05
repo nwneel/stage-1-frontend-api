@@ -78,11 +78,12 @@
   padding: 0;
   width: 320px;
   cursor: pointer;
-  background: white;
+  background: rgb(250 248 245 / 80%);
   margin-top: 48px;
 }
 
 .item-card__new-arrival {
+  background: white;
   border: 1px solid #c7c7c7;
   padding: 16px;
 }
@@ -148,4 +149,8 @@
 .item-card__new-arrival:focus-within .item-card__cart-controls {
   opacity: 1;
   visibility: visible;
+}
+
+.item-card__new-arrivals-products {
+  padding-bottom: 64px;
 }

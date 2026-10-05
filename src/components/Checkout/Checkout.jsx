@@ -1,6 +1,9 @@
 import "./Checkout.css";
 import { useState } from "react";
 import { SALES_TAX_RATE } from "../../utils/constants";
+import { useForm } from "../../hooks/useForm";
+import { getShippingRates } from "../../utils/ThirdPartyApi";
+import { defaultProductLists } from "../../utils/constants";
 
 const usStates = [
   "Alabama",
@@ -183,20 +186,46 @@ function Checkout({
   onSignInClick,
   onUpdateQuantity,
   onRemoveItem,
+  onOrderComplete,
 }) {
   const [selectedOption, setSelectedOption] = useState("");
   const [shippingInfo, setShippingInfo] = useState(initialShippingInfo);
   const [shippingOptions, setShippingMethods] = useState(intialShippingOptions);
+  const [shippingRates, setShippingRates] = useState([]);
+  const [ratesLoading, setRatesLoading] = useState(false);
+  const [ratesError, setRatesError] = useState("");
+  const [selectedRateCode, setSelectedRateCode] = useState("");
+  const [completedOrder, setCompletedOrder] = useState(null);
+  const [selectionError, setSelectionError] = useState("");
   const totalCost = cartItems.reduce(
     (total, item) => total + item.price * item.quantity,
     0,
   );
   const salesTax = totalCost * SALES_TAX_RATE;
-  const totalWithTax = totalCost + salesTax;
-  const showStateField = ["United States", "Canada"].includes(
-    shippingInfo.country,
+  const selectedRate = shippingRates.find(
+    (rate) => rate.serviceCode === selectedRateCode,
   );
-  const isCanadaSelected = shippingInfo.country === "Canada";
+  const shippingCost = selectedRate
+    ? (selectedRate.shipmentCost || 0) + (selectedRate.otherCost || 0)
+    : 0;
+  const totalWithTax = totalCost + salesTax + shippingCost;
+  const defaultValues = {
+    city: "",
+    state: "",
+    zipCode: "",
+    country: "United States",
+    length: "",
+    width: "",
+    height: "",
+  };
+
+  const { values, setValues, handleChange } = useForm(defaultValues);
+  const showStateField = ["United States", "Canada"].includes(values.country);
+  const isCanadaSelected = values.country === "Canada";
+
+  //useEffect(() => {
+  //     setValues(defaultValues);
+  //  }, [setValues]);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -209,14 +238,22 @@ function Checkout({
     }));
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-  };
   const handleSubmitOrder = async (e) => {
     e.preventDefault();
 
+    setRatesLoading(true);
+    setRatesError("");
+    setShippingRates([]);
+    setSelectedRateCode("");
+    setSelectionError("");
+
     try {
-      // ⚠️ MUST BE "http://localhost:3001/api/send-merchant-email"
+      const rates = await getShippingRates(values);
+      setShippingRates(rates);
+      if (rates.length === 0) {
+        setRatesError("No shipping options were found for this address.");
+      }
+      /*// ⚠️ MUST BE "http://localhost:3001/api/send-merchant-email"
       const response = await fetch(
         "http://localhost:3001/api/send-merchant-email",
         {
@@ -238,11 +275,116 @@ function Checkout({
         alert("Order submitted and email sent to merchant!");
       } else {
         alert("Error: " + (result.error || result.message));
-      }
+      }*/
     } catch (err) {
-      console.error("Failed to submit order:", err);
+      console.error("Failed to get shipping rates:", err);
+      setRatesError(err.message || "Could not retrieve shipping rates.");
+    } finally {
+      setRatesLoading(false);
     }
   };
+  const handleCompleteOrder = () => {
+    if (!selectedRate) {
+      setSelectionError("Please select a shipping option");
+      return;
+    }
+    setSelectionError("");
+    setCompletedOrder({
+      orderNumber: `ORD-${Date.now().toString().slice(-8)}`,
+      items: cartItems,
+      subtotal: totalCost,
+      salesTax,
+      shippingCost,
+      shippingService: selectedRate.serviceName,
+      total: totalWithTax,
+      customer: { ...shippingInfo },
+      address: { ...values },
+    });
+    if (typeof onOrderComplete === "function") onOrderComplete();
+  };
+
+  if (completedOrder) {
+    const { customer, address } = completedOrder;
+    return (
+      <main className="checkout-page">
+        <div className="checkout-page__container">
+          <h1 className="checkout-page__title">Order Confirmation</h1>
+          <p>
+            Thank you, {customer.fullName}! Your order{" "}
+            <strong>{completedOrder.orderNumber}</strong> has been placed. A
+            confirmation will be sent to {customer.email}.
+          </p>
+
+          <h2 className="checkout-page__shipping-title">Items</h2>
+          <div className="checkout-page__items">
+            {completedOrder.items.map((item) => (
+              <div className="checkout-page__item" key={item._id}>
+                <div className="checkout-page__details">
+                  <h2 className="checkout-page__item-name">{item.name}</h2>
+                  <p className="checkout-page__item-meta">
+                    ${item.price.toFixed(2)} x {item.quantity}
+                  </p>
+                </div>
+                <span className="checkout-page__item-total">
+                  ${(item.price * item.quantity).toFixed(2)}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          <h2 className="checkout-page__shipping-title">Shipping To</h2>
+          <p>
+            {customer.fullName}
+            <br />
+            {customer.address}
+            <br />
+            {address.city}
+            {address.state ? `, ${address.state}` : ""} {address.zipCode}
+            <br />
+            {address.country}
+          </p>
+
+          <div className="checkout-page__summary">
+            <span className="checkout-page__summary-label">Subtotal:</span>
+            <span className="checkout-page__summary-value">
+              ${completedOrder.subtotal.toFixed(2)}
+            </span>
+          </div>
+          <div className="checkout-page__summary">
+            <span className="checkout-page__summary-label">Sales Tax:</span>
+            <span className="checkout-page__summary-value">
+              ${completedOrder.salesTax.toFixed(2)}
+            </span>
+          </div>
+          <div className="checkout-page__summary">
+            <span className="checkout-page__summary-label">
+              Shipping ({completedOrder.shippingService}):
+            </span>
+            <span className="checkout-page__summary-value">
+              ${completedOrder.shippingCost.toFixed(2)}
+            </span>
+          </div>
+          <div className="checkout-page__summary">
+            <span className="checkout-page__summary-label">Total:</span>
+            <span className="checkout-page__summary-value">
+              ${completedOrder.total.toFixed(2)}
+            </span>
+          </div>
+
+          <div className="checkout-page__actions">
+            <button
+              type="button"
+              className="checkout-page__back-btn"
+              onClick={onBack}
+            >
+              Continue Shopping
+            </button>
+          </div>
+        </div>
+      </main>
+    );
+  }
+
   return (
     <main className="checkout-page">
       <div className="checkout-page__container">
@@ -324,6 +466,16 @@ function Checkout({
                 ${salesTax.toFixed(2)}
               </span>
             </div>
+            {selectedRate && (
+              <div className="checkout-page__summary">
+                <span className="checkout-page__summary-label">
+                  Shipping ({selectedRate.serviceName}):
+                </span>
+                <span className="checkout-page__summary-value">
+                  ${shippingCost.toFixed(2)}
+                </span>
+              </div>
+            )}
             <div className="checkout-page__summary">
               <span className="checkout-page__summary-label">Total:</span>
               <span className="checkout-page__summary-value">
@@ -425,8 +577,8 @@ function Checkout({
                   id="city"
                   name="city"
                   type="text"
-                  value={shippingInfo.city}
-                  onChange={handleInputChange}
+                  value={values.city}
+                  onChange={handleChange}
                   placeholder=""
                   required
                 />
@@ -440,8 +592,8 @@ function Checkout({
                   <select
                     id="state"
                     name="state"
-                    value={shippingInfo.state}
-                    onChange={handleInputChange}
+                    value={values.state}
+                    onChange={handleChange}
                     required
                   >
                     <option value="">
@@ -468,8 +620,8 @@ function Checkout({
                   id="zipCode"
                   name="zipCode"
                   type="text"
-                  value={shippingInfo.zipCode}
-                  onChange={handleInputChange}
+                  value={values.zipCode}
+                  onChange={handleChange}
                   placeholder=""
                   required
                 />
@@ -480,8 +632,14 @@ function Checkout({
                 <select
                   id="country"
                   name="country"
-                  value={shippingInfo.country}
-                  onChange={handleInputChange}
+                  value={values.country}
+                  onChange={(event) =>
+                    setValues((previousValues) => ({
+                      ...previousValues,
+                      country: event.target.value,
+                      state: "",
+                    }))
+                  }
                   required
                 >
                   <option value="">Select a country</option>
@@ -493,7 +651,44 @@ function Checkout({
                 </select>
               </div>
             </div>
-
+            <div className="checkout-page__row">
+              <div className="checkout-page__field-group">
+                <label htmlFor="length">Length</label>
+                <input
+                  id="length"
+                  name="length"
+                  type="number"
+                  value={values.length}
+                  onChange={handleChange}
+                  placeholder=""
+                  required
+                />
+              </div>
+              <div className="checkout-page__field-group">
+                <label htmlFor="width">Width</label>
+                <input
+                  id="width"
+                  name="width"
+                  type="number"
+                  value={values.width}
+                  onChange={handleChange}
+                  placeholder=""
+                  required
+                />
+              </div>
+              <div className="checkout-page__field-group">
+                <label htmlFor="height">Height</label>
+                <input
+                  id="height"
+                  name="height"
+                  type="number"
+                  value={values.height}
+                  onChange={handleChange}
+                  placeholder=""
+                  required
+                />
+              </div>
+            </div>
             <div className="checkout-page__form-actions">
               <button
                 type="button"
@@ -506,6 +701,57 @@ function Checkout({
                 Continue to Shipping Options
               </button>
             </div>
+
+            {ratesError && <p role="alert">{ratesError}</p>}
+            {shippingRates.length > 0 && (
+              <div className="checkout-page__shipping-rates">
+                <h2 className="checkout-page__shipping-title">
+                  Shipping Options
+                </h2>
+                {shippingRates.map((rate) => {
+                  const cost = (rate.shipmentCost || 0) + (rate.otherCost || 0);
+                  return (
+                    <label
+                      className="checkout-page__summary"
+                      key={rate.serviceCode}
+                      htmlFor={`rate-${rate.serviceCode}`}
+                    >
+                      <span className="checkout-page__summary-label">
+                        <input
+                          id={`rate-${rate.serviceCode}`}
+                          type="radio"
+                          name="shippingRate"
+                          value={rate.serviceCode}
+                          checked={selectedRateCode === rate.serviceCode}
+                          onChange={() => {
+                            setSelectedRateCode(rate.serviceCode);
+                            setSelectionError("");
+                          }}
+                        />{" "}
+                        {rate.serviceName}
+                      </span>
+                      <span className="checkout-page__summary-value">
+                        ${cost.toFixed(2)}
+                      </span>
+                    </label>
+                  );
+                })}
+                {selectionError && (
+                  <p className="checkout-page__error" role="alert">
+                    {selectionError}
+                  </p>
+                )}
+                <div className="checkout-page__form-actions">
+                  <button
+                    type="button"
+                    className="checkout-page__submit-btn"
+                    onClick={handleCompleteOrder}
+                  >
+                    Complete Order
+                  </button>
+                </div>
+              </div>
+            )}
           </form>
         )}
       </div>

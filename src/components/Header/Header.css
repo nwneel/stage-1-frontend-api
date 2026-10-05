@@ -2,7 +2,7 @@
   align-items: center;
   display: flex;
   gap: 16px;
-  min-height: 73px;
+  min-height: 60px;
   padding: 0 32px;
   border-bottom: 2px solid lightgrey;
 }
@@ -203,6 +203,80 @@
   top: -6px;
 }
 
+.header__signed-in {
+  display: flex;
+  gap: 16px;
+  cursor: pointer;
+}
+
+.header__shopping-cart-signed-in {
+  width: 24px;
+  height: 24px;
+}
+
+.header__sign-in-cart-quantity {
+  align-items: center;
+  background-color: #d22;
+  border-radius: 50%;
+  color: #fff;
+  display: flex;
+  font-size: 11px;
+  height: 18px;
+  justify-content: center;
+  min-width: 18px;
+  position: absolute;
+  right: 6px;
+  top: 6px;
+  margin-right: 16px;
+  margin-top: 3px;
+}
+
+.header__user-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.header__user-menu {
+  position: relative;
+}
+
+.header__user-menu-trigger {
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  display: flex;
+  padding: 0;
+}
+
+.header__user-menu-list {
+  background-color: #fff;
+  border: 1px solid #c7c7c7;
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 15%);
+  list-style: none;
+  margin: 0;
+  min-width: 160px;
+  padding: 6px 0;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  z-index: 3;
+}
+
+.header__user-menu-list button {
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  padding: 8px 14px;
+  text-align: left;
+  width: 100%;
+}
+
+.header__user-menu-list button:hover,
+.header__user-menu-list button:focus-visible {
+  background-color: #f1f1f1;
+}
+
 .header__sign-in-btn {
   width: 83px;
   height: 32px;
@@ -215,6 +289,15 @@
   width: 83px;
   height: 32px;
   border-radius: 10px;
+}
+
+.header__sign-in-btn:hover {
+  background: lightgrey;
+  cursor: pointer;
+}
+
+.header__sign-up-btn:hover {
+  background-color: #333333;
 }
 
 @media (max-width: 640px) {

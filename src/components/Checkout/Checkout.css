@@ -222,7 +222,9 @@
 .checkout-page__error {
   color: #b91c1c;
   font-size: 0.95rem;
-  margin-top: 1rem;
+  margin-top: 24px;
+  margin-left: 720px;
+  width: 100%;
 }
 
 .checkout-page__shipping-options {

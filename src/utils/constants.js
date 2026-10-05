@@ -1,12 +1,21 @@
 import katanaImage from "../assets/Products/sword.jpg";
 import foamGunImage from "../assets/Products/halo foam gun.jpg";
-import foldingKnifeImage from "../assets/Products/knife.jpg";
+import knivesImage from "../assets/Products/knives.jpg";
 import deadpoolKatanaImage from "../assets/Products/Deadpool Katanas.png";
 import lordOfTheRingsHelmetImage from "../assets/Products/lord of the rings helmet.png";
 
 export const SALES_TAX_RATE = 0.0725;
 
-export const defaultProductItems = [
+export const DEFAULT_PRODUCT_STOCK = 100;
+
+// Set a product's stock directly in its record to override this default.
+const withProductStock = (products) =>
+  products.map((product) => ({
+    ...product,
+    stock: product.stock ?? DEFAULT_PRODUCT_STOCK,
+  }));
+
+export const defaultProductItems = withProductStock([
   {
     _id: "katana-display",
     name: "Katana Display Set",
@@ -26,11 +35,11 @@ export const defaultProductItems = [
     name: "Tactical Folding Knife",
     description:
       "A compact folding knife built with a practical tactical design, ideal for utility, collection display, or everyday carry styling.",
-    image: foldingKnifeImage,
+    image: knivesImage,
   },
-];
+]);
 
-export const defaultNewArrivals = [
+export const defaultNewArrivals = withProductStock([
   {
     _id: "katana",
     name: "Deadpool Katanas",
@@ -38,6 +47,7 @@ export const defaultNewArrivals = [
       "The product is a set of dual katana swords inspired by the character Deadpool, complete with a back sheath for storage and transport. These replica blades are designed to resemble the weapons wielded by Deadpool in various media appearances. Perfect for fans of the anti-hero Deadpool, these swords can be used for display.",
     category: "Anime, Katana, Marvel",
     image: deadpoolKatanaImage,
+    stock: 20,
     price: 158.56,
   },
   {
@@ -48,6 +58,7 @@ export const defaultNewArrivals = [
     category: "Anime, Foam Gun, Batman",
     image:
       "https://cdn11.bigcommerce.com/s-dd172/images/stencil/1920x1920/products/6284/25443/GH45__91568.1722373972.jpg?c=2&imbypass=on",
+    stock: 20,
     price: 37.55,
   },
   {
@@ -57,11 +68,12 @@ export const defaultNewArrivals = [
       "Replica of of the helmet seen in the New Line Cinema motion picture The Lord of the Rings: The Fellowship of the Ring. Iron construction with embossed brass decorations and a weathered and distressed finish. It is fully wearable and looks great on display. Leather lining. Individually serialized on a solid brass plate mounted on the inside back of the helmet to insure authenticity. Wooden display stand silkscreened with The One Ring inscription. Limited edition run of 5000 individually serialized pieces worldwide. Boxed.",
     category: "Armor, Helmet",
     image: lordOfTheRingsHelmetImage,
+    stock: 2,
     price: 409.0,
   },
-];
+]);
 
-export const defaultProductLists = [
+export const defaultProductLists = withProductStock([
   {
     _id: "red-hood-foam-gun",
     name: "Red Hood Foam Gun",
@@ -70,6 +82,7 @@ export const defaultProductLists = [
     category: "Anime and Game Collection, Foam Gun",
     image:
       "https://cdn11.bigcommerce.com/s-dd172/images/stencil/1920x1920/products/6284/25443/GH45__91568.1722373972.jpg?c=2&imbypass=on",
+    stock: 20,
     price: 37.55,
   },
   {
@@ -79,6 +92,7 @@ export const defaultProductLists = [
       "A stylized anime-inspired foam gun with a distinctive look that fits fans of iconic series collectibles, cosplay, and display shelves.",
     category: "Anime, Foam Gun",
     image: "https://i.ebayimg.com/images/g/a7EAAeSwJm1qkdxp/s-l1600.webp",
+    stock: 10,
     price: 35.45,
   },
   {
@@ -88,6 +102,7 @@ export const defaultProductLists = [
       "The Fallout 10mm Pistol 9-Inch Foam Replica, manufactured by Neptune Trading, is a gun replica inspired by the popular video game series. This replica, while not functional, is perfect for fans looking to showcase their love for the Fallout universe. The 9-inch size makes it a unique and eye-catching piece of video game merchandise that would be a great addition to any collection..",
     category: "Anime, Foam Gun",
     image: "https://i.ebayimg.com/images/g/wygAAeSweR5pWL4g/s-l1600.webp",
+    stock: 10,
     price: 34.99,
   },
   {
@@ -101,6 +116,7 @@ export const defaultProductLists = [
       "https://i.ebayimg.com/images/g/L34AAeSwm9NpWCKy/s-l1600.webp",
       "https://i.ebayimg.com/images/g/-nUAAeSwyElpWCKx/s-l1600.webp",
     ],
+    stock: 10,
     price: 85.99,
   },
   {
@@ -109,6 +125,7 @@ export const defaultProductLists = [
     description: "Foam Batman Grapple Launcher",
     category: "Anime, Foam Gun",
     image: "https://i.ebayimg.com/images/g/brUAAeSw8Ghp9nT2/s-l1600.webp",
+    stock: 10,
     price: 30.55,
   },
   {
@@ -118,6 +135,7 @@ export const defaultProductLists = [
       "The Doom Eternal Plasma Rifle Replica Toy is a 23-inch full-size replica gun made of foam, inspired by the popular video game series Doom. Designed as a gun replica for enthusiasts and collectors, this product is a must-have for fans of the franchise. Made in the United States, this unique item allows users to hold and display a replica of the iconic weapon from the game, making it a valuable addition to any video game merchandise collection.",
     category: "Anime, Foam Gun",
     image: "https://i.ebayimg.com/images/g/VzwAAeSwRNhpYo5C/s-l1600.webp",
+    stock: 10,
     price: 30.55,
   },
   {
@@ -127,6 +145,7 @@ export const defaultProductLists = [
       "The Fallout Laser Pistol Replica Foam is a unique collectible item inspired by the popular video game series and TV show. This gun replica is a part of the Bethesda brand's product line, specifically designed for fans of the Fallout series. The model, featuring the character of the Courier, is a precise representation of the laser pistol from the game Fallout 4. Made in the China, this replica is a must-have for any video game enthusiast looking to add a piece of their favorite game to their collection..",
     category: "Anime, Foam Gun",
     image: "https://i.ebayimg.com/images/g/3qYAAeSw-xxpjsn2/s-l1600.webp",
+    stock: 10,
     price: 45.55,
   },
   {
@@ -136,6 +155,7 @@ export const defaultProductLists = [
       "Blade Runner Rick Deckard blaster prop replica with translucent orange grip. Handcrafted sci-fi display piece for cosplay and collectors.",
     category: "Anime, Foam Gun",
     image: "https://i.ebayimg.com/images/g/7xYAAeSwmH9p2AdA/s-l1600.webp",
+    stock: 10,
     price: 365.55,
   },
   {
@@ -145,6 +165,7 @@ export const defaultProductLists = [
       "The Legend of Zelda Master Sword has a glossy metallic blue metal hilt and guard. The hilt has hand painted green accents signature of the Skyward Sword. Golden painted accents adorn the guard to make the piece pop.  The 440 stainless steel blade comes with a factory edge and the Triforce symbol etched on both sides of the blade. Included is a wooden wall plaque so you can proudly display your piece.  The plaque is silkscreened with a golden Triforce symbol and darkened around the outer edges.",
     category: "Anime, Fantasy Swords, Swords",
     image: "https://i.ebayimg.com/images/g/xVwAAeSwqGRpXCoF/s-l1600.webp",
+    stock: 10,
     price: 111.55,
   },
   {
@@ -154,6 +175,7 @@ export const defaultProductLists = [
       "Unveil your chaotic side with the Joker M1911 Pistol, a beautifully crafted foam replica from Suicide Squad, designed for cosplay, collection, or display purposes. Measuring 11.5 inches by 7 inches with an 11.5-inch foam barrel and a 4-inch foam grip, this replica captures the Joker's signature flair with striking details. The dark purple body is adorned with intricate golden designs across the barrel, paired with a white and gold grip featuring a devilish engraving, bringing the iconic weapon from the film to life. The gold accents, from the hammer to the magazine base, reflect the Joker’s love for opulence. This collectible foam gun is an ideal addition for fans of Suicide Squad, offering an authentic yet safe prop for cosplay or a must-have piece in any DC collection.",
     category: "Anime, Batman",
     image: "https://i.ebayimg.com/images/g/sqoAAeSwuvJpXsTF/s-l1600.webp",
+    stock: 10,
     price: 35.55,
   },
   {
@@ -163,6 +185,7 @@ export const defaultProductLists = [
       "Step into the shadowy world of Hellsing with the Jackal Combat Pistol Replica, Alucard’s devastatingly powerful sidearm forged for obliterating the undead. Designed by Hellsing Arms and inscribed with the ominous “Jesus Christ is in Heaven now,” this oversized foam pistol measures 15.5 inches long and embodies the intimidating presence of its anime counterpart. Crafted entirely from safe, lightweight foam with a black finish and deep brown grip, this replica is perfect for cosplay, conventions, or display setups. Fans of the Hellsing series will recognize this legendary anti-vampire weapon as an essential piece of the collection, making it a standout foam collectible with maximum impact.",
     category: "Anime",
     image: "https://i.ebayimg.com/images/g/wc8AAeSw6fhp1VfJ/s-l1600.webp",
+    stock: 10,
     price: 35.55,
   },
   {
@@ -172,6 +195,7 @@ export const defaultProductLists = [
       "The Destiny 2 Duke MK.44 video game replica prop gun is an officially licensed reproduction designed for cosplay or display. This foam gun is a perfect accessory for fans of the popular video game looking to add a touch of authenticity to their cosplay costumes or collections. With its detailed design and high-quality construction, this gun replica from the world of movies will surely be a must-have for any avid collector or fan of the game.",
     category: "Anime",
     image: "https://i.ebayimg.com/images/g/pUkAAeSw~1RplAY2/s-l1600.webp",
+    stock: 10,
     price: 45.58,
   },
   {
@@ -181,6 +205,7 @@ export const defaultProductLists = [
       "46 inch FOAM EXECUTIONER KNIFE PROP Full size 46 inch foam knife designed for horror cosplay, costume events, and display. Features a weathered blade with bloody finish for realistic effect.",
     category: "Anime",
     image: "https://i.ebayimg.com/images/g/6isAAeSwpRtpkS10/s-l1600.webp",
+    stock: 10,
     price: 45.58,
   },
   {
@@ -190,6 +215,7 @@ export const defaultProductLists = [
       "Embrace the iconic bounty hunter aesthetic with the Jango Fett Westar-34 Blaster Foam Replica. This meticulously crafted prop captures the essence of the legendary weapon, offering fans a tangible connection to the Star Wars universe. Whether for cosplay, prop play, or simply as a collector's item, this replica is a must-have for any Star Wars enthusiast.",
     category: "Anime",
     image: "https://i.ebayimg.com/images/g/g28AAeSw3i5pBh3p/s-l1600.webp",
+    stock: 3,
     price: 29.99,
   },
   {
@@ -199,6 +225,7 @@ export const defaultProductLists = [
       "The 18 in Needler Pistol Halo 3 Hand Foam1:1 Gun Toys Cosplay Full Size is a replica toy gun inspired by the Halo video game series, specifically Halo 3. With a 1:1 scale, this foam gun is designed to resemble the iconic weapon from the game, allowing fans to engage in imaginative play and cosplay. Perfect for collectors or enthusiasts looking to bring a piece of the virtual world to life, this toy gun is sure to be a unique addition to any gaming merchandise collection.",
     category: "Anime",
     image: "https://i.ebayimg.com/images/g/z6AAAeSweN9pazSr/s-l1600.webp",
+    stock: 10,
     price: 65.65,
   },
   {
@@ -208,6 +235,7 @@ export const defaultProductLists = [
 
     category: "Anime",
     image: "https://i.ebayimg.com/images/g/lncAAeSwC1VqTs51/s-l1600.webp",
+    stock: 10,
     price: 85.65,
   },
   {
@@ -218,6 +246,7 @@ export const defaultProductLists = [
 
     category: "Anime, fantasy sword",
     image: "https://i.ebayimg.com/images/g/AE0AAeSwVKVqAUht/s-l1600.webp",
+    stock: 10,
     price: 45.65,
   },
   {
@@ -228,6 +257,7 @@ export const defaultProductLists = [
 
     category: "Anime, Star Wars",
     image: "https://i.ebayimg.com/images/g/GuIAAeSwGb1qpuo1/s-l1600.webp",
+    stock: 10,
     price: 29.55,
   },
   {
@@ -238,6 +268,7 @@ export const defaultProductLists = [
 
     category: "katana",
     image: "https://i.ebayimg.com/images/g/guwAAeSwM81oF5nL/s-l1600.webp",
+    stock: 10,
     price: 500.55,
   },
   {
@@ -247,6 +278,7 @@ export const defaultProductLists = [
 
     category: "shield",
     image: "https://i.ebayimg.com/images/g/vR0AAeSwCYho3hxw/s-l1600.webp",
+    stock: 10,
     price: 95.55,
   },
   {
@@ -257,6 +289,7 @@ export const defaultProductLists = [
 
     category: "combat-knives",
     image: "https://i.ebayimg.com/images/g/MLoAAeSwXCxor~iU/s-l1600.webp",
+    stock: 3,
     price: 245.55,
   },
   {
@@ -270,6 +303,7 @@ export const defaultProductLists = [
       "https://i.ebayimg.com/images/g/RokAAeSwhLRqAT9C/s-l1600.webp",
       "https://i.ebayimg.com/images/g/0ZUAAeSw-7BqAT9C/s-l1600.webp",
     ],
+    stock: 10,
     price: 245.55,
   },
   {
@@ -285,6 +319,7 @@ export const defaultProductLists = [
       "https://i.ebayimg.com/images/g/VqkAAeSwZuRqg4ya/s-l1600.webp",
       "https://i.ebayimg.com/images/g/VD0AAeSwPdNqg4ya/s-l1600.webp",
     ],
+    stock: 3,
     price: 245.55,
   },
   {
@@ -300,10 +335,27 @@ export const defaultProductLists = [
       "https://i.ebayimg.com/images/g/09cAAeSwZU5p2qLO/s-l1600.webp",
       "https://i.ebayimg.com/images/g/W3UAAeSwy6tp2qLN/s-l1600.webp",
       "https://i.ebayimg.com/images/g/agEAAeSwVcBp2qLO/s-l1600.webp",
+      "https://i.ebayimg.com/images/g/1ooAAeSwzGVp2qLO/s-l1600.webp",
     ],
+    stock: 10,
     price: 145.55,
   },
-];
+  {
+    _id: "deadpool-foam-gun",
+    name: "Deadpool Hand Cannon Foam 1:1 Gun Toys Cosplay",
+    description:
+      "The Deadpool Hand Cannon Foam 1:1 Gun Toys Cosplay is an action figure featuring the popular character Deadpool with a scale of 1:1. This unique toy comes with a foam gun included, perfect for fans of the character looking to engage in cosplay or play pretend. Made from foam material, this hand cannon is safe and comfortable for creative play scenarios. Ideal for collectors and enthusiasts of action figures and accessories, this product offers a fun and imaginative way to bring the beloved Deadpool character to life.",
+    category: "Marvel, Anime",
+    image: "https://i.ebayimg.com/images/g/XukAAeSwkVZpazVo/s-l1600.webp",
+
+    images: [
+      "https://i.ebayimg.com/images/g/XukAAeSwkVZpazVo/s-l1600.webp",
+      "https://i.ebayimg.com/images/g/ntcAAeSw635pazVn/s-l1600.webp",
+    ],
+    stock: 20,
+    price: 49.99,
+  },
+]);
 
 export const allProducts = Array.from(
   new Map(

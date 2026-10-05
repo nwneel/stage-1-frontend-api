@@ -1,5 +1,7 @@
 .product-list-page {
   padding: 0 0 32px;
+  background: rgb(250 248 245 / 80%);
+  padding-bottom: 64px;
 }
 
 .product-list-page__navigation {
@@ -100,6 +102,7 @@
 
 .product-list-page__cards {
   display: grid;
+  background: rgb(250 248 245 / 80%);
   grid-template-columns: repeat(3, minmax(0, 1fr));
   flex-wrap: wrap;
   gap: 24px;
@@ -111,6 +114,7 @@
 .product-list-page__cards .item-card__new-arrival {
   width: 100%;
   box-sizing: border-box;
+  background: white;
 }
 
 .product-list-page__pagination {
@@ -197,7 +201,7 @@
 }
 
 .product-list-page__franchise-button {
-  background-color: #fff;
+  background: rgb(250 248 245 / 80%);
   border: none;
   border-radius: 4px;
   padding: 8px 12px;

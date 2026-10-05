@@ -60,7 +60,7 @@ function Main({ onAddToCart, onProductSelect }) {
       : sortedNewArrivals.slice(startIndex, startIndex + itemsPerPage);
 
   return (
-    <main>
+    <main className="main__page">
       <StoreLogo />
       <section className="store-logo__name">
         <p className="store-logo__text">
