@@ -197,6 +197,11 @@ function Checkout({
   const [selectedRateCode, setSelectedRateCode] = useState("");
   const [completedOrder, setCompletedOrder] = useState(null);
   const [selectionError, setSelectionError] = useState("");
+  const containsSword = cartItems.some((item) =>
+    /\bswords?\b/i.test(
+      `${item._id || ""} ${item.name || ""} ${item.category || ""}`,
+    ),
+  );
   const totalCost = cartItems.reduce(
     (total, item) => total + item.price * item.quantity,
     0,
@@ -249,8 +254,16 @@ function Checkout({
 
     try {
       const rates = await getShippingRates(values);
-      setShippingRates(rates);
-      if (rates.length === 0) {
+      const availableRates = containsSword
+        ? rates.filter(
+            (rate) =>
+              !/envelope/i.test(
+                `${rate.serviceName || ""} ${rate.packageName || ""} ${rate.packageCode || ""}`,
+              ),
+          )
+        : rates;
+      setShippingRates(availableRates);
+      if (availableRates.length === 0) {
         setRatesError("No shipping options were found for this address.");
       }
       /*// ⚠️ MUST BE "http://localhost:3001/api/send-merchant-email"
