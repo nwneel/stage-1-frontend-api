@@ -183,6 +183,7 @@ function Checkout({
   cartItems = [],
   onBack,
   onSignInClick,
+  isSignedIn = false,
   onUpdateQuantity,
   onRemoveItem,
   onOrderComplete,
@@ -523,9 +524,11 @@ function Checkout({
               <button
                 type="button"
                 className="checkout-page__submit-btn"
-                onClick={() => setSelectedOption("guest")}
+                onClick={() =>
+                  setSelectedOption(isSignedIn ? "sign-in" : "guest")
+                }
               >
-                Checkout as a Guest
+                {isSignedIn ? "Continue to Checkout" : "Checkout as a Guest"}
               </button>
             )}
           </div>

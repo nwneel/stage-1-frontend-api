@@ -389,6 +389,7 @@ function App() {
             onOrderComplete={() => setCartItems([])}
             onBack={handleCheckoutBack}
             onSignInClick={() => setIsSignInOpen(true)}
+            isSignedIn={isSignedIn}
             onUpdateQuantity={(itemId, quantity) =>
               handleUpdateCartItemQuantity(itemId, quantity, {
                 showEmptyCartModal: false,
