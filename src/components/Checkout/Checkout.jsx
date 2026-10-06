@@ -3,7 +3,6 @@ import { useState } from "react";
 import { SALES_TAX_RATE } from "../../utils/constants";
 import { useForm } from "../../hooks/useForm";
 import { getShippingRates } from "../../utils/ThirdPartyApi";
-import { defaultProductLists } from "../../utils/constants";
 
 const usStates = [
   "Alabama",
@@ -197,8 +196,8 @@ function Checkout({
   const [selectedRateCode, setSelectedRateCode] = useState("");
   const [completedOrder, setCompletedOrder] = useState(null);
   const [selectionError, setSelectionError] = useState("");
-  const containsSword = cartItems.some((item) =>
-    /\bswords?\b/i.test(
+  const containsSwordOrKatana = cartItems.some((item) =>
+    /\b(?:swords?|katanas?)\b/i.test(
       `${item._id || ""} ${item.name || ""} ${item.category || ""}`,
     ),
   );
@@ -208,7 +207,7 @@ function Checkout({
   );
   const salesTax = totalCost * SALES_TAX_RATE;
   const selectedRate = shippingRates.find(
-    (rate) => rate.serviceCode === selectedRateCode,
+    (rate) => rate.rateId === selectedRateCode,
   );
   const shippingCost = selectedRate
     ? (selectedRate.shipmentCost || 0) + (selectedRate.otherCost || 0)
@@ -219,9 +218,6 @@ function Checkout({
     state: "",
     zipCode: "",
     country: "United States",
-    length: "",
-    width: "",
-    height: "",
   };
 
   const { values, setValues, handleChange } = useForm(defaultValues);
@@ -253,8 +249,8 @@ function Checkout({
     setSelectionError("");
 
     try {
-      const rates = await getShippingRates(values);
-      const availableRates = containsSword
+      const rates = await getShippingRates({ ...values, cartItems });
+      const availableRates = containsSwordOrKatana
         ? rates.filter(
             (rate) =>
               !/envelope/i.test(
@@ -664,44 +660,6 @@ function Checkout({
                 </select>
               </div>
             </div>
-            <div className="checkout-page__row">
-              <div className="checkout-page__field-group">
-                <label htmlFor="length">Length</label>
-                <input
-                  id="length"
-                  name="length"
-                  type="number"
-                  value={values.length}
-                  onChange={handleChange}
-                  placeholder=""
-                  required
-                />
-              </div>
-              <div className="checkout-page__field-group">
-                <label htmlFor="width">Width</label>
-                <input
-                  id="width"
-                  name="width"
-                  type="number"
-                  value={values.width}
-                  onChange={handleChange}
-                  placeholder=""
-                  required
-                />
-              </div>
-              <div className="checkout-page__field-group">
-                <label htmlFor="height">Height</label>
-                <input
-                  id="height"
-                  name="height"
-                  type="number"
-                  value={values.height}
-                  onChange={handleChange}
-                  placeholder=""
-                  required
-                />
-              </div>
-            </div>
             <div className="checkout-page__form-actions">
               <button
                 type="button"
@@ -726,18 +684,18 @@ function Checkout({
                   return (
                     <label
                       className="checkout-page__summary"
-                      key={rate.serviceCode}
-                      htmlFor={`rate-${rate.serviceCode}`}
+                      key={rate.rateId}
+                      htmlFor={`rate-${rate.rateId}`}
                     >
                       <span className="checkout-page__summary-label">
                         <input
-                          id={`rate-${rate.serviceCode}`}
+                          id={`rate-${rate.rateId}`}
                           type="radio"
                           name="shippingRate"
-                          value={rate.serviceCode}
-                          checked={selectedRateCode === rate.serviceCode}
+                          value={rate.rateId}
+                          checked={selectedRateCode === rate.rateId}
                           onChange={() => {
-                            setSelectedRateCode(rate.serviceCode);
+                            setSelectedRateCode(rate.rateId);
                             setSelectionError("");
                           }}
                         />{" "}

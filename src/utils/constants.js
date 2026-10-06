@@ -49,6 +49,14 @@ export const defaultNewArrivals = withProductStock([
     image: deadpoolKatanaImage,
     stock: 20,
     price: 158.56,
+    dimensions: {
+      length: 42,
+      height: 7,
+      width: 4,
+    },
+    weight: {
+      ounces: 96,
+    },
   },
   {
     _id: "red-hood-foam-gun",
@@ -60,6 +68,14 @@ export const defaultNewArrivals = withProductStock([
       "https://cdn11.bigcommerce.com/s-dd172/images/stencil/1920x1920/products/6284/25443/GH45__91568.1722373972.jpg?c=2&imbypass=on",
     stock: 20,
     price: 37.55,
+    dimensions: {
+      length: 25,
+      height: 12,
+      width: 4,
+    },
+    weight: {
+      ounces: 5,
+    },
   },
   {
     _id: "helmet",
@@ -68,8 +84,16 @@ export const defaultNewArrivals = withProductStock([
       "Replica of of the helmet seen in the New Line Cinema motion picture The Lord of the Rings: The Fellowship of the Ring. Iron construction with embossed brass decorations and a weathered and distressed finish. It is fully wearable and looks great on display. Leather lining. Individually serialized on a solid brass plate mounted on the inside back of the helmet to insure authenticity. Wooden display stand silkscreened with The One Ring inscription. Limited edition run of 5000 individually serialized pieces worldwide. Boxed.",
     category: "Armor, Helmet",
     image: lordOfTheRingsHelmetImage,
-    stock: 2,
-    price: 409.0,
+    stock: 3,
+    price: 650.0,
+    dimensions: {
+      length: 25,
+      height: 12,
+      width: 4,
+    },
+    weight: {
+      ounces: 208,
+    },
   },
 ]);
 
@@ -84,6 +108,14 @@ export const defaultProductLists = withProductStock([
       "https://cdn11.bigcommerce.com/s-dd172/images/stencil/1920x1920/products/6284/25443/GH45__91568.1722373972.jpg?c=2&imbypass=on",
     stock: 20,
     price: 37.55,
+    dimensions: {
+      length: 25,
+      height: 12,
+      width: 4,
+    },
+    weight: {
+      ounces: 5,
+    },
   },
   {
     _id: "vash-the-stampede",
@@ -94,6 +126,14 @@ export const defaultProductLists = withProductStock([
     image: "https://i.ebayimg.com/images/g/a7EAAeSwJm1qkdxp/s-l1600.webp",
     stock: 10,
     price: 35.45,
+    dimensions: {
+      length: 21,
+      height: 12,
+      width: 4,
+    },
+    weight: {
+      ounces: 32,
+    },
   },
   {
     _id: "fallout-10-mm-pistol",
@@ -104,6 +144,14 @@ export const defaultProductLists = withProductStock([
     image: "https://i.ebayimg.com/images/g/wygAAeSweR5pWL4g/s-l1600.webp",
     stock: 10,
     price: 34.99,
+    dimensions: {
+      length: 25,
+      height: 12,
+      width: 4,
+    },
+    weight: {
+      ounces: 16,
+    },
   },
   {
     _id: "Gnasher-shotgun",
@@ -118,6 +166,14 @@ export const defaultProductLists = withProductStock([
     ],
     stock: 10,
     price: 85.99,
+    dimensions: {
+      length: 24,
+      height: 8,
+      width: 5,
+    },
+    weight: {
+      ounces: 32,
+    },
   },
   {
     _id: "batman-grapple-gun",
@@ -127,6 +183,14 @@ export const defaultProductLists = withProductStock([
     image: "https://i.ebayimg.com/images/g/brUAAeSw8Ghp9nT2/s-l1600.webp",
     stock: 10,
     price: 30.55,
+    dimensions: {
+      length: 25,
+      height: 12,
+      width: 4,
+    },
+    weight: {
+      ounces: 5,
+    },
   },
   {
     _id: "doom-plasma-rifle",
@@ -137,6 +201,14 @@ export const defaultProductLists = withProductStock([
     image: "https://i.ebayimg.com/images/g/VzwAAeSwRNhpYo5C/s-l1600.webp",
     stock: 10,
     price: 30.55,
+    dimensions: {
+      length: 38,
+      height: 26,
+      width: 8,
+    },
+    weight: {
+      ounces: 32,
+    },
   },
   {
     _id: "fallout-laser-pistol",
@@ -147,6 +219,14 @@ export const defaultProductLists = withProductStock([
     image: "https://i.ebayimg.com/images/g/3qYAAeSw-xxpjsn2/s-l1600.webp",
     stock: 10,
     price: 45.55,
+    dimensions: {
+      length: 25,
+      height: 12,
+      width: 4,
+    },
+    weight: {
+      ounces: 5,
+    },
   },
   {
     _id: "rick-deckard-blaster",
@@ -157,6 +237,14 @@ export const defaultProductLists = withProductStock([
     image: "https://i.ebayimg.com/images/g/7xYAAeSwmH9p2AdA/s-l1600.webp",
     stock: 10,
     price: 365.55,
+    dimensions: {
+      length: 14,
+      height: 12,
+      width: 5,
+    },
+    weight: {
+      ounces: 16,
+    },
   },
   {
     _id: "legend-of-zelda-wall-sword",
@@ -167,6 +255,14 @@ export const defaultProductLists = withProductStock([
     image: "https://i.ebayimg.com/images/g/xVwAAeSwqGRpXCoF/s-l1600.webp",
     stock: 10,
     price: 111.55,
+    dimensions: {
+      length: 41,
+      height: 30,
+      width: 9,
+    },
+    weight: {
+      ounces: 96,
+    },
   },
   {
     _id: "joker",
@@ -177,6 +273,14 @@ export const defaultProductLists = withProductStock([
     image: "https://i.ebayimg.com/images/g/sqoAAeSwuvJpXsTF/s-l1600.webp",
     stock: 10,
     price: 35.55,
+    dimensions: {
+      length: 14,
+      height: 12,
+      width: 5,
+    },
+    weight: {
+      ounces: 16,
+    },
   },
   {
     _id: "hellsing-pistol",
@@ -187,6 +291,14 @@ export const defaultProductLists = withProductStock([
     image: "https://i.ebayimg.com/images/g/wc8AAeSw6fhp1VfJ/s-l1600.webp",
     stock: 10,
     price: 35.55,
+    dimensions: {
+      length: 14,
+      height: 12,
+      width: 5,
+    },
+    weight: {
+      ounces: 16,
+    },
   },
   {
     _id: "destiny-pistol",
@@ -197,6 +309,14 @@ export const defaultProductLists = withProductStock([
     image: "https://i.ebayimg.com/images/g/pUkAAeSw~1RplAY2/s-l1600.webp",
     stock: 10,
     price: 45.58,
+    dimensions: {
+      length: 14,
+      height: 12,
+      width: 5,
+    },
+    weight: {
+      ounces: 16,
+    },
   },
   {
     _id: "silent-hill-knife",
@@ -205,8 +325,16 @@ export const defaultProductLists = withProductStock([
       "46 inch FOAM EXECUTIONER KNIFE PROP Full size 46 inch foam knife designed for horror cosplay, costume events, and display. Features a weathered blade with bloody finish for realistic effect.",
     category: "Anime",
     image: "https://i.ebayimg.com/images/g/6isAAeSwpRtpkS10/s-l1600.webp",
-    stock: 10,
-    price: 45.58,
+    stock: 11,
+    price: 65.58,
+    dimensions: {
+      length: 38,
+      height: 26,
+      width: 8,
+    },
+    weight: {
+      ounces: 16,
+    },
   },
   {
     _id: "jango-fett-blaster",
@@ -217,6 +345,14 @@ export const defaultProductLists = withProductStock([
     image: "https://i.ebayimg.com/images/g/g28AAeSw3i5pBh3p/s-l1600.webp",
     stock: 3,
     price: 29.99,
+    dimensions: {
+      length: 25,
+      height: 12,
+      width: 4,
+    },
+    weight: {
+      ounces: 32,
+    },
   },
   {
     _id: "needler-blaster",
@@ -227,6 +363,14 @@ export const defaultProductLists = withProductStock([
     image: "https://i.ebayimg.com/images/g/z6AAAeSweN9pazSr/s-l1600.webp",
     stock: 10,
     price: 65.65,
+    dimensions: {
+      length: 25,
+      height: 12,
+      width: 4,
+    },
+    weight: {
+      ounces: 32,
+    },
   },
   {
     _id: "halo3-blaster",
@@ -237,6 +381,14 @@ export const defaultProductLists = withProductStock([
     image: "https://i.ebayimg.com/images/g/lncAAeSwC1VqTs51/s-l1600.webp",
     stock: 10,
     price: 85.65,
+    dimensions: {
+      length: 21,
+      height: 12,
+      width: 4,
+    },
+    weight: {
+      ounces: 32,
+    },
   },
   {
     _id: "Lord-of-the-rings-sting",
@@ -248,6 +400,14 @@ export const defaultProductLists = withProductStock([
     image: "https://i.ebayimg.com/images/g/AE0AAeSwVKVqAUht/s-l1600.webp",
     stock: 10,
     price: 45.65,
+    dimensions: {
+      length: 38,
+      height: 6,
+      width: 6,
+    },
+    weight: {
+      ounces: 32,
+    },
   },
   {
     _id: "mandolorian-foam-gun",
@@ -259,6 +419,14 @@ export const defaultProductLists = withProductStock([
     image: "https://i.ebayimg.com/images/g/GuIAAeSwGb1qpuo1/s-l1600.webp",
     stock: 10,
     price: 29.55,
+    dimensions: {
+      length: 38,
+      height: 12,
+      width: 6,
+    },
+    weight: {
+      ounces: 32,
+    },
   },
   {
     _id: "musashi-horse-katana",
@@ -270,6 +438,14 @@ export const defaultProductLists = withProductStock([
     image: "https://i.ebayimg.com/images/g/guwAAeSwM81oF5nL/s-l1600.webp",
     stock: 10,
     price: 500.55,
+    dimensions: {
+      length: 48,
+      height: 6,
+      width: 6,
+    },
+    weight: {
+      ounces: 80,
+    },
   },
   {
     _id: "Spartan-shield",
@@ -280,6 +456,14 @@ export const defaultProductLists = withProductStock([
     image: "https://i.ebayimg.com/images/g/vR0AAeSwCYho3hxw/s-l1600.webp",
     stock: 10,
     price: 95.55,
+    dimensions: {
+      length: 18,
+      height: 13,
+      width: 3,
+    },
+    weight: {
+      ounces: 144,
+    },
   },
   {
     _id: "rambo-knife",
@@ -291,6 +475,14 @@ export const defaultProductLists = withProductStock([
     image: "https://i.ebayimg.com/images/g/MLoAAeSwXCxor~iU/s-l1600.webp",
     stock: 3,
     price: 245.55,
+    dimensions: {
+      length: 25,
+      height: 12,
+      width: 4,
+    },
+    weight: {
+      ounces: 32,
+    },
   },
   {
     _id: "dom-pedro",
@@ -305,6 +497,14 @@ export const defaultProductLists = withProductStock([
     ],
     stock: 10,
     price: 245.55,
+    dimensions: {
+      length: 14,
+      height: 12,
+      width: 6,
+    },
+    weight: {
+      ounces: 32,
+    },
   },
   {
     _id: "Samwise-Sword",
@@ -321,6 +521,14 @@ export const defaultProductLists = withProductStock([
     ],
     stock: 3,
     price: 245.55,
+    dimensions: {
+      length: 57,
+      height: 10,
+      width: 9,
+    },
+    weight: {
+      ounces: 32,
+    },
   },
   {
     _id: "kill-bill-o-ren-ishii",
@@ -339,6 +547,14 @@ export const defaultProductLists = withProductStock([
     ],
     stock: 10,
     price: 145.55,
+    dimensions: {
+      length: 48,
+      height: 4,
+      width: 4,
+    },
+    weight: {
+      ounces: 80,
+    },
   },
   {
     _id: "deadpool-foam-gun",
@@ -354,6 +570,14 @@ export const defaultProductLists = withProductStock([
     ],
     stock: 20,
     price: 49.99,
+    dimensions: {
+      length: 10,
+      height: 8,
+      width: 4,
+    },
+    weight: {
+      ounces: 16,
+    },
   },
 ]);
 

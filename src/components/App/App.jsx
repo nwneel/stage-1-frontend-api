@@ -13,7 +13,6 @@ import ProductList from "../ProductList/ProductList";
 import About from "../About/About";
 import ShippingAndReturns from "../ShippingAndReturns/ShippingAndReturns";
 import Checkout from "../Checkout/Checkout";
-import { getShippingRates } from "../../utils/ThirdPartyApi";
 import {
   DEFAULT_PRODUCT_STOCK,
   defaultNewArrivals,
@@ -364,10 +363,6 @@ function App() {
     window.scrollTo(0, 0);
   }
 
-  const handleShippingRates = ({ city, state, zipCode, country }) => {
-    getShippingRates({ city, state, zipCode, country });
-  };
-
   return (
     <div className="app">
       <div className="app__content">
@@ -392,7 +387,6 @@ function App() {
           <Checkout
             cartItems={cartItems}
             onOrderComplete={() => setCartItems([])}
-            handleShippingRates={handleShippingRates}
             onBack={handleCheckoutBack}
             onSignInClick={() => setIsSignInOpen(true)}
             onUpdateQuantity={(itemId, quantity) =>
