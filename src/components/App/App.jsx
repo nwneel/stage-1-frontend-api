@@ -13,6 +13,7 @@ import ProductList from "../ProductList/ProductList";
 import About from "../About/About";
 import ShippingAndReturns from "../ShippingAndReturns/ShippingAndReturns";
 import Checkout from "../Checkout/Checkout";
+import Orders from "../Orders/Orders";
 import {
   DEFAULT_PRODUCT_STOCK,
   defaultNewArrivals,
@@ -26,8 +27,20 @@ const productNewArrivalPage = defaultNewArrivals.find(
   (product) => product._id === "katana",
 );
 const productNewArrivalPagePath = "/products";
+const ORDERS_STORAGE_KEY = "orders";
+
+function loadOrders() {
+  try {
+    const stored = JSON.parse(localStorage.getItem(ORDERS_STORAGE_KEY));
+    return Array.isArray(stored) ? stored : [];
+  } catch {
+    return [];
+  }
+}
 
 function App() {
+  const [orders, setOrders] = useState(loadOrders);
+  const [isOrdersPage, setIsOrdersPage] = useState(false);
   const [cartItems, setCartItems] = useState([]);
   const [isSignInOpen, setIsSignInOpen] = useState(false);
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
@@ -47,7 +60,15 @@ function App() {
   useEffect(() => {
     function handlePopState() {
       const pathname = window.location.pathname;
-      if (pathname === "/about-us") {
+      setIsOrdersPage(pathname === "/orders");
+      if (pathname === "/orders") {
+        setIsAboutPage(false);
+        setIsShippingPage(false);
+        setIsCheckoutPage(false);
+        setSelectedCategory(null);
+        setSelectedFranchise(null);
+        setSelectedProduct(null);
+      } else if (pathname === "/about-us") {
         setIsAboutPage(true);
         setIsShippingPage(false);
         setIsCheckoutPage(false);
@@ -122,6 +143,7 @@ function App() {
   }, []);
 
   function handleCategorySelect(categoryName) {
+    setIsOrdersPage(false);
     const path = `/category/${encodeURIComponent(categoryName)}`;
     window.history.pushState({}, "", path);
     setSelectedCategory(categoryName);
@@ -136,6 +158,7 @@ function App() {
   }
 
   function handleFranchiseSelect(franchiseName) {
+    setIsOrdersPage(false);
     const path = `/franchise/${encodeURIComponent(franchiseName)}`;
     window.history.pushState({}, "", path);
     setSelectedFranchise(franchiseName);
@@ -149,6 +172,7 @@ function App() {
   }
 
   function handleBackToHome() {
+    setIsOrdersPage(false);
     window.history.pushState({}, "", "/");
     setSelectedCategory(null);
     setSelectedFranchise(null);
@@ -162,6 +186,7 @@ function App() {
   }
 
   function handleAboutClick() {
+    setIsOrdersPage(false);
     window.history.pushState({}, "", "/about-us");
     setIsAboutPage(true);
     setIsShippingPage(false);
@@ -174,6 +199,7 @@ function App() {
   }
 
   function handleShippingClick() {
+    setIsOrdersPage(false);
     window.history.pushState({}, "", "/shipping-and-returns");
     setIsShippingPage(true);
     setIsAboutPage(false);
@@ -190,6 +216,39 @@ function App() {
     handleBackToHome();
   }
 
+  function handleOrdersClick() {
+    window.history.pushState({}, "", "/orders");
+    setIsOrdersPage(true);
+    setIsAboutPage(false);
+    setIsShippingPage(false);
+    setIsCheckoutPage(false);
+    setSelectedCategory(null);
+    setSelectedFranchise(null);
+    setSelectedProduct(null);
+    setSearchTerm("");
+    setIsSearchSubmitted(false);
+    window.scrollTo(0, 0);
+  }
+
+  function handleOrderComplete(purchasedItems, order) {
+    reduceProductStock(purchasedItems);
+    setCartItems([]);
+    if (order) {
+      setOrders((previousOrders) => {
+        const updatedOrders = [order, ...previousOrders];
+        try {
+          localStorage.setItem(
+            ORDERS_STORAGE_KEY,
+            JSON.stringify(updatedOrders),
+          );
+        } catch {
+          // storage may be full or unavailable; orders stay in memory
+        }
+        return updatedOrders;
+      });
+    }
+  }
+
   function handleSearchChange(value) {
     setSearchTerm(value);
     setIsSearchSubmitted(false);
@@ -197,6 +256,7 @@ function App() {
 
   function handleSearchSubmit() {
     if (!searchTerm.trim()) return;
+    setIsOrdersPage(false);
     setSelectedCategory(null);
     setSelectedProduct(null);
     setIsSearchSubmitted(true);
@@ -204,6 +264,7 @@ function App() {
   }
 
   function handleProductSelect(product) {
+    setIsOrdersPage(false);
     const path =
       product._id === productNewArrivalPage._id
         ? productNewArrivalPagePath
@@ -353,6 +414,7 @@ function App() {
     }
 
     setIsCartOpen(false);
+    setIsOrdersPage(false);
     window.history.pushState({}, "", "/checkout");
     setIsCheckoutPage(true);
     setSelectedCategory(null);
@@ -383,14 +445,12 @@ function App() {
           searchSuggestions={searchResults.slice(0, 5)}
           searchTerm={searchTerm}
           onLogOutClick={handleLogOutClick}
+          onOrdersClick={handleOrdersClick}
         />
         {isCheckoutPage ? (
           <Checkout
             cartItems={cartItems}
-            onOrderComplete={(purchasedItems) => {
-              reduceProductStock(purchasedItems);
-              setCartItems([]);
-            }}
+            onOrderComplete={handleOrderComplete}
             onBack={handleCheckoutBack}
             onSignInClick={() => setIsSignInOpen(true)}
             isSignedIn={isSignedIn}
@@ -403,6 +463,8 @@ function App() {
               handleRemoveCartItem(itemId, { showEmptyCartModal: false })
             }
           />
+        ) : isOrdersPage && isSignedIn ? (
+          <Orders orders={orders} onBack={handleBackToHome} />
         ) : isAboutPage ? (
           <About />
         ) : isShippingPage ? (

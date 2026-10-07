@@ -177,8 +177,6 @@ const initialShippingInfo = {
   country: "United States",
 };
 
-const intialShippingOptions = {};
-
 function Checkout({
   cartItems = [],
   onBack,
@@ -190,7 +188,6 @@ function Checkout({
 }) {
   const [selectedOption, setSelectedOption] = useState("");
   const [shippingInfo, setShippingInfo] = useState(initialShippingInfo);
-  const [shippingOptions, setShippingMethods] = useState(intialShippingOptions);
   const [shippingRates, setShippingRates] = useState([]);
   const [ratesLoading, setRatesLoading] = useState(false);
   const [ratesError, setRatesError] = useState("");
@@ -299,8 +296,9 @@ function Checkout({
       return;
     }
     setSelectionError("");
-    setCompletedOrder({
+    const order = {
       orderNumber: `ORD-${Date.now().toString().slice(-8)}`,
+      placedAt: new Date().toISOString(),
       items: cartItems,
       subtotal: totalCost,
       salesTax,
@@ -309,8 +307,11 @@ function Checkout({
       total: totalWithTax,
       customer: { ...shippingInfo },
       address: { ...values },
-    });
-    if (typeof onOrderComplete === "function") onOrderComplete(cartItems);
+    };
+    setCompletedOrder(order);
+    if (typeof onOrderComplete === "function") {
+      onOrderComplete(cartItems, order);
+    }
   };
 
   if (completedOrder) {
@@ -506,19 +507,21 @@ function Checkout({
             >
               Continue Shopping
             </button>
-            <button
-              type="button"
-              className="checkout-page__signin-btn"
-              onClick={() => {
-                if (typeof onSignInClick === "function") {
-                  onSignInClick();
-                } else {
-                  setSelectedOption("sign-in");
-                }
-              }}
-            >
-              Sign In
-            </button>
+            {!isSignedIn && (
+              <button
+                type="button"
+                className="checkout-page__signin-btn"
+                onClick={() => {
+                  if (typeof onSignInClick === "function") {
+                    onSignInClick();
+                  } else {
+                    setSelectedOption("sign-in");
+                  }
+                }}
+              >
+                Sign In
+              </button>
+            )}
             {/* lines 270-275 Hides the Checkout when you remove item from a cart */}
             {cartItems.length > 0 && (
               <button
@@ -676,6 +679,7 @@ function Checkout({
               </button>
             </div>
 
+            {ratesLoading && <p role="status">Loading shipping rates...</p>}
             {ratesError && <p role="alert">{ratesError}</p>}
             {shippingRates.length > 0 && (
               <div className="checkout-page__shipping-rates">
@@ -694,6 +698,7 @@ function Checkout({
                         <input
                           id={`rate-${rate.rateId}`}
                           type="radio"
+                          className="checkout-page__shipping-radio-btn"
                           name="shippingRate"
                           value={rate.rateId}
                           checked={selectedRateCode === rate.rateId}

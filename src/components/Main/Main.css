@@ -67,3 +67,21 @@
 .main__page {
   background: rgb(250 248 245 / 80%);
 }
+
+@media (max-width: 700px) {
+  .store-logo__image-arrow {
+    width: 36px;
+    height: 36px;
+    opacity: 0.8;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .store-logo__image-arrow_left {
+    left: 8px;
+  }
+
+  .store-logo__image-arrow_right {
+    right: 8px;
+  }
+}

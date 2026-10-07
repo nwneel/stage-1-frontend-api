@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useForm } from "../../hooks/useForm";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 
-const ForgetPassword = ({ isOpen, onClose, onSubmit, onSignInClick }) => {
+const ForgetPassword = ({ isOpen, onClose, onSubmit }) => {
   const defaultValues = {
     email: "",
   };
@@ -27,13 +27,6 @@ const ForgetPassword = ({ isOpen, onClose, onSubmit, onSignInClick }) => {
   const handleSubmit = () => {
     if (typeof onSubmit === "function") {
       onSubmit(values);
-    }
-  };
-
-  const handleSignInClick = () => {
-    onClose();
-    if (typeof onSignInClick === "function") {
-      onSignInClick();
     }
   };
 

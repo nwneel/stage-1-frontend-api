@@ -20,9 +20,7 @@ function Header({
   showCartButton,
   searchSuggestions,
   searchTerm,
-  onAccountClick,
   onOrdersClick,
-  onWishListClick,
   onLogOutClick,
 }) {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
@@ -346,26 +344,10 @@ function Header({
               <ul className="header__user-menu-list">
                 <li>
                   <button
-                    onClick={() => handleUserMenuSelect(onAccountClick)}
-                    type="button"
-                  >
-                    Account
-                  </button>
-                </li>
-                <li>
-                  <button
                     onClick={() => handleUserMenuSelect(onOrdersClick)}
                     type="button"
                   >
                     Orders
-                  </button>
-                </li>
-                <li>
-                  <button
-                    onClick={() => handleUserMenuSelect(onWishListClick)}
-                    type="button"
-                  >
-                    Wish List
                   </button>
                 </li>
                 <li>

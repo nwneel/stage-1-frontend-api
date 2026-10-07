@@ -154,3 +154,25 @@
 .item-card__new-arrivals-products {
   padding-bottom: 64px;
 }
+
+.item-card__new-arrivals-cards {
+  max-width: calc(100% - 32px);
+}
+
+@media (hover: none) {
+  .item-card__cart-controls {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+@media (max-width: 480px) {
+  .item-card__new-arrivals-header {
+    max-width: calc(100% - 32px);
+  }
+
+  .item-card__new-arrival-image {
+    height: auto;
+    aspect-ratio: 1;
+  }
+}

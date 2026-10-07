@@ -175,3 +175,21 @@
 .cart-modal__continue-btn:hover {
   color: #000000;
 }
+
+.cart-modal__item-info {
+  min-width: 0;
+}
+
+.cart-modal__item-name {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 400px) {
+  .cart-modal__item {
+    flex-wrap: wrap;
+  }
+
+  .cart-modal__checkout-btn {
+    min-width: 0;
+  }
+}

@@ -133,3 +133,50 @@
   text-transform: uppercase;
   letter-spacing: 0.25em;
 }
+
+@media (max-width: 1279px) {
+  .footer {
+    height: auto;
+    min-height: 468px;
+    padding-bottom: 32px;
+  }
+
+  .footer__discount {
+    flex-wrap: wrap;
+    gap: 8px 24px;
+  }
+
+  .footer__discount-email {
+    margin-left: 0;
+    min-width: 0;
+    width: 100%;
+    flex: 1;
+  }
+
+  .footer__discount-form {
+    flex: 1 1 280px;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .footer {
+    gap: 0;
+  }
+
+  .footer__information {
+    margin-left: 0;
+    padding: 0 16px;
+    width: 100%;
+  }
+
+  .footer__contact-info {
+    flex-wrap: wrap;
+    gap: 0 48px;
+    margin-top: 32px;
+  }
+
+  .footer__discount-title {
+    margin: 16px 0 0;
+  }
+}

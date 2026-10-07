@@ -15,3 +15,26 @@
   align-items: center;
   justify-content: center;
 }
+
+.store-logo__text {
+  box-sizing: border-box;
+  max-width: 100%;
+  overflow-wrap: break-word;
+  padding: 0 16px;
+}
+
+@media (max-width: 900px) {
+  .store-logo__text {
+    font-size: 44px;
+    height: auto;
+    min-height: 88px;
+    line-height: 1.2;
+    padding: 12px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .store-logo__text {
+    font-size: 32px;
+  }
+}

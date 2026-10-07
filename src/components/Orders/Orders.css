@@ -1,0 +1,133 @@
+.orders {
+  background: rgb(250 248 245 / 80%);
+  display: flex;
+  justify-content: center;
+  padding: 2rem 1rem 4rem;
+}
+
+.orders__container {
+  width: min(900px, 100%);
+  text-align: center;
+}
+
+.orders__title {
+  font-size: clamp(1.75rem, 3vw, 2.4rem);
+  margin: 0 0 1.5rem;
+}
+
+.orders__empty {
+  color: #6b7280;
+  margin: 0 0 1rem;
+}
+
+.orders__button {
+  background: #333;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  padding: 10px 20px;
+}
+
+.orders__list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.orders__order {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+.orders__header {
+  align-items: flex-start;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  justify-content: space-between;
+}
+
+.orders__number {
+  font-size: 1.1rem;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.orders__date {
+  color: #6b7280;
+  margin: 4px 0 0;
+}
+
+.orders__total {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.orders__items {
+  border-bottom: 1px solid #e5e7eb;
+  border-top: 1px solid #e5e7eb;
+  list-style: none;
+  margin: 1rem 0;
+  padding: 0.5rem 0;
+}
+
+.orders__item {
+  align-items: center;
+  display: grid;
+  gap: 0.25rem 1rem;
+  grid-template-columns: 64px minmax(0, 1fr) auto auto;
+  padding: 0.5rem 0;
+}
+
+.orders__item-image {
+  background: #fff;
+  border-radius: 8px;
+  height: 64px;
+  object-fit: contain;
+  width: 64px;
+}
+
+.orders__item-name {
+  overflow-wrap: anywhere;
+}
+
+.orders__item-meta {
+  color: #6b7280;
+}
+
+.orders__item-total {
+  font-weight: 600;
+}
+
+.orders__details {
+  color: #374151;
+  margin: 0 0 0.5rem;
+  overflow-wrap: anywhere;
+}
+
+.orders__details_total {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 0;
+}
+
+@media (max-width: 600px) {
+  .orders__item {
+    grid-template-columns: 64px minmax(0, 1fr) auto;
+  }
+
+  .orders__item-image {
+    grid-row: 1 / span 2;
+  }
+
+  .orders__item-meta {
+    grid-column: 2;
+    grid-row: 2;
+  }
+}

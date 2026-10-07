@@ -157,7 +157,7 @@ function ProductList({
         <StoreLogo />
         <section className="store-logo__name">
           <p className="store-logo__text">
-            Nate's Books, Games, Toys, and Hobby Store
+            Nate&apos;s Books, Games, Toys, and Hobby Store
           </p>
         </section>
         <div className="product-list-page__navigation">
@@ -245,7 +245,7 @@ function ProductList({
               </ul>
             ) : (
               <div className="product-list-page__empty">
-                <p>No products currently available in "{categoryName}".</p>
+                <p>No products currently available in &quot;{categoryName}&quot;.</p>
                 <button
                   type="button"
                   className="product-list-page__home-btn"

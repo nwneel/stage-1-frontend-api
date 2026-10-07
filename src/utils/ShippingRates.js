@@ -12,7 +12,9 @@ for (let a = 65; a <= 90; a++)
     try {
       const n = names.of(code);
       if (n && n !== code) countryCodes[n.toLowerCase()] = code;
-    } catch {}
+    } catch {
+      // Intl.DisplayNames throws for codes it doesn't recognize; skip them
+    }
   }
 Object.assign(countryCodes, {
   "united states": "US",

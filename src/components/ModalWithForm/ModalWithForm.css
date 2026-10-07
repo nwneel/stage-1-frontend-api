@@ -19,7 +19,10 @@
   max-width: 420px;
   padding: 24px;
   position: relative;
-  width: calc(100% - 48px);
+  width: calc(100% - 32px);
+  max-height: calc(100vh - 32px);
+  overflow-y: auto;
+  box-sizing: border-box;
   border-radius: 10px;
 }
 
@@ -31,14 +34,19 @@
 }
 
 .modal__close {
-  top: 20px;
-  right: 28px;
-  width: 20px;
-  height: 20px;
-  background: transparent url(../../closebutton.png) 50% no-repeat;
-  position: absolute;
-  border-style: none;
+  align-items: center;
+  background: transparent;
+  border: 0;
   cursor: pointer;
+  display: flex;
+  height: 32px;
+  justify-content: center;
+  padding: 0;
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  width: 32px;
+  z-index: 1;
 }
 
 .modal__signup-button {
@@ -88,6 +96,7 @@
 }
 
 .modal__close img {
+  display: block;
   height: 20px;
   width: 20px;
   cursor: pointer;

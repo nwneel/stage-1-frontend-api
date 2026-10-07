@@ -242,3 +242,60 @@
 .product-list-page__home-btn:hover {
   background-color: #555;
 }
+
+@media (max-width: 1279px) {
+  .product-list-page__franchise {
+    padding-top: 16px;
+  }
+
+  .product-list-page__franchise-title {
+    margin-left: 0;
+  }
+
+  .product-list-page__controls {
+    margin-left: 0;
+    padding-top: 16px;
+    transform: none;
+  }
+
+  .product-list-page__navigation {
+    justify-content: flex-start;
+  }
+
+  .product-list-page__content {
+    flex-direction: column;
+  }
+
+  .product-list-page__franchise-list {
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 0 0 16px;
+  }
+
+  .product-list-page__content > div:nth-child(2) {
+    flex: none;
+    width: 100%;
+  }
+}
+
+@media (max-width: 800px) {
+  .product-list-page__cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .product-list-page__cards {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .product-list-page__controls,
+  .product-list-page__control-group {
+    width: 100%;
+  }
+
+  .product-list-page__control-group {
+    flex-wrap: wrap;
+  }
+}

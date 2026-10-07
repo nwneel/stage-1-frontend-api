@@ -25,4 +25,4 @@ Vite starts the development server on port 3000 and opens the app in your browse
 
 The production build deploys the frontend only. Features that call an API (such as authentication, shipping rates, or email) also require their API service to be deployed and the frontend's API URLs configured for that service.
 
-Deployment Link: ;
+Deployment Link: https://nwneel.github.io/stage-1-frontend-api/;

@@ -10,8 +10,8 @@ import shoppingCart from "../../assets/Shopping cart.png";
 function Main({ onAddToCart, onProductSelect }) {
   // Lines 8-14 helps make the images change when clicked
   const [imageIndex, setImageIndex] = useState(0);
-  const [sortOrder, setSortOrder] = useState("default");
-  const [displayCount, setDisplayCount] = useState("all");
+  const sortOrder = "default";
+  const displayCount = "all";
   const [currentPage, setCurrentPage] = useState(1);
 
   function handleImageClick() {
@@ -64,7 +64,7 @@ function Main({ onAddToCart, onProductSelect }) {
       <StoreLogo />
       <section className="store-logo__name">
         <p className="store-logo__text">
-          Nate's Books, Games, Toys, and Hobby Store
+          Nate&apos;s Books, Games, Toys, and Hobby Store
         </p>
       </section>
       <section className="store-logo__image-section">

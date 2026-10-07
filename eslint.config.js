@@ -35,10 +35,13 @@ export default [
       ],
       "react/prop-types": 0,
     },
-    overrides: [
-      {
-        files: ["*.js", "*.jsx"],
-      },
-    ],
+  },
+  {
+    files: ["src/utils/ShippingRates.js"],
+    languageOptions: {
+      globals: globals.node,
+      sourceType: "commonjs",
+      parserOptions: { sourceType: "commonjs" },
+    },
   },
 ];
