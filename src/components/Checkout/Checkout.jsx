@@ -310,7 +310,7 @@ function Checkout({
       customer: { ...shippingInfo },
       address: { ...values },
     });
-    if (typeof onOrderComplete === "function") onOrderComplete();
+    if (typeof onOrderComplete === "function") onOrderComplete(cartItems);
   };
 
   if (completedOrder) {

@@ -19,6 +19,7 @@ import {
   allProducts,
   getProductsByCategory,
   getProductsByFranchise,
+  reduceProductStock,
 } from "../../utils/constants";
 
 const productNewArrivalPage = defaultNewArrivals.find(
@@ -386,7 +387,10 @@ function App() {
         {isCheckoutPage ? (
           <Checkout
             cartItems={cartItems}
-            onOrderComplete={() => setCartItems([])}
+            onOrderComplete={(purchasedItems) => {
+              reduceProductStock(purchasedItems);
+              setCartItems([]);
+            }}
             onBack={handleCheckoutBack}
             onSignInClick={() => setIsSignInOpen(true)}
             isSignedIn={isSignedIn}

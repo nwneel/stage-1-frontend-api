@@ -7,6 +7,7 @@ import shoppingCart from "../../assets/Shopping cart.png";
 const franchises = [
   "Batman",
   "Blade Runner",
+  "Cyberpunk",
   "Doom",
   "Fallout",
   "Halo",

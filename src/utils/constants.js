@@ -487,8 +487,7 @@ export const defaultProductLists = withProductStock([
   {
     _id: "dom-pedro",
     name: "Dom Pedro Pistol Fallout 76 Replica Foam Video Games Props TV show",
-    description:
-      "18 inch (45.72cm) overall 13 inch (33.02cm) stainless bowie blade. Laminated hardwood handles with stainless guard and pommel. Black cord lanyard. Blade features anti-glare sighting slot. Top grain leather sheath with leg tie. Officially licensed reproduction.",
+    description: "Foam Dom Pedro Pistol from Fallout 76.",
     category: "anime",
     image: "https://i.ebayimg.com/images/g/RokAAeSwhLRqAT9C/s-l1600.webp",
     images: [
@@ -496,7 +495,7 @@ export const defaultProductLists = withProductStock([
       "https://i.ebayimg.com/images/g/0ZUAAeSw-7BqAT9C/s-l1600.webp",
     ],
     stock: 10,
-    price: 245.55,
+    price: 49.99,
     dimensions: {
       length: 14,
       height: 12,
@@ -579,6 +578,30 @@ export const defaultProductLists = withProductStock([
       ounces: 16,
     },
   },
+  {
+    _id: "cyberpunk-foam-gun",
+    name: "10.5” Cyberpunk 2077 - M-10AF Lexington Replica Cosplay Costume Game Prop",
+    description:
+      "The 10.5” Cyberpunk 2077 M-10AF Lexington Replica is a detailed gun prop designed for cosplay or display. Inspired by the popular video game series, Cyberpunk, this replica features the character of the Courier and is part of the Cyberpunk product line. Made with foam for safety and accuracy, this replica is a must-have for fans of the game looking to add a piece of their favorite virtual world to their collection. The United States-made replica captures the essence of the M-10AF model from the game with precision and authenticity.",
+    category: "Cyberpunk, Anime",
+    image: "https://i.ebayimg.com/images/g/cqUAAeSwkWxpknvW/s-l1600.webp",
+
+    images: [
+      "https://i.ebayimg.com/images/g/cqUAAeSwkWxpknvW/s-l1600.webp",
+      "https://i.ebayimg.com/images/g/iQ8AAeSwxbJpknvV/s-l1600.webp",
+      "https://i.ebayimg.com/images/g/fJoAAeSwR-xpknvV/s-l1600.webp",
+    ],
+    stock: 20,
+    price: 37.95,
+    dimensions: {
+      length: 14,
+      height: 12,
+      width: 9,
+    },
+    weight: {
+      ounces: 32,
+    },
+  },
 ]);
 
 export const allProducts = Array.from(
@@ -588,6 +611,32 @@ export const allProducts = Array.from(
     ),
   ).values(),
 );
+
+// Product records are shared module data, so update every copy with the same id.
+export function reduceProductStock(purchasedItems = []) {
+  const catalogs = [
+    defaultProductItems,
+    defaultNewArrivals,
+    defaultProductLists,
+    allProducts,
+  ];
+  purchasedItems.forEach(({ _id, quantity }) => {
+    const amount = Math.max(0, Math.floor(Number(quantity) || 0));
+    const updatedProducts = new Set();
+    catalogs.forEach((catalog) =>
+      catalog.forEach((product) => {
+        if (product._id !== _id || updatedProducts.has(product)) return;
+        updatedProducts.add(product);
+        product.stock = Math.max(
+          0,
+          (Number.isInteger(product.stock)
+            ? product.stock
+            : DEFAULT_PRODUCT_STOCK) - amount,
+        );
+      }),
+    );
+  });
+}
 
 export function getProductsByCategory(categoryName) {
   if (!categoryName) return [];
