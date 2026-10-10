@@ -28,6 +28,22 @@ const productNewArrivalPage = defaultNewArrivals.find(
 );
 const productNewArrivalPagePath = "/products";
 const ORDERS_STORAGE_KEY = "orders";
+const CART_STORAGE_KEY = "cartItems";
+const AUTH_STORAGE_KEY = "isSignedIn";
+
+// Each `npm run dev` start begins signed out with an empty cart.
+/* global __DEV_SERVER_ID__ */
+if (import.meta.env.DEV) {
+  try {
+    if (localStorage.getItem("devServerId") !== __DEV_SERVER_ID__) {
+      localStorage.removeItem(AUTH_STORAGE_KEY);
+      localStorage.removeItem(CART_STORAGE_KEY);
+      localStorage.setItem("devServerId", __DEV_SERVER_ID__);
+    }
+  } catch (error) {
+    console.error("Failed to reset dev session.", error);
+  }
+}
 
 function loadOrders() {
   try {
@@ -38,13 +54,25 @@ function loadOrders() {
   }
 }
 
+function loadCartItems() {
+  try {
+    const stored = JSON.parse(localStorage.getItem(CART_STORAGE_KEY));
+    return Array.isArray(stored) ? stored : [];
+  } catch (error) {
+    console.error("Failed to load cart items from local storage.", error);
+    return [];
+  }
+}
+
 function App() {
   const [orders, setOrders] = useState(loadOrders);
   const [isOrdersPage, setIsOrdersPage] = useState(false);
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState(loadCartItems);
   const [isSignInOpen, setIsSignInOpen] = useState(false);
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
-  const [isSignedIn, setIsSignedIn] = useState(false);
+  const [isSignedIn, setIsSignedIn] = useState(
+    () => localStorage.getItem(AUTH_STORAGE_KEY) === "true",
+  );
   const [isForgetPasswordOpen, setIsForgetPasswordOpen] = useState(false);
   const [isEmptyCartOpen, setIsEmptyCartOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -57,6 +85,14 @@ function App() {
   const [isShippingPage, setIsShippingPage] = useState(false);
   const [isCheckoutPage, setIsCheckoutPage] = useState(false);
   const [shouldReturnToCheckout, setShouldReturnToCheckout] = useState(false);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cartItems));
+    } catch (error) {
+      console.error("Failed to save cart items to local storage.", error);
+    }
+  }, [cartItems]);
 
   useEffect(() => {
     function handlePopState() {
@@ -399,6 +435,7 @@ function App() {
 
   function handleSignInSubmit() {
     setIsSignInOpen(false);
+    localStorage.setItem(AUTH_STORAGE_KEY, "true");
     setIsSignedIn(true);
 
     if (shouldReturnToCheckout) {
@@ -422,6 +459,9 @@ function App() {
   }
 
   function handleLogOutClick() {
+    localStorage.removeItem(AUTH_STORAGE_KEY);
+    localStorage.removeItem(ORDERS_STORAGE_KEY);
+    setOrders([]);
     setIsSignedIn(false);
     handleBackToHome();
   }

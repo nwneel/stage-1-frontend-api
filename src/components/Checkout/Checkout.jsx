@@ -207,6 +207,11 @@ function Checkout({
   const selectedRate = shippingRates.find(
     (rate) => rate.rateId === selectedRateCode,
   );
+  const orderedShippingRates = [...shippingRates].sort(
+    (a, b) =>
+      Number((b.serviceCode || "").toLowerCase().startsWith("usps")) -
+      Number((a.serviceCode || "").toLowerCase().startsWith("usps")),
+  );
   const shippingCost = selectedRate
     ? (selectedRate.shipmentCost || 0) + (selectedRate.otherCost || 0)
     : 0;
@@ -254,15 +259,11 @@ function Checkout({
     setSelectionError("");
 
     try {
-      const rates = await getShippingRates({ ...values, cartItems });
-      const availableRates = containsSwordOrKatana
-        ? rates.filter(
-            (rate) =>
-              !/envelope/i.test(
-                `${rate.serviceName || ""} ${rate.packageName || ""} ${rate.packageCode || ""}`,
-              ),
-          )
-        : rates;
+      const availableRates = await getShippingRates({
+        ...values,
+        cartItems,
+        excludeEnvelopes: containsSwordOrKatana,
+      });
       setShippingRates(availableRates);
       if (availableRates.length === 0) {
         setRatesError("No shipping options were found for this address.");
@@ -686,7 +687,7 @@ function Checkout({
                 <h2 className="checkout-page__shipping-title">
                   Shipping Options
                 </h2>
-                {shippingRates.map((rate) => {
+                {orderedShippingRates.map((rate) => {
                   const cost = (rate.shipmentCost || 0) + (rate.otherCost || 0);
                   return (
                     <label
