@@ -1,0 +1,195 @@
+.cart-modal__title {
+  margin: 0;
+  font-family: Cabinet Grotesk;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 700;
+}
+
+.cart-modal__items {
+  margin-top: 20px;
+  max-height: 240px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-right: 4px;
+}
+
+.cart-modal__item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.cart-modal__item-image {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  border-radius: 6px;
+  background-color: #f7f7f7;
+}
+
+.cart-modal__item-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cart-modal__item-name {
+  margin: 0;
+  font-family: Cabinet Grotesk;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 18px;
+  color: #000000;
+}
+
+.cart-modal__item-details {
+  margin: 0;
+  font-family: Cabinet Grotesk;
+  font-size: 13px;
+  font-weight: 500;
+  color: #6b6b6b;
+}
+
+.cart-modal__quantity {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.cart-modal__quantity-btn {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1px solid #d5d5d5;
+  background-color: #ffffff;
+  color: #000000;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.cart-modal__quantity-btn:hover {
+  background-color: #f0f0f0;
+}
+
+.cart-modal__quantity-value {
+  min-width: 16px;
+  text-align: center;
+  font-family: Cabinet Grotesk;
+  font-size: 13px;
+  font-weight: 700;
+  color: #000000;
+}
+
+.cart-modal__item-cost {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cart-modal__item-total {
+  font-family: Cabinet Grotesk;
+  font-size: 14px;
+  font-weight: 700;
+  color: #000000;
+}
+
+.cart-modal__remove-btn {
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  line-height: 1;
+  color: #999999;
+  cursor: pointer;
+  padding: 0 4px;
+}
+
+.cart-modal__remove-btn:hover {
+  color: #000000;
+}
+
+.cart-modal__summary {
+  margin-top: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 12px;
+  border-top: 2px solid #000000;
+}
+
+.cart-modal__summary-label {
+  font-family: Cabinet Grotesk;
+  font-size: 16px;
+  font-weight: 700;
+  color: #000000;
+}
+
+.cart-modal__summary-value {
+  font-family: Cabinet Grotesk;
+  font-size: 18px;
+  font-weight: 700;
+  color: #000000;
+}
+
+.cart-modal__checkout-btn {
+  width: auto;
+  min-width: 140px;
+  padding: 0 16px;
+  height: 36px;
+  background-color: #000000;
+  color: #ffffff;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-family: Cabinet Grotesk;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.cart-modal__checkout-btn:hover {
+  opacity: 0.85;
+}
+
+.cart-modal__continue-btn {
+  border: none;
+  background: transparent;
+  color: #6b6b6b;
+  font-family: Cabinet Grotesk;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 8px 12px;
+}
+
+.cart-modal__continue-btn:hover {
+  color: #000000;
+}
+
+.cart-modal__item-info {
+  min-width: 0;
+}
+
+.cart-modal__item-name {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 400px) {
+  .cart-modal__item {
+    flex-wrap: wrap;
+  }
+
+  .cart-modal__checkout-btn {
+    min-width: 0;
+  }
+}

@@ -1,0 +1,87 @@
+.store-logo__image-section {
+  background-color: #fff;
+  padding: 0;
+  width: 100%;
+}
+
+.store-logo__image-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.store-logo__product-image {
+  cursor: pointer;
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: fill;
+}
+
+.store-logo__image-arrow {
+  align-items: center;
+  background: gray;
+  border: 0;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  padding: 8px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  box-sizing: border-box;
+  width: 48px;
+  height: 48px;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.2s ease,
+    visibility 0.2s ease;
+  pointer-events: none;
+}
+
+.store-logo__image-container:hover .store-logo__image-arrow,
+.store-logo__image-arrow:focus-visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.store-logo__image-arrow_left {
+  left: 16px;
+}
+
+.store-logo__image-arrow_right {
+  right: 16px;
+}
+
+.store-logo__image-arrow img {
+  display: block;
+  object-fit: contain;
+}
+
+.main__page {
+  background: rgb(250 248 245 / 80%);
+}
+
+@media (max-width: 700px) {
+  .store-logo__image-arrow {
+    width: 36px;
+    height: 36px;
+    opacity: 0.8;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .store-logo__image-arrow_left {
+    left: 8px;
+  }
+
+  .store-logo__image-arrow_right {
+    right: 8px;
+  }
+}
