@@ -240,6 +240,13 @@ function Checkout({
   const handleSubmitOrder = async (e) => {
     e.preventDefault();
 
+    if (!isSignedIn) {
+      if (typeof onSignInClick === "function") {
+        onSignInClick();
+      }
+      return;
+    }
+
     setRatesLoading(true);
     setRatesError("");
     setShippingRates([]);
@@ -291,6 +298,13 @@ function Checkout({
     }
   };
   const handleCompleteOrder = () => {
+    if (!isSignedIn) {
+      if (typeof onSignInClick === "function") {
+        onSignInClick();
+      }
+      return;
+    }
+
     if (!selectedRate) {
       setSelectionError("Please select a shipping option");
       return;
@@ -507,31 +521,19 @@ function Checkout({
             >
               Continue Shopping
             </button>
-            {!isSignedIn && (
-              <button
-                type="button"
-                className="checkout-page__signin-btn"
-                onClick={() => {
-                  if (typeof onSignInClick === "function") {
-                    onSignInClick();
-                  } else {
-                    setSelectedOption("sign-in");
-                  }
-                }}
-              >
-                Sign In
-              </button>
-            )}
-            {/* lines 270-275 Hides the Checkout when you remove item from a cart */}
             {cartItems.length > 0 && (
               <button
                 type="button"
                 className="checkout-page__submit-btn"
-                onClick={() =>
-                  setSelectedOption(isSignedIn ? "sign-in" : "guest")
-                }
+                onClick={() => {
+                  if (isSignedIn) {
+                    setSelectedOption("sign-in");
+                  } else if (typeof onSignInClick === "function") {
+                    onSignInClick();
+                  }
+                }}
               >
-                {isSignedIn ? "Continue to Checkout" : "Checkout as a Guest"}
+                {isSignedIn ? "Continue to Checkout" : "Sign In to Checkout"}
               </button>
             )}
           </div>
@@ -541,9 +543,7 @@ function Checkout({
             onSubmit={handleSubmitOrder}
           >
             <h2 className="checkout-page__shipping-title">
-              {selectedOption === "sign-in"
-                ? "Shipping Information"
-                : "Guest Shipping Information"}
+              Shipping Information
             </h2>
 
             <div className="checkout-page__field-group">

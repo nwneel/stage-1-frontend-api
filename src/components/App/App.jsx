@@ -56,6 +56,7 @@ function App() {
   const [isAboutPage, setIsAboutPage] = useState(false);
   const [isShippingPage, setIsShippingPage] = useState(false);
   const [isCheckoutPage, setIsCheckoutPage] = useState(false);
+  const [shouldReturnToCheckout, setShouldReturnToCheckout] = useState(false);
 
   useEffect(() => {
     function handlePopState() {
@@ -121,6 +122,13 @@ function App() {
         setSelectedCategory(null);
         setSelectedFranchise(null);
       } else if (pathname === "/checkout") {
+        if (!isSignedIn) {
+          window.history.replaceState({}, "", "/");
+          setIsCheckoutPage(false);
+          setShouldReturnToCheckout(true);
+          setIsSignInOpen(true);
+          return;
+        }
         setIsAboutPage(false);
         setIsShippingPage(false);
         setIsCheckoutPage(true);
@@ -140,7 +148,7 @@ function App() {
     handlePopState();
     window.addEventListener("popstate", handlePopState);
     return () => window.removeEventListener("popstate", handlePopState);
-  }, []);
+  }, [isSignedIn]);
 
   function handleCategorySelect(categoryName) {
     setIsOrdersPage(false);
@@ -392,6 +400,25 @@ function App() {
   function handleSignInSubmit() {
     setIsSignInOpen(false);
     setIsSignedIn(true);
+
+    if (shouldReturnToCheckout) {
+      setShouldReturnToCheckout(false);
+      setIsOrdersPage(false);
+      window.history.pushState({}, "", "/checkout");
+      setIsCheckoutPage(true);
+      setSelectedCategory(null);
+      setSelectedProduct(null);
+      setIsAboutPage(false);
+      setIsShippingPage(false);
+      setSearchTerm("");
+      setIsSearchSubmitted(false);
+      window.scrollTo(0, 0);
+    }
+  }
+
+  function handleCheckoutSignInClick() {
+    setShouldReturnToCheckout(true);
+    setIsSignInOpen(true);
   }
 
   function handleLogOutClick() {
@@ -413,6 +440,12 @@ function App() {
       return;
     }
 
+    if (!isSignedIn) {
+      setIsCartOpen(false);
+      handleCheckoutSignInClick();
+      return;
+    }
+
     setIsCartOpen(false);
     setIsOrdersPage(false);
     window.history.pushState({}, "", "/checkout");
@@ -431,7 +464,10 @@ function App() {
       <div className="app__content">
         <Header
           cartQuantity={cartQuantity}
-          onSignInClick={() => setIsSignInOpen(true)}
+          onSignInClick={() => {
+            setShouldReturnToCheckout(false);
+            setIsSignInOpen(true);
+          }}
           onSignUpClick={() => setIsSignUpOpen(true)}
           isSignedIn={isSignedIn}
           onCartClick={handleCartClick}
@@ -452,7 +488,7 @@ function App() {
             cartItems={cartItems}
             onOrderComplete={handleOrderComplete}
             onBack={handleCheckoutBack}
-            onSignInClick={() => setIsSignInOpen(true)}
+            onSignInClick={handleCheckoutSignInClick}
             isSignedIn={isSignedIn}
             onUpdateQuantity={(itemId, quantity) =>
               handleUpdateCartItemQuantity(itemId, quantity, {
@@ -515,7 +551,10 @@ function App() {
       </div>
       <SignIn
         isOpen={isSignInOpen}
-        onClose={() => setIsSignInOpen(false)}
+        onClose={() => {
+          setShouldReturnToCheckout(false);
+          setIsSignInOpen(false);
+        }}
         onSubmit={handleSignInSubmit}
         onSignUpClick={() => {
           setIsSignInOpen(false);
