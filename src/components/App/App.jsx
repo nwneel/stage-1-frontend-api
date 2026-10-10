@@ -14,6 +14,7 @@ import About from "../About/About";
 import ShippingAndReturns from "../ShippingAndReturns/ShippingAndReturns";
 import Checkout from "../Checkout/Checkout";
 import Orders from "../Orders/Orders";
+import Profile from "../Profile/Profile";
 import {
   DEFAULT_PRODUCT_STOCK,
   defaultNewArrivals,
@@ -28,6 +29,7 @@ const productNewArrivalPage = defaultNewArrivals.find(
 );
 const productNewArrivalPagePath = "/products";
 const ORDERS_STORAGE_KEY = "orders";
+const PROFILE_STORAGE_KEY = "profile";
 const CART_STORAGE_KEY = "cartItems";
 const AUTH_STORAGE_KEY = "isSignedIn";
 
@@ -54,6 +56,19 @@ function loadOrders() {
   }
 }
 
+function loadProfile() {
+  try {
+    const stored = JSON.parse(localStorage.getItem(PROFILE_STORAGE_KEY));
+    return {
+      username: typeof stored?.username === "string" ? stored.username : "",
+      email: typeof stored?.email === "string" ? stored.email : "",
+    };
+  } catch (error) {
+    console.error("Failed to load profile from local storage.", error);
+    return { username: "", email: "" };
+  }
+}
+
 function loadCartItems() {
   try {
     const stored = JSON.parse(localStorage.getItem(CART_STORAGE_KEY));
@@ -66,7 +81,9 @@ function loadCartItems() {
 
 function App() {
   const [orders, setOrders] = useState(loadOrders);
+  const [profile, setProfile] = useState(loadProfile);
   const [isOrdersPage, setIsOrdersPage] = useState(false);
+  const [isProfilePage, setIsProfilePage] = useState(false);
   const [cartItems, setCartItems] = useState(loadCartItems);
   const [isSignInOpen, setIsSignInOpen] = useState(false);
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
@@ -98,7 +115,23 @@ function App() {
     function handlePopState() {
       const pathname = window.location.pathname;
       setIsOrdersPage(pathname === "/orders");
-      if (pathname === "/orders") {
+      setIsProfilePage(pathname === "/profile" && isSignedIn);
+      if (pathname === "/profile") {
+        if (!isSignedIn) {
+          window.history.replaceState({}, "", "/");
+          setIsProfilePage(false);
+          setIsAboutPage(false);
+          setIsShippingPage(false);
+          setIsCheckoutPage(false);
+          return;
+        }
+        setIsAboutPage(false);
+        setIsShippingPage(false);
+        setIsCheckoutPage(false);
+        setSelectedCategory(null);
+        setSelectedFranchise(null);
+        setSelectedProduct(null);
+      } else if (pathname === "/orders") {
         setIsAboutPage(false);
         setIsShippingPage(false);
         setIsCheckoutPage(false);
@@ -188,6 +221,7 @@ function App() {
 
   function handleCategorySelect(categoryName) {
     setIsOrdersPage(false);
+    setIsProfilePage(false);
     const path = `/category/${encodeURIComponent(categoryName)}`;
     window.history.pushState({}, "", path);
     setSelectedCategory(categoryName);
@@ -203,6 +237,7 @@ function App() {
 
   function handleFranchiseSelect(franchiseName) {
     setIsOrdersPage(false);
+    setIsProfilePage(false);
     const path = `/franchise/${encodeURIComponent(franchiseName)}`;
     window.history.pushState({}, "", path);
     setSelectedFranchise(franchiseName);
@@ -217,6 +252,7 @@ function App() {
 
   function handleBackToHome() {
     setIsOrdersPage(false);
+    setIsProfilePage(false);
     window.history.pushState({}, "", "/");
     setSelectedCategory(null);
     setSelectedFranchise(null);
@@ -231,6 +267,7 @@ function App() {
 
   function handleAboutClick() {
     setIsOrdersPage(false);
+    setIsProfilePage(false);
     window.history.pushState({}, "", "/about-us");
     setIsAboutPage(true);
     setIsShippingPage(false);
@@ -244,6 +281,7 @@ function App() {
 
   function handleShippingClick() {
     setIsOrdersPage(false);
+    setIsProfilePage(false);
     window.history.pushState({}, "", "/shipping-and-returns");
     setIsShippingPage(true);
     setIsAboutPage(false);
@@ -263,6 +301,7 @@ function App() {
   function handleOrdersClick() {
     window.history.pushState({}, "", "/orders");
     setIsOrdersPage(true);
+    setIsProfilePage(false);
     setIsAboutPage(false);
     setIsShippingPage(false);
     setIsCheckoutPage(false);
@@ -272,6 +311,26 @@ function App() {
     setSearchTerm("");
     setIsSearchSubmitted(false);
     window.scrollTo(0, 0);
+  }
+
+  function handleProfileClick() {
+    window.history.pushState({}, "", "/profile");
+    setIsProfilePage(true);
+    setIsOrdersPage(false);
+    setIsAboutPage(false);
+    setIsShippingPage(false);
+    setIsCheckoutPage(false);
+    setSelectedCategory(null);
+    setSelectedFranchise(null);
+    setSelectedProduct(null);
+    setSearchTerm("");
+    setIsSearchSubmitted(false);
+    window.scrollTo(0, 0);
+  }
+
+  function handleProfileSave(updatedProfile) {
+    localStorage.setItem(PROFILE_STORAGE_KEY, JSON.stringify(updatedProfile));
+    setProfile(updatedProfile);
   }
 
   function handleOrderComplete(purchasedItems, order) {
@@ -301,6 +360,7 @@ function App() {
   function handleSearchSubmit() {
     if (!searchTerm.trim()) return;
     setIsOrdersPage(false);
+    setIsProfilePage(false);
     setSelectedCategory(null);
     setSelectedProduct(null);
     setIsSearchSubmitted(true);
@@ -309,6 +369,7 @@ function App() {
 
   function handleProductSelect(product) {
     setIsOrdersPage(false);
+    setIsProfilePage(false);
     const path =
       product._id === productNewArrivalPage._id
         ? productNewArrivalPagePath
@@ -433,11 +494,25 @@ function App() {
     }
   }
 
-  function handleSignInSubmit() {
+  function handleSignInSubmit(credentials) {
     setIsSignInOpen(false);
     localStorage.setItem(AUTH_STORAGE_KEY, "true");
     setIsSignedIn(true);
+    const email = credentials.email.trim();
+    const updatedProfile =
+      profile.email.toLowerCase() === email.toLowerCase()
+        ? { ...profile, email }
+        : { username: email.split("@")[0], email };
+    try {
+      localStorage.setItem(PROFILE_STORAGE_KEY, JSON.stringify(updatedProfile));
+    } catch (error) {
+      console.error("Failed to save sign-in details to local storage.", error);
+    }
+    setProfile(updatedProfile);
+    returnToCheckoutIfNeeded();
+  }
 
+  function returnToCheckoutIfNeeded() {
     if (shouldReturnToCheckout) {
       setShouldReturnToCheckout(false);
       setIsOrdersPage(false);
@@ -466,8 +541,21 @@ function App() {
     handleBackToHome();
   }
 
-  function handleSignUpSubmit() {
+  function handleSignUpSubmit(values) {
     setIsSignUpOpen(false);
+    const updatedProfile = {
+      username: values.username.trim(),
+      email: values.email.trim(),
+    };
+    try {
+      localStorage.setItem(PROFILE_STORAGE_KEY, JSON.stringify(updatedProfile));
+    } catch (error) {
+      console.error("Failed to save sign-up details to local storage.", error);
+    }
+    setProfile(updatedProfile);
+    localStorage.setItem(AUTH_STORAGE_KEY, "true");
+    setIsSignedIn(true);
+    returnToCheckoutIfNeeded();
   }
 
   function handleForgetPasswordSubmit() {
@@ -522,6 +610,8 @@ function App() {
           searchTerm={searchTerm}
           onLogOutClick={handleLogOutClick}
           onOrdersClick={handleOrdersClick}
+          onProfileClick={handleProfileClick}
+          username={profile.username}
         />
         {isCheckoutPage ? (
           <Checkout
@@ -538,6 +628,12 @@ function App() {
             onRemoveItem={(itemId) =>
               handleRemoveCartItem(itemId, { showEmptyCartModal: false })
             }
+          />
+        ) : isProfilePage && isSignedIn ? (
+          <Profile
+            profile={profile}
+            onBack={handleBackToHome}
+            onSave={handleProfileSave}
           />
         ) : isOrdersPage && isSignedIn ? (
           <Orders orders={orders} onBack={handleBackToHome} />

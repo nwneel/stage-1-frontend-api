@@ -21,7 +21,9 @@ function Header({
   searchSuggestions,
   searchTerm,
   onOrdersClick,
+  onProfileClick,
   onLogOutClick,
+  username,
 }) {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
@@ -342,6 +344,17 @@ function Header({
             </button>
             {isUserMenuOpen && (
               <ul className="header__user-menu-list">
+                {username && (
+                  <li className="header__user-menu-username">{username}</li>
+                )}
+                <li>
+                  <button
+                    onClick={() => handleUserMenuSelect(onProfileClick)}
+                    type="button"
+                  >
+                    My Profile
+                  </button>
+                </li>
                 <li>
                   <button
                     onClick={() => handleUserMenuSelect(onOrdersClick)}

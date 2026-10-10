@@ -263,6 +263,14 @@
   z-index: 3;
 }
 
+.header__user-menu-username {
+  border-bottom: 1px solid #e5e7eb;
+  font-weight: 600;
+  margin-bottom: 6px;
+  overflow-wrap: anywhere;
+  padding: 8px 14px;
+}
+
 .header__user-menu-list button {
   background: transparent;
   border: 0;
