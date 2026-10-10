@@ -37,6 +37,10 @@ export default [
     },
   },
   {
+    files: ["vite.config.js"],
+    languageOptions: { globals: globals.node },
+  },
+  {
     files: ["src/utils/ShippingRates.js"],
     languageOptions: {
       globals: globals.node,

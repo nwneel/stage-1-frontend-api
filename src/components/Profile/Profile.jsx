@@ -68,6 +68,11 @@ function Profile({ profile, onSave, onBack }) {
               value={values.email}
             />
           </label>
+          {saveMessage && (
+            <p aria-live="polite" className="profile-page__message">
+              {saveMessage}
+            </p>
+          )}
           <div className="profile-page__actions">
             <button className="profile-page__button" type="submit">
               Save Profile
