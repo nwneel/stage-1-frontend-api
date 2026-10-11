@@ -308,11 +308,6 @@
   background-color: #333333;
 }
 
-.header__search-input {
-  flex: 1;
-  min-width: 0;
-}
-
 .header__search-suggestions {
   max-width: 100%;
 }
