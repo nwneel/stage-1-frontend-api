@@ -14,7 +14,7 @@ export default defineConfig(({ mode }) => {
   };
 
   return {
-    base: "/stage-1-frontend-api/",
+    base: mode === "development" ? "/" : "/stage-1-frontend-api/",
     plugins: [react()],
     define: {
       __DEV_SERVER_ID__: JSON.stringify(String(Date.now())),

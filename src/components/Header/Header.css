@@ -7,6 +7,17 @@
   border-bottom: 2px solid lightgrey;
 }
 
+.header-category-list-btn {
+  background: transparent;
+  border: none;
+  text-align: center;
+  cursor: pointer;
+}
+
+.header-category-list-btn:hover {
+  background: gray;
+}
+
 .header__search-form {
   align-items: center;
   display: flex;
@@ -49,7 +60,7 @@
   padding: 0 14px;
 }
 
-.header__search-button img {
+.header__search-icon {
   height: 18px;
   width: 18px;
 }
@@ -69,7 +80,7 @@
   z-index: 3;
 }
 
-.header__search-suggestions button {
+.header__search-btn {
   align-items: center;
   background: transparent;
   border: 0;
@@ -96,8 +107,8 @@
   white-space: nowrap;
 }
 
-.header__search-suggestions button:hover,
-.header__search-suggestions button:focus-visible {
+.header__search-btn:hover,
+.header__search-btn:focus-visible {
   background-color: #f1f1f1;
 }
 
@@ -143,7 +154,7 @@
   z-index: 2;
 }
 
-.header__category-list button {
+.header__category-list-btn {
   background: transparent;
   border: 0;
   cursor: pointer;
@@ -152,8 +163,8 @@
   width: 100%;
 }
 
-.header__category-list button:hover,
-.header__category-list button:focus-visible {
+.header__category-list-btn:hover,
+.header__category-list-btn:focus-visible {
   background-color: #f1f1f1;
 }
 
@@ -167,9 +178,6 @@
   display: flex;
   gap: 12px;
   margin-left: 16px;
-}
-
-.header__sign-in-up button {
   cursor: pointer;
 }
 
@@ -183,9 +191,10 @@
   background: transparent;
 }
 
-.header__check-out-btn img {
+.header__check-out-icon {
   height: 24px;
   width: 24px;
+  cursor: pointer;
 }
 
 .header__cart-quantity {
@@ -271,7 +280,7 @@
   padding: 8px 14px;
 }
 
-.header__user-menu-list button {
+.header__user-dropdown {
   background: transparent;
   border: 0;
   cursor: pointer;
@@ -280,8 +289,8 @@
   width: 100%;
 }
 
-.header__user-menu-list button:hover,
-.header__user-menu-list button:focus-visible {
+.header__user-dropdown:hover,
+.header__user-dropdown:focus-visible {
   background-color: #f1f1f1;
 }
 

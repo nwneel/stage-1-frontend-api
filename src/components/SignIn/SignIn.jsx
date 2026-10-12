@@ -15,23 +15,24 @@ const SignIn = ({
     password: "",
   };
 
-  const { values, setValues, handleChange } = useForm(defaultValues);
+  const { values, handleChange, errors, isValid, resetForm } =
+    useForm(defaultValues);
 
   useEffect(() => {
     if (!isOpen) {
-      setValues(defaultValues);
+      resetForm();
     }
-  }, [isOpen, setValues]);
+  }, [isOpen, resetForm]);
 
   useEffect(() => {
-    const handleExternalReset = () => setValues(defaultValues);
-    document.addEventListener("resetSignInForm", handleExternalReset);
+    document.addEventListener("resetSignInForm", resetForm);
     return () => {
-      document.removeEventListener("resetSignInForm", handleExternalReset);
+      document.removeEventListener("resetSignInForm", resetForm);
     };
-  }, [setValues]);
+  }, [resetForm]);
 
   const handleSubmit = () => {
+    if (!isValid) return;
     onSubmit(values);
   };
 
@@ -53,6 +54,7 @@ const SignIn = ({
       className="signin__title"
       name="sign in"
       isOpen={isOpen}
+      isSubmitDisabled={!isValid}
       onClose={onClose}
       onSubmit={handleSubmit}
       secondaryButtonText="or Sign Up"
@@ -66,7 +68,7 @@ const SignIn = ({
       <label htmlFor="email" className="signin-modal__label">
         Email
         <input
-          type="text"
+          type="email"
           name="email"
           className="signin-modal__input"
           id="email"
@@ -75,6 +77,7 @@ const SignIn = ({
           value={values.email}
           onChange={handleChange}
         />
+        <span className="modal__error">{errors.email}</span>
       </label>
       <label htmlFor="password" className="signin-modal__label">
         Password
@@ -88,6 +91,7 @@ const SignIn = ({
           value={values.password}
           onChange={handleChange}
         />
+        <span className="modal__error">{errors.password}</span>
       </label>
     </ModalWithForm>
   );

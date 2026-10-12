@@ -44,7 +44,7 @@
   gap: 0.4rem;
 }
 
-.profile-page__field input {
+.profile-page__username-input {
   border: 1px solid #c7c7c7;
   border-radius: 4px;
   font: inherit;
@@ -53,12 +53,18 @@
   padding: 0.5rem 0.75rem;
 }
 
-.profile-page__field input:focus-visible {
+.profile-page__username-input:focus-visible {
   outline: 2px solid #333;
   outline-offset: 2px;
 }
 
 .profile-page__note,
+.profile-page__error {
+  color: #b91c1c;
+  font-size: 0.85rem;
+  font-weight: 400;
+}
+
 .profile-page__message {
   font-size: 0.9rem;
   margin: 0;

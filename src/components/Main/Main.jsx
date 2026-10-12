@@ -67,32 +67,34 @@ function Main({ onAddToCart, onProductSelect }) {
           Nate&apos;s Books, Games, Toys, and Hobby Store
         </p>
       </section>
-      <section className="store-logo__image-section">
+      <section className="store-logo__image-section store-logo__image-container">
         {/* Help the images change when clicked which is called on lines 8-14 */}
-        <div className="store-logo__image-container">
-          <button
-            aria-label="Previous product image"
-            className="store-logo__image-arrow store-logo__image-arrow_left"
-            onClick={handlePreviousImageClick}
-            type="button"
-          >
-            <img alt="" src={leftArrowImage} />
-          </button>
+        <button
+          aria-label="Previous product image"
+          className="store-logo__image-arrow store-logo__image-arrow_left"
+          onClick={handlePreviousImageClick}
+          type="button"
+        >
           <img
-            alt={defaultProductItems[imageIndex].name}
-            className="store-logo__product-image"
-            onClick={handleImageClick}
-            src={defaultProductItems[imageIndex].image}
+            className="store-logo__arrow-icon"
+            alt="left arrow"
+            src={leftArrowImage}
           />
-          <button
-            aria-label="Next product image"
-            className="store-logo__image-arrow store-logo__image-arrow_right"
-            onClick={handleImageClick}
-            type="button"
-          >
-            <img alt="" src={rightArrowImage} />
-          </button>
-        </div>
+        </button>
+        <img
+          alt={defaultProductItems[imageIndex].name}
+          className="store-logo__product-image"
+          onClick={handleImageClick}
+          src={defaultProductItems[imageIndex].image}
+        />
+        <button
+          aria-label="Next product image"
+          className="store-logo__image-arrow store-logo__image-arrow_right"
+          onClick={handleImageClick}
+          type="button"
+        >
+          <img alt="right arrow" src={rightArrowImage} />
+        </button>
       </section>
       <section className="item-card__new-arrivals-header">
         <h2 className="item-card__new-arrivals">New Arrivals</h2>

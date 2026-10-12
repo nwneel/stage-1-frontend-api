@@ -132,11 +132,12 @@ function Header({
               searchSuggestions.map((product) => (
                 <li key={product._id}>
                   <button
+                    className="header__search-btn"
                     type="button"
                     onClick={() => onSearchSuggestionSelect(product)}
                   >
                     <img
-                      alt=""
+                      alt="header search"
                       className="header__search-suggestion-image"
                       src={product.image}
                     />
@@ -168,7 +169,11 @@ function Header({
           className="header__search-button"
           type="submit"
         >
-          <img src={searchButtonImage} />
+          <img
+            className="header__search-icon"
+            alt="header search button"
+            src={searchButtonImage}
+          />
         </button>
       </form>
       <div className="header__products">
@@ -189,6 +194,7 @@ function Header({
           <ul className="header__category-list">
             <li>
               <button
+                className="header__category-list-btn"
                 type="button"
                 onClick={() => handleSelectCategory("Anime & Game Collection")}
               >
@@ -197,6 +203,7 @@ function Header({
             </li>
             <li>
               <button
+                className="header__category-list-btn"
                 type="button"
                 onClick={() => handleSelectCategory("Fantasy Armor")}
               >
@@ -205,6 +212,7 @@ function Header({
             </li>
             <li>
               <button
+                className="header__category-list-btn"
                 type="button"
                 onClick={() => handleSelectCategory("Fantasy Swords")}
               >
@@ -229,6 +237,7 @@ function Header({
           <ul className="header__category-list">
             <li>
               <button
+                className="header__category-list-btn"
                 type="button"
                 onClick={() => handleSelectCategory("Helmets")}
               >
@@ -237,6 +246,7 @@ function Header({
             </li>
             <li>
               <button
+                className="header__category-list-btn"
                 type="button"
                 onClick={() => handleSelectCategory("Body Armor")}
               >
@@ -245,6 +255,7 @@ function Header({
             </li>
             <li>
               <button
+                className="header__category-list-btn"
                 type="button"
                 onClick={() => handleSelectCategory("Shields")}
               >
@@ -269,6 +280,7 @@ function Header({
           <ul className="header__category-list">
             <li>
               <button
+                className="header__category-list-btn"
                 type="button"
                 onClick={() => handleSelectCategory("Fantasy Knives")}
               >
@@ -277,6 +289,7 @@ function Header({
             </li>
             <li>
               <button
+                className="header__category-list-btn"
                 type="button"
                 onClick={() => handleSelectCategory("Combat Knives")}
               >
@@ -285,6 +298,7 @@ function Header({
             </li>
             <li>
               <button
+                className="header__category-list-btn"
                 type="button"
                 onClick={() => handleSelectCategory("Pocket Knives")}
               >
@@ -309,6 +323,7 @@ function Header({
           <ul className="header__category-list">
             <li>
               <button
+                className="header__category-list-btn"
                 type="button"
                 onClick={() => handleSelectCategory("Katanas")}
               >
@@ -317,6 +332,7 @@ function Header({
             </li>
             <li>
               <button
+                className="header__category-list-btn"
                 type="button"
                 onClick={() => handleSelectCategory("Medieval Swords")}
               >
@@ -349,6 +365,7 @@ function Header({
                 )}
                 <li>
                   <button
+                    className="header__user-dropdown"
                     onClick={() => handleUserMenuSelect(onProfileClick)}
                     type="button"
                   >
@@ -378,6 +395,7 @@ function Header({
             <>
               <img
                 className="header__shopping-cart-signed-in"
+                alt="shopping cart"
                 src={shoppingCartButton}
                 // onClick={onCartClick} opens the form where you are take to the checkout popup form
                 onClick={onCartClick}
@@ -416,7 +434,11 @@ function Header({
               onClick={onCartClick}
               type="button"
             >
-              <img alt="" src={shoppingCartButton} />
+              <img
+                className="header__check-out-icon"
+                alt="shopping cart"
+                src={shoppingCartButton}
+              />
               {cartQuantity > 0 && (
                 <span
                   aria-label={`${cartQuantity} items in cart`}

@@ -80,7 +80,7 @@
   right: 16px;
 }
 
-.product-page__image-arrow img {
+.product-page__arrow-icon {
   display: block;
   object-fit: contain;
 }
@@ -115,12 +115,13 @@
   padding: 0;
 }
 
-.product-page__thumbnail img {
+.product-page__thumbnail-icon {
   display: block;
   height: 80px;
   object-fit: contain;
   width: 80px;
   background: white;
+  cursor: pointer;
 }
 
 .product-page__thumbnail--selected {
@@ -167,7 +168,7 @@
   margin-bottom: 24px;
 }
 
-.product-page__cart-controls label {
+.product-page__cart-quantity {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -175,7 +176,7 @@
   clip: rect(0 0 0 0);
 }
 
-.product-page__cart-controls input {
+.product-page__cart-input {
   box-sizing: border-box;
   height: 40px;
   width: 56px;
@@ -187,6 +188,19 @@
   padding: 10px 16px;
   align-self: center;
   width: 120px;
+  background: transparent;
+  border: none;
+}
+
+.product-page__cancel-btn {
+  cursor: pointer;
+  border-radius: 10px;
+  padding: 8px 12px;
+  width: 125px;
+}
+
+.product-page__cancel-btn:hover {
+  color: gray;
 }
 
 .product-page__review-section {
@@ -242,8 +256,16 @@
   padding: 16px;
 }
 
-.product-page__review-form textarea,
-.product-page__review-form select {
+.product-page__review,
+.product-page__review-name,
+.product-page__review-title,
+.product-page__review-review {
+  width: 100%;
+}
+
+.product-page__review-name-input,
+.product-page__review-title-input,
+.product-page__review-input {
   box-sizing: border-box;
   font: inherit;
   padding: 8px;
@@ -253,11 +275,20 @@
 .product-page__review-actions {
   display: flex;
   gap: 8px;
+  justify-content: center;
+  margin-top: 24px;
 }
 
-.product-page__review-actions button {
+.product-page__review-submit {
   cursor: pointer;
   padding: 8px 12px;
+  background-color: #3085c7;
+  color: #fff;
+  border-radius: 10px;
+}
+
+.product-page__review-submit:hover {
+  color: lightgray;
 }
 
 .product-page__review-error {

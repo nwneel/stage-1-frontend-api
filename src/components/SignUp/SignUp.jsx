@@ -1,6 +1,6 @@
 import "./SignUp.css";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useForm } from "../../hooks/useForm";
 
 const SignUp = ({ isOpen, onClose, onSubmit, onSignInClick }) => {
@@ -11,48 +11,38 @@ const SignUp = ({ isOpen, onClose, onSubmit, onSignInClick }) => {
     confirmPassword: "",
   };
 
-  const { values, setValues, handleChange } = useForm(defaultValues);
-  // Helps check if the passwords match
-  const [passwordError, setPasswordError] = useState("");
+  const { values, handleChange, errors, isValid, resetForm } =
+    useForm(defaultValues);
 
   useEffect(() => {
     if (!isOpen) {
-      setValues(defaultValues);
-      setPasswordError("");
+      resetForm();
     }
-  }, [isOpen, setValues]);
+  }, [isOpen, resetForm]);
 
   useEffect(() => {
-    const handleExternalReset = () => {
-      setValues(defaultValues);
-      setPasswordError("");
-    };
-    document.addEventListener("resetsignupForm", handleExternalReset);
+    document.addEventListener("resetsignupForm", resetForm);
     return () => {
-      document.removeEventListener("resetsignupForm", handleExternalReset);
+      document.removeEventListener("resetsignupForm", resetForm);
     };
-  }, [setValues]);
+  }, [resetForm]);
 
   const handleInputChange = (e) => {
-    handleChange(e);
-    const { name, value } = e.target;
+    const { name, value, form } = e.target;
     const currentPassword = name === "password" ? value : values.password;
     const currentConfirmPassword =
       name === "confirmPassword" ? value : values.confirmPassword;
 
-    if (currentConfirmPassword && currentPassword !== currentConfirmPassword) {
-      setPasswordError("Passwords don't match");
-    } else {
-      setPasswordError("");
-    }
+    form.elements.confirmPassword.setCustomValidity(
+      currentConfirmPassword && currentPassword !== currentConfirmPassword
+        ? "Passwords don't match"
+        : "",
+    );
+    handleChange(e);
   };
 
   const handleSubmit = () => {
-    if (values.password !== values.confirmPassword) {
-      setPasswordError("Passwords don't match");
-      return;
-    }
-    setPasswordError("");
+    if (!isValid) return;
     if (typeof onSubmit === "function") onSubmit(values);
   };
 
@@ -70,6 +60,7 @@ const SignUp = ({ isOpen, onClose, onSubmit, onSignInClick }) => {
       title="Sign Up"
       name="sign-up"
       isOpen={isOpen}
+      isSubmitDisabled={!isValid}
       onClose={onClose}
       onSubmit={handleSubmit}
       secondaryButtonText="or Sign In"
@@ -90,21 +81,22 @@ const SignUp = ({ isOpen, onClose, onSubmit, onSignInClick }) => {
           value={values.username}
           onChange={handleInputChange}
         />
+        <span className="modal__error">{errors.username}</span>
       </label>
       <label htmlFor="email" className="signup-modal__label">
         Email
         <input
-          type="text"
+          type="email"
           name="email"
           className="signup-modal__input"
           id="email"
           placeholder="Email"
           required
-          minLength="1"
           maxLength="30"
           value={values.email}
           onChange={handleInputChange}
         />
+        <span className="modal__error">{errors.email}</span>
       </label>
       <label htmlFor="password" className="signup-modal__label">
         Password
@@ -115,11 +107,12 @@ const SignUp = ({ isOpen, onClose, onSubmit, onSignInClick }) => {
           id="password"
           placeholder="Password"
           required
-          minLength="1"
+          minLength="8"
           maxLength="30"
           value={values.password}
           onChange={handleInputChange}
         />
+        <span className="modal__error">{errors.password}</span>
       </label>
       <label htmlFor="confirmPassword" className="signup-modal__label">
         Confirm Password
@@ -130,14 +123,11 @@ const SignUp = ({ isOpen, onClose, onSubmit, onSignInClick }) => {
           id="confirmPassword"
           placeholder="Confirm Password"
           required
-          minLength="1"
           maxLength="30"
           value={values.confirmPassword}
           onChange={handleInputChange}
         />
-        {passwordError && (
-          <span className="signup-modal__error">{passwordError}</span>
-        )}
+        <span className="modal__error">{errors.confirmPassword}</span>
       </label>
     </ModalWithForm>
   );

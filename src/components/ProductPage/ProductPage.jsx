@@ -120,7 +120,11 @@ function ProductPage({ product, onAddToCart }) {
                 onClick={handlePreviousImage}
                 type="button"
               >
-                <img alt="" src={leftArrowImage} />
+                <img
+                  className="product-page__arrow-icon"
+                  alt="left arrow"
+                  src={leftArrowImage}
+                />
               </button>
             )}
             <img
@@ -140,7 +144,7 @@ function ProductPage({ product, onAddToCart }) {
                 onClick={handleNextImage}
                 type="button"
               >
-                <img alt="" src={rightArrowImage} />
+                <img alt="right arrow" src={rightArrowImage} />
               </button>
             )}
           </div>
@@ -159,7 +163,11 @@ function ProductPage({ product, onAddToCart }) {
                   onClick={() => setSelectedImageIndex(index)}
                   type="button"
                 >
-                  <img alt="" src={image} />
+                  <img
+                    className="product-page__thumbnail-icon"
+                    alt="product image"
+                    src={image}
+                  />
                 </button>
               ))}
             </div>
@@ -170,8 +178,14 @@ function ProductPage({ product, onAddToCart }) {
           <p className="product-page__price">${product.price.toFixed(2)}</p>
           <p className="product-page__stock">Stock: {product.stock}</p>
           <div className="product-page__cart-controls">
-            <label htmlFor="product-quantity">Quantity</label>
+            <label
+              className="product-page__cart-quantity"
+              htmlFor="product-quantity"
+            >
+              Quantity
+            </label>
             <input
+              className="product-page__cart-input"
               id="product-quantity"
               min="1"
               onChange={(event) => setQuantity(Number(event.target.value))}
@@ -213,7 +227,9 @@ function ProductPage({ product, onAddToCart }) {
             onSubmit={handleReviewSubmit}
           >
             <div className="product-page__review-rating">
-              <label htmlFor="review-rating">Rating</label>
+              <label className="product-page__review" htmlFor="review-rating">
+                Rating
+              </label>
               <div
                 aria-label="Rating"
                 className="product-page__review-stars"
@@ -242,8 +258,14 @@ function ProductPage({ product, onAddToCart }) {
                 })}
               </div>
             </div>
-            <label htmlFor="review-comment">Your Name</label>
+            <label
+              className="product-page__review-name"
+              htmlFor="review-comment"
+            >
+              Your Name
+            </label>
             <textarea
+              className="product-page__review-name-input"
               id="review-name"
               onChange={(event) => setReviewName(event.target.value)}
               placeholder="Your Name"
@@ -251,8 +273,14 @@ function ProductPage({ product, onAddToCart }) {
               rows="4"
               value={reviewName}
             />
-            <label htmlFor="review-comment">Title</label>
+            <label
+              className="product-page__review-title"
+              htmlFor="review-comment"
+            >
+              Title
+            </label>
             <textarea
+              className="product-page__review-title-input"
               id="review-title"
               onChange={(event) => setReviewTitle(event.target.value)}
               placeholder="Title"
@@ -260,8 +288,14 @@ function ProductPage({ product, onAddToCart }) {
               rows="4"
               value={reviewTitle}
             />
-            <label htmlFor="review-comment">Review</label>
+            <label
+              className="product-page__review-review"
+              htmlFor="review-comment"
+            >
+              Review
+            </label>
             <textarea
+              className="product-page__review-input"
               id="review-comment"
               onChange={(event) => setReviewComment(event.target.value)}
               placeholder="Write your review"
@@ -273,8 +307,11 @@ function ProductPage({ product, onAddToCart }) {
               <p className="product-page__review-error">{reviewError}</p>
             )}
             <div className="product-page__review-actions">
-              <button type="submit">Submit Review</button>
+              <button className="product-page__review-submit" type="submit">
+                Submit Review
+              </button>
               <button
+                className="product-page__cancel-btn"
                 onClick={() => {
                   setIsReviewOpen(false);
                   setSelectedRating(0);

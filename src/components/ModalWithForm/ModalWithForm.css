@@ -10,6 +10,20 @@
   align-items: center;
 }
 
+.modal__error {
+  display: block;
+  min-height: 16px;
+  margin-top: 4px;
+  color: #ff0000;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.modal__submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .modal__opened {
   display: flex;
 }
@@ -95,7 +109,7 @@
   line-height: 20px;
 }
 
-.modal__close img {
+.modal__close-icon {
   display: block;
   height: 20px;
   width: 20px;

@@ -8,23 +8,24 @@ const ForgetPassword = ({ isOpen, onClose, onSubmit }) => {
     email: "",
   };
 
-  const { values, setValues, handleChange } = useForm(defaultValues);
+  const { values, handleChange, errors, isValid, resetForm } =
+    useForm(defaultValues);
 
   useEffect(() => {
     if (!isOpen) {
-      setValues(defaultValues);
+      resetForm();
     }
-  }, [isOpen, setValues]);
+  }, [isOpen, resetForm]);
 
   useEffect(() => {
-    const handleExternalReset = () => setValues(defaultValues);
-    document.addEventListener("resetPasswordForm", handleExternalReset);
+    document.addEventListener("resetPasswordForm", resetForm);
     return () => {
-      document.removeEventListener("resetPasswordForm", handleExternalReset);
+      document.removeEventListener("resetPasswordForm", resetForm);
     };
-  }, [setValues]);
+  }, [resetForm]);
 
   const handleSubmit = () => {
+    if (!isValid) return;
     if (typeof onSubmit === "function") {
       onSubmit(values);
     }
@@ -34,6 +35,7 @@ const ForgetPassword = ({ isOpen, onClose, onSubmit }) => {
     <ModalWithForm
       className="forget-password__title"
       isOpen={isOpen}
+      isSubmitDisabled={!isValid}
       onClose={onClose}
       onSubmit={handleSubmit}
       buttonText="Reset Password"
@@ -51,6 +53,7 @@ const ForgetPassword = ({ isOpen, onClose, onSubmit }) => {
           value={values.email}
           onChange={handleChange}
         />
+        <span className="modal__error">{errors.email}</span>
       </label>
     </ModalWithForm>
   );

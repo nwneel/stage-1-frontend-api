@@ -1,5 +1,14 @@
 import "./App.css";
 import { useEffect, useState } from "react";
+import {
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
 import Footer from "../Footer/footer";
@@ -15,6 +24,7 @@ import ShippingAndReturns from "../ShippingAndReturns/ShippingAndReturns";
 import Checkout from "../Checkout/Checkout";
 import Orders from "../Orders/Orders";
 import Profile from "../Profile/Profile";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import {
   DEFAULT_PRODUCT_STOCK,
   defaultNewArrivals,
@@ -79,11 +89,43 @@ function loadCartItems() {
   }
 }
 
+function ProductRoute({ onAddToCart, onBack }) {
+  const { productId } = useParams();
+  const product = allProducts.find((item) => item._id === productId);
+  if (!product) return <Navigate to="/" replace />;
+  return (
+    <ProductPage onAddToCart={onAddToCart} onBack={onBack} product={product} />
+  );
+}
+
+function FranchiseRoute(props) {
+  const { franchiseName } = useParams();
+  return (
+    <ProductList
+      categoryName={franchiseName}
+      products={getProductsByFranchise(franchiseName)}
+      {...props}
+    />
+  );
+}
+
+function CategoryRoute(props) {
+  const { categoryName } = useParams();
+  return (
+    <ProductList
+      categoryName={categoryName}
+      products={getProductsByCategory(categoryName)}
+      {...props}
+    />
+  );
+}
+
 function App() {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const [searchParams] = useSearchParams();
   const [orders, setOrders] = useState(loadOrders);
   const [profile, setProfile] = useState(loadProfile);
-  const [isOrdersPage, setIsOrdersPage] = useState(false);
-  const [isProfilePage, setIsProfilePage] = useState(false);
   const [cartItems, setCartItems] = useState(loadCartItems);
   const [isSignInOpen, setIsSignInOpen] = useState(false);
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
@@ -93,14 +135,11 @@ function App() {
   const [isForgetPasswordOpen, setIsForgetPasswordOpen] = useState(false);
   const [isEmptyCartOpen, setIsEmptyCartOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const [selectedFranchise, setSelectedFranchise] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
-  const [isSearchSubmitted, setIsSearchSubmitted] = useState(false);
-  const [isAboutPage, setIsAboutPage] = useState(false);
-  const [isShippingPage, setIsShippingPage] = useState(false);
-  const [isCheckoutPage, setIsCheckoutPage] = useState(false);
+  const submittedSearch =
+    pathname === "/search" ? (searchParams.get("q") ?? "") : null;
+  const isSearchSubmitted = submittedSearch !== null;
+  const isCheckoutPage = pathname === "/checkout";
   const [shouldReturnToCheckout, setShouldReturnToCheckout] = useState(false);
 
   useEffect(() => {
@@ -112,186 +151,36 @@ function App() {
   }, [cartItems]);
 
   useEffect(() => {
-    function handlePopState() {
-      const pathname = window.location.pathname;
-      setIsOrdersPage(pathname === "/orders");
-      setIsProfilePage(pathname === "/profile" && isSignedIn);
-      if (pathname === "/profile") {
-        if (!isSignedIn) {
-          window.history.replaceState({}, "", "/");
-          setIsProfilePage(false);
-          setIsAboutPage(false);
-          setIsShippingPage(false);
-          setIsCheckoutPage(false);
-          return;
-        }
-        setIsAboutPage(false);
-        setIsShippingPage(false);
-        setIsCheckoutPage(false);
-        setSelectedCategory(null);
-        setSelectedFranchise(null);
-        setSelectedProduct(null);
-      } else if (pathname === "/orders") {
-        setIsAboutPage(false);
-        setIsShippingPage(false);
-        setIsCheckoutPage(false);
-        setSelectedCategory(null);
-        setSelectedFranchise(null);
-        setSelectedProduct(null);
-      } else if (pathname === "/about-us") {
-        setIsAboutPage(true);
-        setIsShippingPage(false);
-        setIsCheckoutPage(false);
-        setSelectedCategory(null);
-        setSelectedProduct(null);
-      } else if (pathname === "/shipping-and-returns") {
-        setIsAboutPage(false);
-        setIsShippingPage(true);
-        setIsCheckoutPage(false);
-        setSelectedCategory(null);
-        setSelectedFranchise(null);
-        setSelectedProduct(null);
-      } else if (pathname.startsWith("/category/")) {
-        setIsAboutPage(false);
-        setIsShippingPage(false);
-        setIsCheckoutPage(false);
-        const categoryName = decodeURIComponent(
-          pathname.replace("/category/", ""),
-        );
-        setSelectedCategory(categoryName);
-        setSelectedFranchise(null);
-        setSelectedProduct(null);
-      } else if (pathname.startsWith("/franchise/")) {
-        setIsAboutPage(false);
-        setIsShippingPage(false);
-        setIsCheckoutPage(false);
-        const franchiseName = decodeURIComponent(
-          pathname.replace("/franchise/", ""),
-        );
-        setSelectedFranchise(franchiseName);
-        setSelectedCategory(null);
-        setSelectedProduct(null);
-      } else if (pathname === productNewArrivalPagePath) {
-        setIsAboutPage(false);
-        setIsShippingPage(false);
-        setIsCheckoutPage(false);
-        setSelectedProduct(productNewArrivalPage);
-        setSelectedCategory(null);
-      } else if (pathname.startsWith("/products/")) {
-        setIsAboutPage(false);
-        setIsShippingPage(false);
-        setIsCheckoutPage(false);
-        const productId = decodeURIComponent(
-          pathname.replace("/products/", ""),
-        );
-        const foundProduct = allProducts.find(
-          (product) => product._id === productId,
-        );
-        setSelectedProduct(foundProduct || null);
-        setSelectedCategory(null);
-        setSelectedFranchise(null);
-      } else if (pathname === "/checkout") {
-        if (!isSignedIn) {
-          window.history.replaceState({}, "", "/");
-          setIsCheckoutPage(false);
-          setShouldReturnToCheckout(true);
-          setIsSignInOpen(true);
-          return;
-        }
-        setIsAboutPage(false);
-        setIsShippingPage(false);
-        setIsCheckoutPage(true);
-        setSelectedCategory(null);
-        setSelectedFranchise(null);
-        setSelectedProduct(null);
-      } else {
-        setIsAboutPage(false);
-        setIsShippingPage(false);
-        setIsCheckoutPage(false);
-        setSelectedProduct(null);
-        setSelectedCategory(null);
-        setSelectedFranchise(null);
-      }
+    if (pathname === "/checkout" && !isSignedIn) {
+      setShouldReturnToCheckout(true);
+      setIsSignInOpen(true);
     }
+  }, [pathname, isSignedIn]);
 
-    handlePopState();
-    window.addEventListener("popstate", handlePopState);
-    return () => window.removeEventListener("popstate", handlePopState);
-  }, [isSignedIn]);
+  function goTo(path) {
+    navigate(path);
+    setSearchTerm("");
+    window.scrollTo(0, 0);
+  }
 
   function handleCategorySelect(categoryName) {
-    setIsOrdersPage(false);
-    setIsProfilePage(false);
-    const path = `/category/${encodeURIComponent(categoryName)}`;
-    window.history.pushState({}, "", path);
-    setSelectedCategory(categoryName);
-    setSelectedFranchise(null);
-    setSelectedProduct(null);
-    setSearchTerm("");
-    setIsSearchSubmitted(false);
-    setIsAboutPage(false);
-    setIsShippingPage(false);
-    setIsCheckoutPage(false);
-    window.scrollTo(0, 0);
+    goTo(`/category/${encodeURIComponent(categoryName)}`);
   }
 
   function handleFranchiseSelect(franchiseName) {
-    setIsOrdersPage(false);
-    setIsProfilePage(false);
-    const path = `/franchise/${encodeURIComponent(franchiseName)}`;
-    window.history.pushState({}, "", path);
-    setSelectedFranchise(franchiseName);
-    setSelectedCategory(null);
-    setSelectedProduct(null);
-    setSearchTerm("");
-    setIsSearchSubmitted(false);
-    setIsAboutPage(false);
-    setIsCheckoutPage(false);
-    window.scrollTo(0, 0);
+    goTo(`/franchise/${encodeURIComponent(franchiseName)}`);
   }
 
   function handleBackToHome() {
-    setIsOrdersPage(false);
-    setIsProfilePage(false);
-    window.history.pushState({}, "", "/");
-    setSelectedCategory(null);
-    setSelectedFranchise(null);
-    setSelectedProduct(null);
-    setSearchTerm("");
-    setIsSearchSubmitted(false);
-    setIsAboutPage(false);
-    setIsShippingPage(false);
-    setIsCheckoutPage(false);
-    window.scrollTo(0, 0);
+    goTo("/");
   }
 
   function handleAboutClick() {
-    setIsOrdersPage(false);
-    setIsProfilePage(false);
-    window.history.pushState({}, "", "/about-us");
-    setIsAboutPage(true);
-    setIsShippingPage(false);
-    setIsCheckoutPage(false);
-    setSelectedCategory(null);
-    setSelectedProduct(null);
-    setSearchTerm("");
-    setIsSearchSubmitted(false);
-    window.scrollTo(0, 0);
+    goTo("/about-us");
   }
 
   function handleShippingClick() {
-    setIsOrdersPage(false);
-    setIsProfilePage(false);
-    window.history.pushState({}, "", "/shipping-and-returns");
-    setIsShippingPage(true);
-    setIsAboutPage(false);
-    setIsCheckoutPage(false);
-    setSelectedCategory(null);
-    setSelectedFranchise(null);
-    setSelectedProduct(null);
-    setSearchTerm("");
-    setIsSearchSubmitted(false);
-    window.scrollTo(0, 0);
+    goTo("/shipping-and-returns");
   }
 
   function handleCheckoutBack() {
@@ -299,33 +188,11 @@ function App() {
   }
 
   function handleOrdersClick() {
-    window.history.pushState({}, "", "/orders");
-    setIsOrdersPage(true);
-    setIsProfilePage(false);
-    setIsAboutPage(false);
-    setIsShippingPage(false);
-    setIsCheckoutPage(false);
-    setSelectedCategory(null);
-    setSelectedFranchise(null);
-    setSelectedProduct(null);
-    setSearchTerm("");
-    setIsSearchSubmitted(false);
-    window.scrollTo(0, 0);
+    goTo("/orders");
   }
 
   function handleProfileClick() {
-    window.history.pushState({}, "", "/profile");
-    setIsProfilePage(true);
-    setIsOrdersPage(false);
-    setIsAboutPage(false);
-    setIsShippingPage(false);
-    setIsCheckoutPage(false);
-    setSelectedCategory(null);
-    setSelectedFranchise(null);
-    setSelectedProduct(null);
-    setSearchTerm("");
-    setIsSearchSubmitted(false);
-    window.scrollTo(0, 0);
+    goTo("/profile");
   }
 
   function handleProfileSave(updatedProfile) {
@@ -354,36 +221,24 @@ function App() {
 
   function handleSearchChange(value) {
     setSearchTerm(value);
-    setIsSearchSubmitted(false);
   }
 
   function handleSearchSubmit() {
-    if (!searchTerm.trim()) return;
-    setIsOrdersPage(false);
-    setIsProfilePage(false);
-    setSelectedCategory(null);
-    setSelectedProduct(null);
-    setIsSearchSubmitted(true);
+    const query = searchTerm.trim();
+    if (!query) return;
+    navigate(`/search?q=${encodeURIComponent(query)}`);
     window.scrollTo(0, 0);
   }
 
   function handleProductSelect(product) {
-    setIsOrdersPage(false);
-    setIsProfilePage(false);
     const path =
       product._id === productNewArrivalPage._id
         ? productNewArrivalPagePath
         : `/products/${encodeURIComponent(product._id)}`;
-    window.history.pushState({}, "", path);
-    setSelectedProduct(product);
-    setSelectedCategory(null);
-    setSelectedFranchise(null);
-    window.scrollTo(0, 0);
+    goTo(path);
   }
 
   function handleSearchSuggestionSelect(product) {
-    setSearchTerm("");
-    setIsSearchSubmitted(false);
     handleProductSelect(product);
   }
 
@@ -395,7 +250,9 @@ function App() {
     (total, item) => total + item.quantity,
     0,
   );
-  const normalizedSearchTerm = searchTerm.trim().toLowerCase();
+  const normalizedSearchTerm = (submittedSearch ?? searchTerm)
+    .trim()
+    .toLowerCase();
   const searchResults = allProducts.filter((product) => {
     const productKeywords = [
       product.name,
@@ -515,16 +372,7 @@ function App() {
   function returnToCheckoutIfNeeded() {
     if (shouldReturnToCheckout) {
       setShouldReturnToCheckout(false);
-      setIsOrdersPage(false);
-      window.history.pushState({}, "", "/checkout");
-      setIsCheckoutPage(true);
-      setSelectedCategory(null);
-      setSelectedProduct(null);
-      setIsAboutPage(false);
-      setIsShippingPage(false);
-      setSearchTerm("");
-      setIsSearchSubmitted(false);
-      window.scrollTo(0, 0);
+      goTo("/checkout");
     }
   }
 
@@ -575,16 +423,7 @@ function App() {
     }
 
     setIsCartOpen(false);
-    setIsOrdersPage(false);
-    window.history.pushState({}, "", "/checkout");
-    setIsCheckoutPage(true);
-    setSelectedCategory(null);
-    setSelectedProduct(null);
-    setIsAboutPage(false);
-    setIsShippingPage(false);
-    setSearchTerm("");
-    setIsSearchSubmitted(false);
-    window.scrollTo(0, 0);
+    goTo("/checkout");
   }
 
   return (
@@ -613,73 +452,115 @@ function App() {
           onProfileClick={handleProfileClick}
           username={profile.username}
         />
-        {isCheckoutPage ? (
-          <Checkout
-            cartItems={cartItems}
-            onOrderComplete={handleOrderComplete}
-            onBack={handleCheckoutBack}
-            onSignInClick={handleCheckoutSignInClick}
-            isSignedIn={isSignedIn}
-            onUpdateQuantity={(itemId, quantity) =>
-              handleUpdateCartItemQuantity(itemId, quantity, {
-                showEmptyCartModal: false,
-              })
+        <Routes>
+          <Route
+            path="/checkout"
+            element={
+              <ProtectedRoute isLoggedIn={isSignedIn}>
+                <Checkout
+                  cartItems={cartItems}
+                  onOrderComplete={handleOrderComplete}
+                  onBack={handleCheckoutBack}
+                  onSignInClick={handleCheckoutSignInClick}
+                  isSignedIn={isSignedIn}
+                  onUpdateQuantity={(itemId, quantity) =>
+                    handleUpdateCartItemQuantity(itemId, quantity, {
+                      showEmptyCartModal: false,
+                    })
+                  }
+                  onRemoveItem={(itemId) =>
+                    handleRemoveCartItem(itemId, { showEmptyCartModal: false })
+                  }
+                />
+              </ProtectedRoute>
             }
-            onRemoveItem={(itemId) =>
-              handleRemoveCartItem(itemId, { showEmptyCartModal: false })
+          />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute isLoggedIn={isSignedIn}>
+                <Profile
+                  profile={profile}
+                  onBack={handleBackToHome}
+                  onSave={handleProfileSave}
+                />
+              </ProtectedRoute>
             }
           />
-        ) : isProfilePage && isSignedIn ? (
-          <Profile
-            profile={profile}
-            onBack={handleBackToHome}
-            onSave={handleProfileSave}
+          <Route
+            path="/orders"
+            element={
+              <ProtectedRoute isLoggedIn={isSignedIn}>
+                <Orders orders={orders} onBack={handleBackToHome} />
+              </ProtectedRoute>
+            }
           />
-        ) : isOrdersPage && isSignedIn ? (
-          <Orders orders={orders} onBack={handleBackToHome} />
-        ) : isAboutPage ? (
-          <About />
-        ) : isShippingPage ? (
-          <ShippingAndReturns />
-        ) : selectedProduct ? (
-          <ProductPage
-            onAddToCart={handleAddToCart}
-            onBack={handleProductBack}
-            product={selectedProduct}
+          <Route path="/about-us" element={<About />} />
+          <Route path="/shipping-and-returns" element={<ShippingAndReturns />} />
+          <Route
+            path={productNewArrivalPagePath}
+            element={
+              <ProductPage
+                onAddToCart={handleAddToCart}
+                onBack={handleProductBack}
+                product={productNewArrivalPage}
+              />
+            }
           />
-        ) : isSearchSubmitted ? (
-          <ProductList
-            categoryName={`Search Results for "${searchTerm.trim()}"`}
-            products={searchResults}
-            onProductSelect={handleProductSelect}
-            onAddToCart={handleAddToCart}
-            onBack={handleBackToHome}
-            onFranchiseSelect={handleFranchiseSelect}
+          <Route
+            path="/products/:productId"
+            element={
+              <ProductRoute
+                onAddToCart={handleAddToCart}
+                onBack={handleProductBack}
+              />
+            }
           />
-        ) : selectedFranchise ? (
-          <ProductList
-            categoryName={selectedFranchise}
-            products={getProductsByFranchise(selectedFranchise)}
-            onProductSelect={handleProductSelect}
-            onAddToCart={handleAddToCart}
-            onBack={handleBackToHome}
-            onFranchiseSelect={handleFranchiseSelect}
+          <Route
+            path="/search"
+            element={
+              <ProductList
+                categoryName={`Search Results for "${(submittedSearch ?? "").trim()}"`}
+                products={searchResults}
+                onProductSelect={handleProductSelect}
+                onAddToCart={handleAddToCart}
+                onBack={handleBackToHome}
+                onFranchiseSelect={handleFranchiseSelect}
+              />
+            }
           />
-        ) : selectedCategory ? (
-          <ProductList
-            categoryName={selectedCategory}
-            products={getProductsByCategory(selectedCategory)}
-            onProductSelect={handleProductSelect}
-            onAddToCart={handleAddToCart}
-            onBack={handleBackToHome}
-            onFranchiseSelect={handleFranchiseSelect}
+          <Route
+            path="/franchise/:franchiseName"
+            element={
+              <FranchiseRoute
+                onProductSelect={handleProductSelect}
+                onAddToCart={handleAddToCart}
+                onBack={handleBackToHome}
+                onFranchiseSelect={handleFranchiseSelect}
+              />
+            }
           />
-        ) : (
-          <Main
-            onAddToCart={handleAddToCart}
-            onProductSelect={handleProductSelect}
+          <Route
+            path="/category/:categoryName"
+            element={
+              <CategoryRoute
+                onProductSelect={handleProductSelect}
+                onAddToCart={handleAddToCart}
+                onBack={handleBackToHome}
+                onFranchiseSelect={handleFranchiseSelect}
+              />
+            }
           />
-        )}
+          <Route
+            path="*"
+            element={
+              <Main
+                onAddToCart={handleAddToCart}
+                onProductSelect={handleProductSelect}
+              />
+            }
+          />
+        </Routes>
         <Footer
           onAboutClick={handleAboutClick}
           onShippingClick={handleShippingClick}

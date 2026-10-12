@@ -11,10 +11,10 @@
   padding-bottom: 64px;
 }
 
-.shipping-and-returns h1 {
+.shipping-and-returns__title {
   margin-top: 0;
 }
 
-.shipping-and-returns p {
+.shipping-and-returns__description {
   line-height: 1.6;
 }

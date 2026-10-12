@@ -183,13 +183,13 @@
   gap: 0.5rem;
 }
 
-.checkout-page__field-group label {
+.checkout-page__label {
   font-weight: 600;
   color: #374151;
 }
 
-.checkout-page__field-group input,
-.checkout-page__field-group select {
+.checkout-page__input,
+.checkout-page__select {
   padding: 0.85rem 1rem;
   border: 1px solid #d1d5db;
   border-radius: 8px;
@@ -201,8 +201,8 @@
   cursor: pointer;
 }
 
-.checkout-page__field-group input:focus,
-.checkout-page__field-group select:focus {
+.checkout-page__input:focus,
+.checkout-page__select:focus {
   outline: 2px solid rgba(29, 78, 216, 0.2);
   border-color: #1d4ed8;
 }
@@ -232,6 +232,12 @@
   margin-top: 24px;
   margin-left: 650px;
   width: 100%;
+}
+
+.checkout-page__field-error {
+  color: #b91c1c;
+  font-size: 0.85rem;
+  margin-top: 4px;
 }
 
 .checkout-page__shipping-options {

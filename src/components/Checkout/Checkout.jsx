@@ -1,7 +1,7 @@
 import "./Checkout.css";
 import { useState } from "react";
 import { SALES_TAX_RATE } from "../../utils/constants";
-import { useForm } from "../../hooks/useForm";
+import { useFieldErrors, useForm } from "../../hooks/useForm";
 import { getShippingRates } from "../../utils/ThirdPartyApi";
 
 const usStates = [
@@ -177,6 +177,14 @@ const initialShippingInfo = {
   country: "United States",
 };
 
+function FieldError({ message }) {
+  return message ? (
+    <span className="checkout-page__field-error" role="alert">
+      {message}
+    </span>
+  ) : null;
+}
+
 function Checkout({
   cartItems = [],
   onBack,
@@ -223,16 +231,23 @@ function Checkout({
     country: "United States",
   };
 
-  const { values, setValues, handleChange } = useForm(defaultValues);
+  const {
+    values,
+    setValues,
+    handleChange: handleValueChange,
+  } = useForm(defaultValues);
+  const { errors, validateField, validateForm } = useFieldErrors();
   const showStateField = ["United States", "Canada"].includes(values.country);
   const isCanadaSelected = values.country === "Canada";
 
-  //useEffect(() => {
-  //     setValues(defaultValues);
-  //  }, [setValues]);
+  const handleChange = (event) => {
+    handleValueChange(event);
+    validateField(event);
+  };
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
+    validateField(event);
     setShippingInfo((prevState) => ({
       ...prevState,
       [name]: value,
@@ -244,6 +259,7 @@ function Checkout({
 
   const handleSubmitOrder = async (e) => {
     e.preventDefault();
+    if (!validateForm(e.currentTarget)) return;
 
     if (!isSignedIn) {
       if (typeof onSignInClick === "function") {
@@ -542,14 +558,18 @@ function Checkout({
           <form
             className="checkout-page__shipping-form"
             onSubmit={handleSubmitOrder}
+            noValidate
           >
             <h2 className="checkout-page__shipping-title">
               Shipping Information
             </h2>
 
             <div className="checkout-page__field-group">
-              <label htmlFor="fullName">Full Name</label>
+              <label className="checkout-page__label" htmlFor="fullName">
+                Full Name
+              </label>
               <input
+                className="checkout-page__input"
                 id="fullName"
                 name="fullName"
                 type="text"
@@ -558,6 +578,7 @@ function Checkout({
                 placeholder=""
                 required
               />
+              <FieldError message={errors.fullName} />
             </div>
 
             <div className="checkout-page__field-group">
@@ -571,6 +592,7 @@ function Checkout({
                 placeholder=""
                 required
               />
+              <FieldError message={errors.email} />
             </div>
 
             <div className="checkout-page__field-group">
@@ -584,6 +606,7 @@ function Checkout({
                 placeholder=""
                 required
               />
+              <FieldError message={errors.address} />
             </div>
 
             <div className="checkout-page__row">
@@ -598,6 +621,7 @@ function Checkout({
                   placeholder=""
                   required
                 />
+                <FieldError message={errors.city} />
               </div>
 
               {showStateField && (
@@ -606,6 +630,7 @@ function Checkout({
                     {isCanadaSelected ? "Province/Territory" : "State/Province"}
                   </label>
                   <select
+                    className="checkout-page__select"
                     id="state"
                     name="state"
                     value={values.state}
@@ -625,6 +650,7 @@ function Checkout({
                       ),
                     )}
                   </select>
+                  <FieldError message={errors.state} />
                 </div>
               )}
             </div>
@@ -641,6 +667,7 @@ function Checkout({
                   placeholder=""
                   required
                 />
+                <FieldError message={errors.zipCode} />
               </div>
 
               <div className="checkout-page__field-group">
@@ -649,13 +676,14 @@ function Checkout({
                   id="country"
                   name="country"
                   value={values.country}
-                  onChange={(event) =>
+                  onChange={(event) => {
+                    validateField(event);
                     setValues((previousValues) => ({
                       ...previousValues,
                       country: event.target.value,
                       state: "",
-                    }))
-                  }
+                    }));
+                  }}
                   required
                 >
                   <option value="">Select a country</option>
@@ -665,6 +693,7 @@ function Checkout({
                     </option>
                   ))}
                 </select>
+                <FieldError message={errors.country} />
               </div>
             </div>
             <div className="checkout-page__form-actions">
