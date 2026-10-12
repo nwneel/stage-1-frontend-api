@@ -1,11 +1,9 @@
 import "./About.css";
-import StoreLogo from "../StoreLogo/StoreLogo";
 
 function About() {
   return (
     <div className="about__page">
       <main className="about">
-        <StoreLogo />
         <h1 className="about__title">About Us</h1>
         <p className="about__description">
           Nate&apos;s Books, Games, Toys, and Hobby Store operates as a unique retail

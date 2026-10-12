@@ -155,11 +155,6 @@ function ProductList({
     <div>
       <main className="product-list-page">
         <StoreLogo />
-        <section className="store-logo__name">
-          <p className="store-logo__text">
-            Nate&apos;s Books, Games, Toys, and Hobby Store
-          </p>
-        </section>
         <div className="product-list-page__navigation">
           <div className="product-list-page__franchise">
             <h3 className="product-list-page__franchise-title">Franchise</h3>

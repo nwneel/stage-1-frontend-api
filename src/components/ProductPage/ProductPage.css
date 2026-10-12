@@ -55,8 +55,6 @@
   transform: translateY(-50%);
   z-index: 2;
   box-sizing: border-box;
-  width: 48px;
-  height: 48px;
   opacity: 0;
   visibility: hidden;
   transition:

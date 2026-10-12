@@ -1,11 +1,9 @@
 import "./ShippingAndReturns.css";
-import StoreLogo from "../StoreLogo/StoreLogo";
 
 function ShippingAndReturns() {
   return (
     <div className="shipping-and-returns__page">
       <main className="shipping-and-returns">
-        <StoreLogo />
         <h1 className="shipping-and-returns__title">Shipping and Returns</h1>
         <p className="shipping-and-returns__description">
           Orders are processed and shipped within 2-5 business days. Delivery
