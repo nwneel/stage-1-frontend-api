@@ -35,10 +35,17 @@ export default [
       ],
       "react/prop-types": 0,
     },
-    overrides: [
-      {
-        files: ["*.js", "*.jsx"],
-      },
-    ],
+  },
+  {
+    files: ["vite.config.js"],
+    languageOptions: { globals: globals.node },
+  },
+  {
+    files: ["src/utils/ShippingRates.js"],
+    languageOptions: {
+      globals: globals.node,
+      sourceType: "commonjs",
+      parserOptions: { sourceType: "commonjs" },
+    },
   },
 ];

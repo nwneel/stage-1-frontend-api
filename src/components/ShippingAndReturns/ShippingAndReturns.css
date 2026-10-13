@@ -1,0 +1,20 @@
+.shipping-and-returns {
+  margin: 64px auto;
+  max-width: 720px;
+  padding: 0 32px;
+  margin-bottom: 145px;
+}
+
+.shipping-and-returns__page {
+  background: rgb(250 248 245 / 80%);
+  padding-top: 64px;
+  padding-bottom: 64px;
+}
+
+.shipping-and-returns__title {
+  margin-top: 0;
+}
+
+.shipping-and-returns__description {
+  line-height: 1.6;
+}
