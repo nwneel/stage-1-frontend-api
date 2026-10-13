@@ -159,6 +159,10 @@
   max-width: calc(100% - 32px);
 }
 
+.item-card__new-arrivals-products > .item-card__new-arrivals-cards {
+  width: min(320px, calc(100% - 32px));
+}
+
 @media (hover: none) {
   .item-card__cart-controls {
     opacity: 1;

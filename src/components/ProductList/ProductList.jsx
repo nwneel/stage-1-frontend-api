@@ -1,7 +1,6 @@
 import "./ProductList.css";
 import { useEffect, useState } from "react";
 import StoreLogo from "../StoreLogo/StoreLogo";
-import "../ItemCard/ItemCard.css";
 import shoppingCart from "../../assets/Shopping cart.png";
 
 const franchises = [
@@ -47,7 +46,7 @@ function ProductListItemCard({ item, onProductSelect, onAddToCart }) {
 
   return (
     <li
-      className="item-card__new-arrival"
+      className="product-list__new-arrival"
       key={item._id}
       onClick={() => onProductSelect(item)}
       onMouseEnter={() => setIsHovered(true)}
@@ -58,7 +57,7 @@ function ProductListItemCard({ item, onProductSelect, onAddToCart }) {
     >
       <button
         aria-label={`View ${item.name}`}
-        className="item-card__product-link"
+        className="product-list__product-link"
         onClick={(event) => {
           event.stopPropagation();
           onProductSelect(item);
@@ -67,33 +66,33 @@ function ProductListItemCard({ item, onProductSelect, onAddToCart }) {
       >
         <img
           alt={item.name}
-          className="item-card__new-arrival-image"
+          className="product-list__new-arrival-image"
           src={currentImage}
         />
       </button>
-      <h2 className="item-card__name">{item.name}</h2>
+      <h2 className="product-list__name">{item.name}</h2>
       {item.price !== undefined && item.price !== null && (
-        <p className="item-card__price">${item.price.toFixed(2)}</p>
+        <p className="product-list__price">${item.price.toFixed(2)}</p>
       )}
       <div
-        className="item-card__cart-controls"
+        className="product-list__cart-controls"
         onClick={(event) => event.stopPropagation()}
       >
         <label
-          className="item-card__quantity-label"
+          className="product-list__quantity-label"
           htmlFor={`quantity-${item._id}`}
         >
           Quantity
         </label>
         <input
-          className="item-card__quantity"
+          className="product-list__quantity"
           defaultValue="1"
           id={`quantity-${item._id}`}
           min="1"
           type="number"
         />
         <button
-          className="item-card__add-to-cart"
+          className="product-list__add-to-cart"
           onClick={(event) => onAddToCart(event, item)}
           type="button"
         >
@@ -123,7 +122,7 @@ function ProductList({
   function handleAddToCart(event, item) {
     event.stopPropagation();
     const quantityInput = event.currentTarget.parentElement.querySelector(
-      ".item-card__quantity",
+      ".product-list__quantity",
     );
     const quantity = Number(quantityInput?.value || 1);
     onAddToCart(item, quantity > 0 ? quantity : 1);
@@ -153,25 +152,25 @@ function ProductList({
 
   return (
     <div>
-      <main className="product-list-page">
+      <main className="product-list">
         <StoreLogo />
-        <div className="product-list-page__navigation">
-          <div className="product-list-page__franchise">
-            <h3 className="product-list-page__franchise-title">Franchise</h3>
+        <div className="product-list__navigation">
+          <div className="product-list__franchise">
+            <h3 className="product-list__franchise-title">Franchise</h3>
           </div>
 
           {products.length > 0 && (
-            <div className="product-list-page__controls">
-              <div className="product-list-page__control-group">
+            <div className="product-list__controls">
+              <div className="product-list__control-group">
                 <label
                   htmlFor="product-list-display"
-                  className="product-list-page__control-label"
+                  className="product-list__control-label"
                 >
                   Per Page:
                 </label>
                 <select
                   id="product-list-display"
-                  className="product-list-page__control-select"
+                  className="product-list__control-select"
                   value={displayCount}
                   onChange={(e) => {
                     setDisplayCount(e.target.value);
@@ -185,16 +184,16 @@ function ProductList({
                   <option value="100">100</option>
                 </select>
               </div>
-              <div className="product-list-page__control-group">
+              <div className="product-list__control-group">
                 <label
                   htmlFor="product-list-sort"
-                  className="product-list-page__control-label"
+                  className="product-list__control-label"
                 >
                   Sort by:
                 </label>
                 <select
                   id="product-list-sort"
-                  className="product-list-page__control-select"
+                  className="product-list__control-select"
                   value={sortOrder}
                   onChange={(e) => setSortOrder(e.target.value)}
                 >
@@ -206,14 +205,14 @@ function ProductList({
             </div>
           )}
         </div>
-        <section className="product-list-page__content">
+        <section className="product-list__content">
           <div>
-            <ul className="product-list-page__franchise-list">
+            <ul className="product-list__franchise-list">
               {franchises.map((franchise) => (
                 <li key={franchise}>
                   <button
                     type="button"
-                    className="product-list-page__franchise-button"
+                    className="product-list__franchise-button"
                     onClick={() => onFranchiseSelect?.(franchise)}
                   >
                     {franchise}
@@ -223,12 +222,12 @@ function ProductList({
             </ul>
           </div>
           <div>
-            <h2 className="product-list-page__heading">
+            <h2 className="product-list__heading">
               {categoryName || "All Products"}
             </h2>
 
             {displayedProducts.length > 0 ? (
-              <ul className="item-card__new-arrivals-cards product-list-page__cards">
+              <ul className="product-list__new-arrivals-cards product-list__cards">
                 {displayedProducts.map((item) => (
                   <ProductListItemCard
                     item={item}
@@ -239,11 +238,13 @@ function ProductList({
                 ))}
               </ul>
             ) : (
-              <div className="product-list-page__empty">
-                <p>No products currently available in &quot;{categoryName}&quot;.</p>
+              <div className="product-list__empty">
+                <p>
+                  No products currently available in &quot;{categoryName}&quot;.
+                </p>
                 <button
                   type="button"
-                  className="product-list-page__home-btn"
+                  className="product-list__home-btn"
                   onClick={onBack}
                 >
                   Explore Other Products
@@ -253,24 +254,24 @@ function ProductList({
           </div>
         </section>
         {totalPages > 1 && (
-          <div className="product-list-page__pagination">
+          <div className="product-list__pagination">
             <button
               type="button"
-              className="product-list-page__pagination-btn"
+              className="product-list__pagination-btn"
               disabled={validCurrentPage === 1}
               onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
             >
               ← Previous Page
             </button>
-            <div className="product-list-page__pagination-pages">
+            <div className="product-list__pagination-pages">
               {Array.from({ length: totalPages }, (_, i) => i + 1).map(
                 (pageNum) => (
                   <button
                     key={pageNum}
                     type="button"
-                    className={`product-list-page__page-num ${
+                    className={`product-list__page-num ${
                       pageNum === validCurrentPage
-                        ? "product-list-page__page-num_active"
+                        ? "product-list__page-num_active"
                         : ""
                     }`}
                     onClick={() => setCurrentPage(pageNum)}
@@ -282,7 +283,7 @@ function ProductList({
             </div>
             <button
               type="button"
-              className="product-list-page__pagination-btn"
+              className="product-list__pagination-btn"
               disabled={validCurrentPage === totalPages}
               onClick={() =>
                 setCurrentPage((prev) => Math.min(totalPages, prev + 1))

@@ -109,7 +109,7 @@ function ProductPage({ product, onAddToCart }) {
 
   return (
     <main className="product-page">
-      <StoreLogo />
+      <StoreLogo showStoreName={false} />
       <article className="product-page__details">
         <div className="product-page__gallery">
           <div className="product-page__image-container">

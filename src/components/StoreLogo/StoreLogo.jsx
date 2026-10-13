@@ -9,14 +9,17 @@ function StoreLogo({
   handlePreviousImageClick,
   imageIndex = 0,
   showBannerImage = false,
+  showStoreName = true,
 }) {
   return (
     <section className="store-logo">
-      <section className="store-logo__name">
-        <p className="store-logo__text">
-          Nate&apos;s Books, Games, Toys, and Hobby Store
-        </p>
-      </section>
+      {showStoreName && (
+        <section className="store-logo__name">
+          <p className="store-logo__text">
+            Nate&apos;s Books, Games, Toys, and Hobby Store
+          </p>
+        </section>
+      )}
       {showBannerImage && (
         <section className="store-logo__image-section store-logo__image-container">
           {/* Help the images change when clicked which is called on lines 8-14 */}

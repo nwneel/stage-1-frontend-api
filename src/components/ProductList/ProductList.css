@@ -1,10 +1,10 @@
-.product-list-page {
+.product-list {
   padding: 0 0 32px;
   background: rgb(250 248 245 / 80%);
   padding-bottom: 64px;
 }
 
-.product-list-page__navigation {
+.product-list__navigation {
   max-width: 960px;
   margin: 16px auto;
   padding: 0 16px;
@@ -15,7 +15,7 @@
   gap: 20px;
 }
 
-.product-list-page__franchise {
+.product-list__franchise {
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -25,14 +25,14 @@
   margin-left: 0;
 }
 
-.product-list-page__franchise-title {
+.product-list__franchise-title {
   margin: 0;
   font-size: 18px;
   color: #333;
   margin-left: -350px;
 }
 
-.product-list-page__controls {
+.product-list__controls {
   display: flex;
   align-items: flex-start;
   gap: 16px;
@@ -42,20 +42,20 @@
   transform: translateX(325px);
 }
 
-.product-list-page__control-group {
+.product-list__control-group {
   display: flex;
   align-items: center;
   gap: 8px;
   min-height: 38px;
 }
 
-.product-list-page__control-label {
+.product-list__control-label {
   font-size: 14px;
   font-weight: 500;
   color: #333;
 }
 
-.product-list-page__control-select {
+.product-list__control-select {
   padding: 6px 12px;
   font-size: 14px;
   border: 1px solid #ccc;
@@ -64,7 +64,7 @@
   cursor: pointer;
 }
 
-.product-list-page__back-btn {
+.product-list__back-btn {
   background: transparent;
   border: 1px solid #333;
   border-radius: 4px;
@@ -76,12 +76,12 @@
     color 0.2s ease;
 }
 
-.product-list-page__back-btn:hover {
+.product-list__back-btn:hover {
   background-color: #333;
   color: #fff;
 }
 
-.product-list-page__content {
+.product-list__content {
   /* display flex helps align the items in a grid */
   display: flex;
   max-width: 960px;
@@ -89,18 +89,18 @@
   padding: 0 16px;
 }
 
-.product-list-page__content > div:nth-child(2) {
+.product-list__content > div:nth-child(2) {
   flex: 1;
   min-width: 0;
 }
 
-.product-list-page__heading {
+.product-list__heading {
   font-size: 24px;
   margin-bottom: 24px;
   text-align: center;
 }
 
-.product-list-page__cards {
+.product-list__cards {
   display: grid;
   background: rgb(250 248 245 / 80%);
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -111,13 +111,13 @@
   width: 100%;
 }
 
-.product-list-page__cards .item-card__new-arrival {
+.product-list__cards .product-list__new-arrival {
   width: 100%;
   box-sizing: border-box;
   background: white;
 }
 
-.product-list-page__pagination {
+.product-list__pagination {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -126,12 +126,12 @@
   flex-wrap: wrap;
 }
 
-.product-list-page__pagination-pages {
+.product-list__pagination-pages {
   display: flex;
   gap: 8px;
 }
 
-.product-list-page__pagination-btn {
+.product-list__pagination-btn {
   background-color: #fff;
   border: 1px solid #333;
   border-radius: 4px;
@@ -143,18 +143,18 @@
     color 0.2s;
 }
 
-.product-list-page__pagination-btn:hover:not(:disabled) {
+.product-list__pagination-btn:hover:not(:disabled) {
   background-color: #333;
   color: #fff;
 }
 
-.product-list-page__pagination-btn:disabled {
+.product-list__pagination-btn:disabled {
   opacity: 0.4;
   cursor: not-allowed;
   border-color: #ccc;
 }
 
-.product-list-page__page-num {
+.product-list__page-num {
   background-color: #fff;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -168,29 +168,29 @@
   transition: all 0.2s;
 }
 
-.product-list-page__page-num:hover {
+.product-list__page-num:hover {
   border-color: #333;
 }
 
-.product-list-page__page-num_active {
+.product-list__page-num_active {
   background-color: #333;
   color: #fff;
   border-color: #333;
   font-weight: bold;
 }
 
-.product-list-page__empty {
+.product-list__empty {
   text-align: center;
   padding: 48px 16px;
   color: #666;
 }
 
-.product-list-page__empty p {
+.product-list__empty p {
   font-size: 18px;
   margin-bottom: 16px;
 }
 
-.product-list-page__franchise-list {
+.product-list__franchise-list {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -200,7 +200,7 @@
   margin-left: -350px;
 }
 
-.product-list-page__franchise-button {
+.product-list__franchise-button {
   background: rgb(250 248 245 / 80%);
   border: none;
   border-radius: 4px;
@@ -214,18 +214,18 @@
     border-color 0.2s ease;
 }
 
-.product-list-page__franchise-button:hover {
+.product-list__franchise-button:hover {
   background-color: #f5f5f5;
   border-color: #333;
 }
 
-.product-list-page__franchise-button_active {
+.product-list__franchise-button_active {
   background-color: #333;
   color: #fff;
   border-color: #333;
 }
 
-.product-list-page__home-btn {
+.product-list__home-btn {
   background-color: #333;
   color: #fff;
   border: none;
@@ -239,63 +239,178 @@
   width: 24px;
 }
 
-.product-list-page__home-btn:hover {
+.product-list__new-arrivals-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  list-style: none;
+  margin: 48px auto 0;
+  padding: 0;
+  width: 320px;
+  max-width: calc(100% - 32px);
+  cursor: pointer;
+  background: rgb(250 248 245 / 80%);
+}
+
+.product-list__new-arrivals-cards:has(
+    > .product-list__new-arrival:nth-child(2)
+  ) {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  width: 100%;
+  max-width: 840px;
+}
+
+.product-list__new-arrival {
+  background: white;
+  border: 1px solid #c7c7c7;
+  padding: 16px;
+}
+
+.product-list__new-arrival-image {
+  display: block;
+  height: 280px;
+  object-fit: contain;
+  width: 100%;
+}
+
+.product-list__product-link {
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  display: block;
+  padding: 0;
+  width: 100%;
+}
+
+.product-list__name {
+  font-size: 18px;
+  margin: 16px 0 8px;
+  text-align: center;
+}
+
+.product-list__price {
+  margin: 0;
+  text-align: center;
+}
+
+.product-list__cart-controls {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 16px;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.2s ease,
+    visibility 0.2s ease;
+}
+
+.product-list__quantity-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+.product-list__quantity {
+  box-sizing: border-box;
+  height: 40px;
+  width: 56px;
+}
+
+.product-list__add-to-cart {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+}
+
+.product-list__new-arrival:hover .product-list__cart-controls,
+.product-list__new-arrival:focus-within .product-list__cart-controls {
+  opacity: 1;
+  visibility: visible;
+}
+
+.product-list__home-btn:hover {
   background-color: #555;
 }
 
+@media (hover: none) {
+  .product-list__cart-controls {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
 @media (max-width: 1279px) {
-  .product-list-page__franchise {
+  .product-list__franchise {
     padding-top: 16px;
   }
 
-  .product-list-page__franchise-title {
+  .product-list__franchise-title {
     margin-left: 0;
   }
 
-  .product-list-page__controls {
+  .product-list__controls {
     margin-left: 0;
     padding-top: 16px;
     transform: none;
   }
 
-  .product-list-page__navigation {
+  .product-list__navigation {
     justify-content: flex-start;
   }
 
-  .product-list-page__content {
+  .product-list__content {
     flex-direction: column;
   }
 
-  .product-list-page__franchise-list {
+  .product-list__franchise-list {
     flex-direction: row;
     flex-wrap: wrap;
     margin: 0 0 16px;
   }
 
-  .product-list-page__content > div:nth-child(2) {
+  .product-list__content > div:nth-child(2) {
     flex: none;
     width: 100%;
   }
 }
 
 @media (max-width: 800px) {
-  .product-list-page__cards {
+  .product-list__new-arrivals-cards:has(
+      > .product-list__new-arrival:nth-child(2)
+    ) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 16px;
   }
 }
 
 @media (max-width: 480px) {
-  .product-list-page__cards {
+  .product-list__new-arrival-image {
+    height: auto;
+    aspect-ratio: 1;
+  }
+
+  .product-list__new-arrivals-cards:has(
+      > .product-list__new-arrival:nth-child(2)
+    ) {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .product-list-page__controls,
-  .product-list-page__control-group {
+  .product-list__controls,
+  .product-list__control-group {
     width: 100%;
   }
 
-  .product-list-page__control-group {
+  .product-list__control-group {
     flex-wrap: wrap;
   }
 }
