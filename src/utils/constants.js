@@ -602,6 +602,29 @@ export const defaultProductLists = withProductStock([
       ounces: 32,
     },
   },
+  {
+    _id: "roman-armor",
+    name: "Roman Commander Eagle Steel Leg Armor Guard Greaves",
+    description:
+      "The official greaves from the period movie are handcrafted of solid steel, coated in brass and decorated with sculptural ornaments. Light marks and scratches lend the metal an authentically antiqued look. These detailed leg guards are fit for any officer. An embossed leaf symbol decorates both the lower and upper cuffs. Thick leather lacing allows you to customize the fit.",
+    category: "body armor",
+    image: "https://i.ebayimg.com/images/g/3wwAAeSw2z9oqqrI/s-l1600.webp",
+
+    images: [
+      "https://i.ebayimg.com/images/g/3wwAAeSw2z9oqqrI/s-l1600.webp",
+      "https://i.ebayimg.com/images/g/JPgAAeSwfm5oqqrL/s-l1600.webp",
+    ],
+    stock: 10,
+    price: 61.95,
+    dimensions: {
+      length: 14,
+      height: 12,
+      width: 9,
+    },
+    weight: {
+      ounces: 32,
+    },
+  },
 ]);
 
 export const allProducts = Array.from(
