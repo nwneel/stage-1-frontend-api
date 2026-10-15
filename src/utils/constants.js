@@ -82,7 +82,7 @@ export const defaultNewArrivals = withProductStock([
     name: "Lord of the Rings-The Helm of King Elendil United Cutlery",
     description:
       "Replica of of the helmet seen in the New Line Cinema motion picture The Lord of the Rings: The Fellowship of the Ring. Iron construction with embossed brass decorations and a weathered and distressed finish. It is fully wearable and looks great on display. Leather lining. Individually serialized on a solid brass plate mounted on the inside back of the helmet to insure authenticity. Wooden display stand silkscreened with The One Ring inscription. Limited edition run of 5000 individually serialized pieces worldwide. Boxed.",
-    category: "Armor, Helmet",
+    category: "Armor, Helmet, fantasy armor",
     image: lordOfTheRingsHelmetImage,
     stock: 3,
     price: 650.0,
@@ -668,13 +668,41 @@ export function getProductsByCategory(categoryName) {
   const matched = allProducts.filter((product) => {
     if (!product.category) return false;
     const prodCat = product.category.toLowerCase();
-
+    // makes it possible for items to only appear under the categories they are assigned
     if (normalizedCategory === "helmet" || normalizedCategory === "helmets") {
       return prodCat.includes("helmet");
     }
 
     if (normalizedCategory === "shield" || normalizedCategory === "shields") {
       return prodCat.includes("shield");
+    }
+
+    if (
+      normalizedCategory === "fantasy armor" ||
+      normalizedCategory === "fantasy armor"
+    ) {
+      return prodCat.includes("fantasy armor");
+    }
+
+    if (
+      normalizedCategory === "fantasy knives" ||
+      normalizedCategory === "fantasy knives"
+    ) {
+      return prodCat.includes("fantasy knives");
+    }
+
+    if (
+      normalizedCategory === "combat knives" ||
+      normalizedCategory === "combat knives"
+    ) {
+      return prodCat.includes("combat knives");
+    }
+
+    if (
+      normalizedCategory === "pocket knives" ||
+      normalizedCategory === "pocket knives"
+    ) {
+      return prodCat.includes("pocket knives");
     }
 
     if (

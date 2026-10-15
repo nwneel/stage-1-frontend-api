@@ -582,8 +582,11 @@ function Checkout({
             </div>
 
             <div className="checkout-page__field-group">
-              <label htmlFor="email">Email</label>
+              <label className="checkout-page__label" htmlFor="email">
+                Email
+              </label>
               <input
+                className="checkout-page__input"
                 id="email"
                 name="email"
                 type="email"
@@ -596,8 +599,11 @@ function Checkout({
             </div>
 
             <div className="checkout-page__field-group">
-              <label htmlFor="address">Street Address</label>
+              <label className="checkout-page__label" htmlFor="address">
+                Street Address
+              </label>
               <input
+                className="checkout-page__input"
                 id="address"
                 name="address"
                 type="text"
@@ -611,8 +617,11 @@ function Checkout({
 
             <div className="checkout-page__row">
               <div className="checkout-page__field-group">
-                <label htmlFor="city">City</label>
+                <label className="checkout-page__label" htmlFor="city">
+                  City
+                </label>
                 <input
+                  className="checkout-page__input"
                   id="city"
                   name="city"
                   type="text"
@@ -626,7 +635,7 @@ function Checkout({
 
               {showStateField && (
                 <div className="checkout-page__field-group">
-                  <label htmlFor="state">
+                  <label className="checkout-page__label" htmlFor="state">
                     {isCanadaSelected ? "Province/Territory" : "State/Province"}
                   </label>
                   <select
@@ -657,8 +666,11 @@ function Checkout({
 
             <div className="checkout-page__row">
               <div className="checkout-page__field-group">
-                <label htmlFor="zipCode">ZIP Code</label>
+                <label className="checkout-page__label" htmlFor="zipCode">
+                  ZIP Code
+                </label>
                 <input
+                  className="checkout-page__input"
                   id="zipCode"
                   name="zipCode"
                   type="text"
@@ -671,8 +683,11 @@ function Checkout({
               </div>
 
               <div className="checkout-page__field-group">
-                <label htmlFor="country">Country</label>
+                <label className="checkout-page__label" htmlFor="country">
+                  Country
+                </label>
                 <select
+                  className="checkout-page__select"
                   id="country"
                   name="country"
                   value={values.country}

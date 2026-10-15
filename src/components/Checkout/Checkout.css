@@ -181,6 +181,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  min-width: 0;
 }
 
 .checkout-page__label {
@@ -190,9 +191,14 @@
 
 .checkout-page__input,
 .checkout-page__select {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  height: 3rem;
   padding: 0.85rem 1rem;
   border: 1px solid #d1d5db;
   border-radius: 8px;
+  font-family: inherit;
   font-size: 1rem;
   cursor: pointer;
 }
