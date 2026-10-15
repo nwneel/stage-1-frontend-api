@@ -669,6 +669,14 @@ export function getProductsByCategory(categoryName) {
     if (!product.category) return false;
     const prodCat = product.category.toLowerCase();
 
+    if (normalizedCategory === "helmet" || normalizedCategory === "helmets") {
+      return prodCat.includes("helmet");
+    }
+
+    if (normalizedCategory === "shield" || normalizedCategory === "shields") {
+      return prodCat.includes("shield");
+    }
+
     if (
       prodCat.includes(normalizedCategory) ||
       normalizedCategory.includes(prodCat)
