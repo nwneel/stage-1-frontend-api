@@ -374,6 +374,7 @@ function Header({
                 </li>
                 <li>
                   <button
+                    className="header__user-dropdown"
                     onClick={() => handleUserMenuSelect(onOrdersClick)}
                     type="button"
                   >
@@ -382,6 +383,7 @@ function Header({
                 </li>
                 <li>
                   <button
+                    className="header__user-dropdown"
                     onClick={() => handleUserMenuSelect(onLogOutClick)}
                     type="button"
                   >
