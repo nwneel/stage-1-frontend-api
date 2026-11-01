@@ -306,6 +306,7 @@
   width: 83px;
   height: 32px;
   border-radius: 10px;
+  cursor: pointer;
 }
 
 .header__sign-in-btn:hover {

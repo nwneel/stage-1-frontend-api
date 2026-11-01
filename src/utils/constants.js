@@ -673,6 +673,13 @@ export function getProductsByCategory(categoryName) {
       return prodCat.includes("helmet");
     }
 
+    if (
+      normalizedCategory === "combat knives" ||
+      normalizedCategory === "combat knives"
+    ) {
+      return prodCat.includes("combat knives");
+    }
+
     if (normalizedCategory === "shield" || normalizedCategory === "shields") {
       return prodCat.includes("shield");
     }
