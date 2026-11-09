@@ -132,7 +132,6 @@ function App() {
   const [isSignedIn, setIsSignedIn] = useState(
     () => localStorage.getItem(AUTH_STORAGE_KEY) === "true",
   );
-  const [isForgetPasswordOpen, setIsForgetPasswordOpen] = useState(false);
   const [isEmptyCartOpen, setIsEmptyCartOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -406,10 +405,6 @@ function App() {
     returnToCheckoutIfNeeded();
   }
 
-  function handleForgetPasswordSubmit() {
-    setIsForgetPasswordOpen(false);
-  }
-
   function handleCheckout() {
     if (cartItems.length === 0) {
       setIsEmptyCartOpen(true);
@@ -498,6 +493,29 @@ function App() {
           <Route path="/about-us" element={<About />} />
           <Route path="/shipping-and-returns" element={<ShippingAndReturns />} />
           <Route
+            path="/forgot-password"
+            element={
+              <ForgetPassword
+                onSignInClick={() => {
+                  goTo("/");
+                  setIsSignInOpen(true);
+                }}
+              />
+            }
+          />
+          <Route
+            path="/forgot-password/sent"
+            element={
+              <ForgetPassword
+                isConfirmation
+                onSignInClick={() => {
+                  goTo("/");
+                  setIsSignInOpen(true);
+                }}
+              />
+            }
+          />
+          <Route
             path={productNewArrivalPagePath}
             element={
               <ProductPage
@@ -579,7 +597,7 @@ function App() {
         }}
         onForgetPasswordClick={() => {
           setIsSignInOpen(false);
-          setIsForgetPasswordOpen(true);
+          goTo("/forgot-password");
         }}
       />
       <SignUp
@@ -588,15 +606,6 @@ function App() {
         onSubmit={handleSignUpSubmit}
         onSignInClick={() => {
           setIsSignUpOpen(false);
-          setIsSignInOpen(true);
-        }}
-      />
-      <ForgetPassword
-        isOpen={isForgetPasswordOpen}
-        onClose={() => setIsForgetPasswordOpen(false)}
-        onSubmit={handleForgetPasswordSubmit}
-        onSignInClick={() => {
-          setIsForgetPasswordOpen(false);
           setIsSignInOpen(true);
         }}
       />

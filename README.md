@@ -29,6 +29,10 @@ The Vite development and preview proxies attach the `API-Key` header on the serv
 
 If no key is configured, shipping requests return a configuration error instead of sending an empty key to ShipStation. If ShipStation still returns **401**, verify that the key is active and was generated for API v2, not the v1 API key/secret pair. See [ShipStation authentication](https://docs.shipstation.com/authentication).
 
+### Configure the API locally
+
+The sign-in and password-reset forms send requests to the API service at `http://localhost:3001` by default. To use a different API service, set `VITE_API_URL` in `.env.local` to its base URL (for example, `https://api.example.com`) and restart Vite. Password reset requests are sent to `POST /forget-password`; the API service must implement sending the reset email.
+
 Vite starts the development server on port 3000 and opens the app in your browser. To create and inspect a local production build, run `npm run build`, then `npm run preview`.
 
 ## Deploy

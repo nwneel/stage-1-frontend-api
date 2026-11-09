@@ -7,6 +7,11 @@ import lordOfTheRingsHelmetImage from "../assets/Products/lord of the rings helm
 export const SALES_TAX_RATE = 0.0725;
 
 export const DEFAULT_PRODUCT_STOCK = 100;
+const configuredApiUrl = import.meta.env.VITE_API_URL?.trim();
+export const baseUrl = (configuredApiUrl || "http://localhost:3001").replace(
+  /\/+$/,
+  "",
+);
 
 // Set a product's stock directly in its record to override this default.
 const withProductStock = (products) =>
