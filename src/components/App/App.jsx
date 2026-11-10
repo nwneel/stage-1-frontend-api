@@ -129,6 +129,7 @@ function App() {
   const [cartItems, setCartItems] = useState(loadCartItems);
   const [isSignInOpen, setIsSignInOpen] = useState(false);
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
+  const [isForgetPasswordOpen, setIsForgetPasswordOpen] = useState(false);
   const [isSignedIn, setIsSignedIn] = useState(
     () => localStorage.getItem(AUTH_STORAGE_KEY) === "true",
   );
@@ -597,9 +598,19 @@ function App() {
         }}
         onForgetPasswordClick={() => {
           setIsSignInOpen(false);
-          goTo("/forgot-password");
+          setIsForgetPasswordOpen(true);
         }}
       />
+      {isForgetPasswordOpen && (
+        <ForgetPassword
+          isModal
+          onClose={() => setIsForgetPasswordOpen(false)}
+          onSignInClick={() => {
+            setIsForgetPasswordOpen(false);
+            setIsSignInOpen(true);
+          }}
+        />
+      )}
       <SignUp
         isOpen={isSignUpOpen}
         onClose={() => setIsSignUpOpen(false)}

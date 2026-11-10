@@ -33,6 +33,8 @@ If no key is configured, shipping requests return a configuration error instead 
 
 The sign-in and password-reset forms send requests to the API service at `http://localhost:3001` by default. To use a different API service, set `VITE_API_URL` in `.env.local` to its base URL (for example, `https://api.example.com`) and restart Vite. Password reset requests are sent to `POST /forget-password`; the API service must implement sending the reset email.
 
+Select **Forget Password** in the sign-in modal to enter your email in a reset-password modal without leaving the current page. A successful request shows a check-your-email confirmation; a failed request displays an error and allows retrying. Close the modal with its close button, Escape, or the backdrop, or select **Back to Sign In**. Direct links to `/forgot-password` and `/forgot-password/sent` remain available.
+
 Vite starts the development server on port 3000 and opens the app in your browser. To create and inspect a local production build, run `npm run build`, then `npm run preview`.
 
 ## Deploy
